@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import {onMounted} from 'vue'
 
 import * as Matter from 'matter-js';
 
-defineProps<{ }>()
+import {levelProvider} from "../game/levelProvider.ts";
 
-// module aliases
+console.log(levelProvider);
+
+const props = defineProps<{levelName: string}>()
+
 const Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -15,14 +18,12 @@ const Engine = Matter.Engine,
     MouseConstraint = Matter.MouseConstraint,
     Detector = Matter.Detector;
 
-// create an engine
 var engine = Engine.create();
 
-
 onMounted(() => {
+  const level = levelProvider.getLevelByName(props.levelName);
 
-// create a renderer
-  var render = Render.create({
+  const render = Render.create({
     element: document.getElementById('world'),
     engine: engine,
     options: {
@@ -30,36 +31,15 @@ onMounted(() => {
     }
   });
 
-// run the renderer
   Render.run(render);
-
-// create runner
-  var runner = Runner.create();
-
-// run the engine
+  const runner = Runner.create();
   Runner.run(runner, engine);
 
-// create two boxes and a ground
-  var targetA = Bodies.rectangle(700, 540, 80, 80, {
-    render: {
-      sprite: {
-        texture: '/jan.png',
-        xScale: 0.2,
-        yScale: 0.2,
-      }
-    }
-
-  });
-  var wallA = Bodies.rectangle(450, 540, 20, 100);
-  var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-  const ballPosition = {
-    x: 100,
-    y: 500
-  };
+  Composite.add(engine.world, level.getAllBodies());
 
   let isFired = false;
 
-  let ball = Bodies.circle(ballPosition.x, ballPosition.y, 20, {
+  let ball = Bodies.circle(level.slingPosition.x, level.slingPosition.y, 20, {
     render: {
       sprite: {
         texture: '/dominik.png',
@@ -70,8 +50,8 @@ onMounted(() => {
   });
   let sling = Constraint.create({
     pointA: {
-      x: ballPosition.x,
-      y: ballPosition.y
+      x: level.slingPosition.x,
+      y: level.slingPosition.y,
     },
     bodyB: ball,
     stiffness: 0.05,
@@ -83,11 +63,7 @@ onMounted(() => {
   })
 
   let detector = Detector.create({
-    bodies: [
-      targetA,
-      wallA,
-      ball,
-    ]
+    bodies: level.objectsMovable.concat(level.targets).concat([ball])
   });
 
   let slingMouseConstraint = MouseConstraint.create(engine, {
@@ -105,16 +81,16 @@ onMounted(() => {
     }
   });
 
-  Matter.Events.on(engine, 'afterUpdate', (event) => {
+  Matter.Events.on(engine, 'afterUpdate', () => {
     if (!isFired) return;
 
-    let distanceX = Math.abs(ball.position.x - ballPosition.x);
-    let distanceY = Math.abs(ball.position.y - ballPosition.y);
+    let distanceX = Math.abs(ball.position.x - level.slingPosition.x);
+    let distanceY = Math.abs(ball.position.y - level.slingPosition.y);
     let minDistance = 5;
 
     if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
-    ball = Bodies.circle(ballPosition.x, ballPosition.y, 20, {
+    ball = Bodies.circle(level.slingPosition.x, level.slingPosition.y, 20, {
       render: {
         sprite: {
           texture: '/dominik.png',
@@ -139,21 +115,32 @@ onMounted(() => {
     console.log(collisions);
 
     collisions.forEach((collision) => {
+
+      const bodyATarget = level.targets.indexOf(collision.bodyA);
+      const bodyBTarget = level.targets.indexOf(collision.bodyB);
+
       if (
-          (collision.bodyA === targetA || collision.bodyB === targetA)
+          bodyATarget >= 0 || bodyBTarget >= 0
       ) {
         console.log('HIT');
-        detector.bodies = [];
-        Composite.remove(engine.world, targetA);
+        console.log(Math.max(bodyATarget, bodyBTarget));
+        console.log(level.targets);
+
+        const targetToRemove = level.targets[
+            Math.max(bodyATarget, bodyBTarget)
+            ];
+
+        Composite.remove(engine.world, targetToRemove);
+
+        detector.bodies = detector.bodies.filter((body) => {
+          return body !== targetToRemove;
+        });
       }
     });
   });
 
-// add all of the bodies to the world
-  Composite.add(engine.world, [targetA, wallA, ground]);
-
-// add all of the bodies to the world
-  Composite.add(engine.world, [ball, sling, slingMouseConstraint]);})
+  Composite.add(engine.world, [ball, sling, slingMouseConstraint]);
+})
 
 </script>
 

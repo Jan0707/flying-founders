@@ -1,0 +1,21 @@
+import {level as level1} from "./levels/level1.ts";
+import {Level} from "./level.ts";
+
+class LevelProvider {
+    levels: [Level];
+    constructor(levels: [Level]) {
+        this.levels = levels;
+    }
+
+    getLevelByName(name: string): Level | undefined {
+        return this.levels.find(level => level.name === name);
+    }
+}
+
+const levelProvider = new LevelProvider(
+    [
+        level1,
+    ]
+);
+
+export { levelProvider };
