@@ -7,6 +7,13 @@ const level = new Level();
 level.name = "1";
 level.slingPosition = {x: 100, y: 500};
 
+level.setStockpile([
+    'dominik',
+    'jens',
+    'dominik',
+    'jens',
+]);
+
 var wallA = Bodies.rectangle(450, 540, 20, 100);
 var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 var platform = Bodies.rectangle(600, 300, 200, 20, { isStatic: true });

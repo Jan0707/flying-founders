@@ -3,6 +3,11 @@ import {Level} from "./../level.ts";
 
 export class LevelEvent {
     name: string
+    payload: {}
+    constructor(name: string, payload: object = {}) {
+        this.name = name;
+        this.payload = payload;
+    }
 }
 
 export function createLevel(targetElement: HTMLElement, level: Level, eventHandler: (event: LevelEvent) => void){
@@ -10,7 +15,6 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
     const Engine = Matter.Engine,
         Render = Matter.Render,
         Runner = Matter.Runner,
-        Bodies = Matter.Bodies,
         Composite = Matter.Composite,
         Constraint = Matter.Constraint,
         MouseConstraint = Matter.MouseConstraint,
@@ -34,15 +38,8 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
 
     let isFired = false;
 
-    let ball = Bodies.circle(level.slingPosition.x, level.slingPosition.y, 20, {
-        render: {
-            sprite: {
-                texture: '/dominik.png',
-                xScale: 0.10,
-                yScale: 0.10,
-            }
-        }
-    });
+    let ball = level.ballFactory.getBall();
+
     let sling = Constraint.create({
         pointA: {
             x: level.slingPosition.x,
@@ -73,11 +70,7 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
     Matter.Events.on(slingMouseConstraint, 'enddrag', (event) => {
         if (event.body === ball) {
             isFired = true;
-
-            event = new LevelEvent();
-            event.name = 'fired';
-
-            eventHandler(event);
+            eventHandler(new LevelEvent('fired'));
         }
     });
 
@@ -90,15 +83,13 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
 
         if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
-        ball = Bodies.circle(level.slingPosition.x, level.slingPosition.y, 20, {
-            render: {
-                sprite: {
-                    texture: '/dominik.png',
-                    xScale: 0.10,
-                    yScale: 0.10,
-                }
-            }
-        });
+        if (level.ballFactory?.getRemainingShots() === 0) {
+            sling.bodyB = null;
+            return
+        };
+
+        ball = level.ballFactory?.getBall();
+
         sling.bodyB = ball;
         isFired = false;
 
