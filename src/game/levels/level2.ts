@@ -13,7 +13,7 @@ function getLevel(): Level {
   ];
 
   level.objectsMovable = [
-    objectFactory.createObject("wood", 200, 540, 20, 100, 0),
+    objectFactory.createObject("concrete", 200, 540, 20, 100, 0),
   ];
 
   level.targets = [

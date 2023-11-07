@@ -1,7 +1,11 @@
 import * as Matter from "matter-js";
 import { Level } from "../Level.ts";
+import { settings } from "../settings.ts";
 
 export class LevelEvent {
+  static readonly EVENT_FIRED = "fired";
+  static readonly EVENT_HIT = "hit";
+
   name: string;
   payload: {};
   constructor(name: string, payload: object = {}) {
@@ -49,8 +53,8 @@ export function createLevel(
       y: level.slingPosition.y,
     },
     bodyB: ball,
-    stiffness: 0.05,
-    length: 0.5,
+    stiffness: settings.sling.stiffness,
+    length: settings.sling.length,
     render: {
       visible: false,
     },
@@ -72,7 +76,7 @@ export function createLevel(
   Matter.Events.on(mouseConstraint, "enddrag", (event) => {
     if (event.body === ball) {
       isFired = true;
-      eventHandler(new LevelEvent("fired"));
+      eventHandler(new LevelEvent(LevelEvent.EVENT_FIRED));
     }
   });
 
@@ -81,7 +85,7 @@ export function createLevel(
 
     const distanceX = Math.abs(ball.position.x - level.slingPosition.x);
     const distanceY = Math.abs(ball.position.y - level.slingPosition.y);
-    const minDistance = 5;
+    const minDistance = settings.sling.minimalDistanceToRelease;
 
     if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
@@ -112,10 +116,7 @@ export function createLevel(
       const bodyBTarget = level.targets.indexOf(collision.bodyB);
 
       if (bodyATarget >= 0 || bodyBTarget >= 0) {
-        console.log("HIT");
-        console.log(Math.max(bodyATarget, bodyBTarget));
-        console.log(level.targets);
-        eventHandler(new LevelEvent("hit"));
+        eventHandler(new LevelEvent(LevelEvent.EVENT_HIT));
 
         const targetToRemove =
           level.targets[Math.max(bodyATarget, bodyBTarget)];

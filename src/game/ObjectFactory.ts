@@ -27,6 +27,7 @@ class ObjectFactory {
       options.render = {
         fillStyle: "green",
       };
+      options.restitution = 0.8;
     }
 
     if (type === "platform") {
@@ -35,6 +36,7 @@ class ObjectFactory {
         strokeStyle: "red",
         lineWidth: 3,
       };
+      options.restitution = 0.8;
     }
 
     return Bodies.rectangle(x, y, length, height, options);
@@ -54,6 +56,15 @@ class ObjectFactory {
       options.render = {
         fillStyle: "brown",
       };
+      options.restitution = 0.9;
+    }
+
+    if (type === "concrete") {
+      options.render = {
+        fillStyle: "grey",
+      };
+      options.mass = 5;
+      options.restitution = 0.95;
     }
 
     const createdObject = Bodies.rectangle(x, y, length, height, options);

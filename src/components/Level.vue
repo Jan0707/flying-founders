@@ -10,14 +10,16 @@ const props = defineProps<{ levelName: string }>();
 const domElement = ref();
 
 function eventHandler(event: LevelEvent) {
-  console.log(event);
-
-  if (event.name === "fired") {
-    levelState.incrementShots();
-  }
-  if (event.name === "hit") {
-    levelState.incrementPoints(100);
-    levelState.decrementRemainingTargetsCount();
+  switch (event.name) {
+    case LevelEvent.EVENT_FIRED:
+      levelState.incrementShots();
+      break;
+    case LevelEvent.EVENT_HIT:
+      levelState.incrementPoints(100);
+      levelState.decrementRemainingTargetsCount();
+      break;
+    default:
+      console.warn("Encountered unhandled Level Event", event)
   }
 }
 
