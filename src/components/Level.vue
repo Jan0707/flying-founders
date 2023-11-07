@@ -15,11 +15,16 @@ function eventHandler(event: LevelEvent) {
   if (event.name === "fired") {
     levelState.incrementShots();
   }
+  if (event.name === "hit") {
+    levelState.incrementPoints(100);
+    levelState.decrementTargets();
+  }
 }
 
 onMounted(() => {
   levelState.reset();
   const level = levelProvider.getLevelByName(props.levelName);
+  levelState.setTargets(level.targets.length);
   createLevel(domElement.value, level, eventHandler);
 });
 </script>

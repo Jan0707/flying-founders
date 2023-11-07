@@ -115,6 +115,7 @@ export function createLevel(
         console.log("HIT");
         console.log(Math.max(bodyATarget, bodyBTarget));
         console.log(level.targets);
+        eventHandler(new LevelEvent("hit"));
 
         const targetToRemove =
           level.targets[Math.max(bodyATarget, bodyBTarget)];
