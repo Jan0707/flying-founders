@@ -1,5 +1,5 @@
 import {level as level1} from "./levels/level1.ts";
-import {Level} from "./level.ts";
+import {Level} from "./Level.ts";
 
 class LevelProvider {
     levels: [Level];

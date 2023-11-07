@@ -1,5 +1,5 @@
 import * as Matter from 'matter-js';
-import {Level} from "./../level.ts";
+import {Level} from "../Level.ts";
 
 export class LevelEvent {
     name: string
@@ -58,7 +58,7 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
         bodies: level.objectsMovable.concat(level.targets).concat([ball])
     });
 
-    let slingMouseConstraint = MouseConstraint.create(engine, {
+    let mouseConstraint = MouseConstraint.create(engine, {
         mouse: Matter.Mouse.create(render.canvas),
         constraint: {
             render: {
@@ -67,7 +67,7 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
         }
     })
 
-    Matter.Events.on(slingMouseConstraint, 'enddrag', (event) => {
+    Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
         if (event.body === ball) {
             isFired = true;
             eventHandler(new LevelEvent('fired'));
@@ -130,5 +130,16 @@ export function createLevel(targetElement: HTMLElement, level: Level, eventHandl
         });
     });
 
-    Composite.add(engine.world, [ball, sling, slingMouseConstraint]);
+    Matter.Events.on(mouseConstraint, "mousedown", function () {
+        // When the mouse is down, set the objects to static to prevent dragging
+        level.objectsMovable.concat(level.targets).forEach(object => Matter.Body.setStatic(object, true))
+
+    });
+
+    Matter.Events.on(mouseConstraint, "mouseup", function () {
+        // When the mouse is up, set the object back to not static to enable physics interaction and collision
+        level.objectsMovable.concat(level.targets).forEach(object => Matter.Body.setStatic(object, false))
+    });
+
+    Composite.add(engine.world, [ball, sling, mouseConstraint]);
 }
