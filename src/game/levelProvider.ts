@@ -1,21 +1,17 @@
-import {level as level1} from "./levels/level1.ts";
-import {Level} from "./Level.ts";
+import { level as level1 } from "./levels/level1.ts";
+import { Level } from "./Level.ts";
 
 class LevelProvider {
-    levels: [Level];
-    constructor(levels: [Level]) {
-        this.levels = levels;
-    }
+  levels: [Level];
+  constructor(levels: [Level]) {
+    this.levels = levels;
+  }
 
-    getLevelByName(name: string): Level | undefined {
-        return this.levels.find(level => level.name === name);
-    }
+  getLevelByName(name: string): Level | undefined {
+    return this.levels.find((level) => level.name === name);
+  }
 }
 
-const levelProvider = new LevelProvider(
-    [
-        level1,
-    ]
-);
+const levelProvider = new LevelProvider([level1]);
 
 export { levelProvider };

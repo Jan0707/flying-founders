@@ -1,145 +1,146 @@
-import * as Matter from 'matter-js';
-import {Level} from "../Level.ts";
+import * as Matter from "matter-js";
+import { Level } from "../Level.ts";
 
 export class LevelEvent {
-    name: string
-    payload: {}
-    constructor(name: string, payload: object = {}) {
-        this.name = name;
-        this.payload = payload;
-    }
+  name: string;
+  payload: {};
+  constructor(name: string, payload: object = {}) {
+    this.name = name;
+    this.payload = payload;
+  }
 }
 
-export function createLevel(targetElement: HTMLElement, level: Level, eventHandler: (event: LevelEvent) => void){
+export function createLevel(
+  targetElement: HTMLElement,
+  level: Level,
+  eventHandler: (event: LevelEvent) => void,
+) {
+  const Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Composite = Matter.Composite,
+    Constraint = Matter.Constraint,
+    MouseConstraint = Matter.MouseConstraint,
+    Detector = Matter.Detector;
 
-    const Engine = Matter.Engine,
-        Render = Matter.Render,
-        Runner = Matter.Runner,
-        Composite = Matter.Composite,
-        Constraint = Matter.Constraint,
-        MouseConstraint = Matter.MouseConstraint,
-        Detector = Matter.Detector;
+  const engine = Engine.create();
 
-    var engine = Engine.create();
+  const render = Render.create({
+    element: targetElement,
+    engine: engine,
+    options: {
+      wireframes: false,
+    },
+  });
 
-    const render = Render.create({
-        element: targetElement,
-        engine: engine,
-        options: {
-            wireframes: false
-        }
-    });
+  Render.run(render);
+  const runner = Runner.create();
+  Runner.run(runner, engine);
 
-    Render.run(render);
-    const runner = Runner.create();
-    Runner.run(runner, engine);
+  Composite.add(engine.world, level.getAllBodies());
 
-    Composite.add(engine.world, level.getAllBodies());
+  let isFired = false;
 
-    let isFired = false;
+  let ball = level.ballFactory.getBall();
 
-    let ball = level.ballFactory.getBall();
+  const sling = Constraint.create({
+    pointA: {
+      x: level.slingPosition.x,
+      y: level.slingPosition.y,
+    },
+    bodyB: ball,
+    stiffness: 0.05,
+    length: 0.5,
+    render: {
+      visible: false,
+    },
+  });
 
-    let sling = Constraint.create({
-        pointA: {
-            x: level.slingPosition.x,
-            y: level.slingPosition.y,
-        },
-        bodyB: ball,
-        stiffness: 0.05,
-        length: 0.5,
-        render: {
-            visible: false,
-        }
+  const detector = Detector.create({
+    bodies: level.objectsMovable.concat(level.targets).concat([ball]),
+  });
 
-    })
+  const mouseConstraint = MouseConstraint.create(engine, {
+    mouse: Matter.Mouse.create(render.canvas),
+    constraint: {
+      render: {
+        visible: false,
+      },
+    },
+  });
 
-    let detector = Detector.create({
-        bodies: level.objectsMovable.concat(level.targets).concat([ball])
-    });
+  Matter.Events.on(mouseConstraint, "enddrag", (event) => {
+    if (event.body === ball) {
+      isFired = true;
+      eventHandler(new LevelEvent("fired"));
+    }
+  });
 
-    let mouseConstraint = MouseConstraint.create(engine, {
-        mouse: Matter.Mouse.create(render.canvas),
-        constraint: {
-            render: {
-                visible: false
-            }
-        }
-    })
+  Matter.Events.on(engine, "afterUpdate", () => {
+    if (!isFired) return;
 
-    Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
-        if (event.body === ball) {
-            isFired = true;
-            eventHandler(new LevelEvent('fired'));
-        }
-    });
+    const distanceX = Math.abs(ball.position.x - level.slingPosition.x);
+    const distanceY = Math.abs(ball.position.y - level.slingPosition.y);
+    const minDistance = 5;
 
-    Matter.Events.on(engine, 'afterUpdate', () => {
-        if (!isFired) return;
+    if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
-        let distanceX = Math.abs(ball.position.x - level.slingPosition.x);
-        let distanceY = Math.abs(ball.position.y - level.slingPosition.y);
-        let minDistance = 5;
+    if (level.ballFactory?.getRemainingShots() === 0) {
+      sling.bodyB = null;
+      return;
+    }
 
-        if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
+    ball = level.ballFactory?.getBall();
 
-        if (level.ballFactory?.getRemainingShots() === 0) {
-            sling.bodyB = null;
-            return
-        };
+    sling.bodyB = ball;
+    isFired = false;
 
-        ball = level.ballFactory?.getBall();
+    detector.bodies.push(ball);
 
-        sling.bodyB = ball;
-        isFired = false;
+    Composite.add(engine.world, [ball]);
+  });
 
-        detector.bodies.push(ball);
+  Matter.Events.on(engine, "afterUpdate", (event) => {
+    const collisions = Detector.collisions(detector);
 
-        Composite.add(engine.world, [ball]);
-    });
+    if (collisions.length === 0) return;
 
-    Matter.Events.on(engine, 'afterUpdate', (event) => {
-        const collisions = Detector.collisions(detector);
+    console.log(collisions);
 
-        if (collisions.length === 0) return;
+    collisions.forEach((collision) => {
+      const bodyATarget = level.targets.indexOf(collision.bodyA);
+      const bodyBTarget = level.targets.indexOf(collision.bodyB);
 
-        console.log(collisions);
+      if (bodyATarget >= 0 || bodyBTarget >= 0) {
+        console.log("HIT");
+        console.log(Math.max(bodyATarget, bodyBTarget));
+        console.log(level.targets);
 
-        collisions.forEach((collision) => {
+        const targetToRemove =
+          level.targets[Math.max(bodyATarget, bodyBTarget)];
 
-            const bodyATarget = level.targets.indexOf(collision.bodyA);
-            const bodyBTarget = level.targets.indexOf(collision.bodyB);
+        Composite.remove(engine.world, targetToRemove);
 
-            if (
-                bodyATarget >= 0 || bodyBTarget >= 0
-            ) {
-                console.log('HIT');
-                console.log(Math.max(bodyATarget, bodyBTarget));
-                console.log(level.targets);
-
-                const targetToRemove = level.targets[
-                    Math.max(bodyATarget, bodyBTarget)
-                    ];
-
-                Composite.remove(engine.world, targetToRemove);
-
-                detector.bodies = detector.bodies.filter((body) => {
-                    return body !== targetToRemove;
-                });
-            }
+        detector.bodies = detector.bodies.filter((body) => {
+          return body !== targetToRemove;
         });
+      }
     });
+  });
 
-    Matter.Events.on(mouseConstraint, "mousedown", function () {
-        // When the mouse is down, set the objects to static to prevent dragging
-        level.objectsMovable.concat(level.targets).forEach(object => Matter.Body.setStatic(object, true))
+  Matter.Events.on(mouseConstraint, "mousedown", function () {
+    // When the mouse is down, set the objects to static to prevent dragging
+    level.objectsMovable
+      .concat(level.targets)
+      .forEach((object) => Matter.Body.setStatic(object, true));
+  });
 
-    });
+  Matter.Events.on(mouseConstraint, "mouseup", function () {
+    // When the mouse is up, set the object back to not static to enable physics interaction and collision
+    level.objectsMovable
+      .concat(level.targets)
+      .forEach((object) => Matter.Body.setStatic(object, false));
+  });
 
-    Matter.Events.on(mouseConstraint, "mouseup", function () {
-        // When the mouse is up, set the object back to not static to enable physics interaction and collision
-        level.objectsMovable.concat(level.targets).forEach(object => Matter.Body.setStatic(object, false))
-    });
-
-    Composite.add(engine.world, [ball, sling, mouseConstraint]);
+  Composite.add(engine.world, [ball, sling, mouseConstraint]);
 }

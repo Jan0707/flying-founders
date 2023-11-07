@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import Level from "./Level.vue";
-import {levelState} from "../game/levelState.ts";
+import { levelState } from "../game/levelState.ts";
 </script>
 
 <template>
-  <p class="shot-counter">
-    Shots fired: {{levelState.shots}}
-  </p>
+  <p class="shot-counter">Shots fired: {{ levelState.shots }}</p>
   <Level levelName="1" />
 </template>
 
