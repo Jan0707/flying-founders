@@ -37,7 +37,7 @@ function getNextLevel() {
 </script>
 
 <template>
-  <div v-if="!isLevelFinished" class="top-bar">
+  <div class="top-bar">
     <LevelInfo />
     <MenuItems @reset="reset" />
   </div>
