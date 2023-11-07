@@ -12,9 +12,9 @@ const levelName = ref("1");
 const isLevelFinished = ref(false);
 
 watch(
-  () => levelState.targets,
+  () => levelState.remainingTargetsCount,
   () => {
-    if (levelState.targets === 0) {
+    if (levelState.remainingTargetsCount === 0) {
       isLevelFinished.value = true;
     }
   },

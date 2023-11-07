@@ -17,14 +17,14 @@ function eventHandler(event: LevelEvent) {
   }
   if (event.name === "hit") {
     levelState.incrementPoints(100);
-    levelState.decrementTargets();
+    levelState.decrementRemainingTargetsCount();
   }
 }
 
 onMounted(() => {
   levelState.reset();
-  const level = levelProvider.getLevelByName(props.levelName);
-  levelState.setTargets(level.targets.length);
+  const level = levelProvider.getLevelByName(props.levelName)();
+  levelState.setRemainingTargetsCount(level.targets.length);
   createLevel(domElement.value, level, eventHandler);
 });
 </script>
@@ -32,5 +32,6 @@ onMounted(() => {
 <template>
   <div ref="domElement"></div>
 </template>
+// https://stackoverflow.com/a/64053073/1143315
 
 <style scoped></style>

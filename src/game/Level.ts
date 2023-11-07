@@ -1,7 +1,6 @@
 import { BallFactory } from "./BallFactory.ts";
 
 class Level {
-  name: string;
   targets: any[];
   objectsMovable: any[];
   objectsStatic: any[];
@@ -19,4 +18,6 @@ class Level {
   }
 }
 
-export { Level };
+type LevelCreatorFunction = () => Level;
+
+export { Level, LevelCreatorFunction };

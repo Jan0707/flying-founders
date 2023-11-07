@@ -3,12 +3,12 @@ import { reactive } from "vue";
 export const levelState = reactive({
   shots: 0,
   points: 0,
-  targets: 0,
-  timeNeeded: Date.now(),
+  remainingTargetsCount: 0,
+  startTime: Date.now(),
   reset() {
     this.shots = 0;
     this.points = 0;
-    this.timeNeeded = Date.now();
+    this.startTime = Date.now();
   },
   incrementShots() {
     this.shots++;
@@ -16,13 +16,13 @@ export const levelState = reactive({
   incrementPoints(points: number) {
     this.points += points;
   },
-  setTargets(targets: number) {
-    this.targets = targets;
+  setRemainingTargetsCount(remainingTargetsCount: number) {
+    this.remainingTargetsCount = remainingTargetsCount;
   },
-  decrementTargets() {
-    this.targets--;
+  decrementRemainingTargetsCount() {
+    this.remainingTargetsCount--;
   },
   getTimeNeededInSeconds() {
-    return Math.floor((Date.now() - this.timeNeeded) / 1000);
+    return Math.floor((Date.now() - this.startTime) / 1000);
   },
 });

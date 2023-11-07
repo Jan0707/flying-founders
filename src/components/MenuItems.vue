@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { levelState } from "../game/levelState.ts";
-
 const emit = defineEmits(["reset"]);
 </script>
 
