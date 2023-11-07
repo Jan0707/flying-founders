@@ -2,9 +2,22 @@
 import Level from "./Level.vue";
 import LevelInfo from "./LevelInfo.vue";
 import MenuItems from "./MenuItems.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { levelState } from "../game/levelState.ts";
 
 const levelKeys = ref(1);
+const levelName = ref("1");
+
+watch(
+  () => levelState.targets,
+  () => {
+    if (levelState.targets === 0) {
+      levelName.value = "2";
+      levelKeys.value += 1;
+      console.log("levelName: ", levelName.value);
+    }
+  },
+);
 
 function reset() {
   levelKeys.value += 1;
@@ -16,7 +29,7 @@ function reset() {
     <LevelInfo />
     <MenuItems @reset="reset" />
   </div>
-  <Level :key="levelKeys" levelName="1" />
+  <Level :key="levelKeys" :levelName="levelName" />
 </template>
 
 <style scoped>
