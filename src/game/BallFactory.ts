@@ -4,7 +4,6 @@ const Bodies = Matter.Bodies;
 import Level from "./Level.ts";
 
 export class BallFactory {
-  //
   level: Level;
   constructor(level: Level) {
     this.level = level;
@@ -30,7 +29,7 @@ export class BallFactory {
 
     ball.plugin.lotum = {
       name: name,
-    }
+    };
 
     return ball;
   }

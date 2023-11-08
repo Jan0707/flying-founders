@@ -31,6 +31,10 @@ function eventHandler(event: LevelEvent) {
   }
 }
 
+function onTriggerSkill() {
+  console.log("Jan will take care of this, as soon as the triggering works!");
+}
+
 onMounted(() => {
   levelState.reset();
   const levelCreator = levelProvider.getLevelByName(props.levelName);

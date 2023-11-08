@@ -47,7 +47,11 @@ export function createLevel(
 
   let isFired = false;
   let currentBall = level.ballFactory.getBall();
-  eventHandler(new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {name: currentBall.plugin.lotum.name}))
+  eventHandler(
+    new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
+      name: currentBall.plugin.lotum.name,
+    }),
+  );
 
   const sling = Constraint.create({
     pointA: {
@@ -90,13 +94,19 @@ export function createLevel(
     console.log("Stopped");
 
     if (level.ballFactory?.getRemainingShots() === 0) {
-      eventHandler(new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {name: null}))
+      eventHandler(
+        new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, { name: null }),
+      );
       sling.bodyB = null;
       return;
     }
 
     currentBall = level.ballFactory?.getBall();
-    eventHandler(new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {name: currentBall.plugin.lotum.name}))
+    eventHandler(
+      new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
+        name: currentBall.plugin.lotum.name,
+      }),
+    );
 
     sling.bodyB = currentBall;
     isFired = false;
@@ -136,7 +146,7 @@ export function createLevel(
     return;
   });
 
-  Matter.Events.on(engine, "afterUpdate", (event) => {
+  Matter.Events.on(engine, "afterUpdate", () => {
     const collisions = Detector.collisions(detector);
 
     if (collisions.length === 0) return;
