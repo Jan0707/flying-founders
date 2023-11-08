@@ -8,11 +8,19 @@ import { levelState } from "./../game/levelState.ts";
 const props = defineProps<{ levelName: string }>();
 
 const domElement = ref();
+const level = ref();
 
 function eventHandler(event: LevelEvent) {
   switch (event.name) {
+    case LevelEvent.EVENT_UPDATE_FOUNDER:
+      levelState.currentFounder = event.payload.name;
+      break;
     case LevelEvent.EVENT_FIRED:
       levelState.incrementShots();
+      levelState.isBallFlying = true;
+      break;
+    case LevelEvent.EVENT_STOPPED:
+      levelState.isBallFlying = false;
       break;
     case LevelEvent.EVENT_HIT:
       levelState.incrementPoints(100);
@@ -25,9 +33,13 @@ function eventHandler(event: LevelEvent) {
 
 onMounted(() => {
   levelState.reset();
-  const level = levelProvider.getLevelByName(props.levelName)();
-  levelState.setRemainingTargetsCount(level.targets.length);
-  createLevel(domElement.value, level, eventHandler);
+  const levelCreator = levelProvider.getLevelByName(props.levelName);
+
+  if (levelCreator) {
+    level.value = levelCreator();
+    levelState.setRemainingTargetsCount(level.value.targets.length);
+    createLevel(domElement.value, level.value, eventHandler);
+  }
 });
 </script>
 

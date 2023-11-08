@@ -5,6 +5,7 @@ import MenuItems from "./MenuItems.vue";
 import { ref, watch } from "vue";
 import { levelState } from "../game/levelState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
+import SkillButton from "./SkillButton.vue";
 
 const levelKeys = ref(1);
 const levelName = ref("1");
@@ -48,6 +49,9 @@ function getNextLevel() {
     :levelName="levelName"
     @continue="getNextLevel()"
   />
+  <div class="bottom-bar">
+    <SkillButton />
+  </div>
 </template>
 
 <style scoped>

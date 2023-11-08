@@ -28,6 +28,10 @@ export class BallFactory {
       },
     );
 
+    ball.plugin.lotum = {
+      name: name,
+    }
+
     return ball;
   }
 
