@@ -4,6 +4,7 @@ import { ref, onMounted } from "vue";
 import { levelProvider } from "../game/levelProvider.ts";
 import { createLevel, LevelEvent } from "./../game/matter/matter.ts";
 import { levelState } from "./../game/levelState.ts";
+import { emitter } from "../util/eventBus.ts";
 
 const props = defineProps<{ levelName: string }>();
 
@@ -32,19 +33,21 @@ function eventHandler(event: LevelEvent) {
 }
 
 function onTriggerSkill() {
-  console.log("Jan will take care of this, as soon as the triggering works!");
+  level.value.skills.powerPatron();
 }
 
-onMounted(() => {
+onMounted(function () {
   levelState.reset();
   const levelCreator = levelProvider.getLevelByName(props.levelName);
 
   if (levelCreator) {
-    level.value = levelCreator();
-    levelState.setRemainingTargetsCount(level.value.targets.length);
-    createLevel(domElement.value, level.value, eventHandler);
+    const createdLevel = levelCreator();
+    levelState.setRemainingTargetsCount(createdLevel.targets.length);
+    level.value = createLevel(domElement.value, createdLevel, eventHandler);
   }
 });
+
+emitter.on("triggerSkill", onTriggerSkill);
 </script>
 
 <template>

@@ -1,6 +1,19 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { levelState } from "../game/levelState.ts";
-const emit = defineEmits(["triggerSkill"]);
+import { emitter } from "../util/eventBus.ts";
+
+onMounted(function () {
+  window.addEventListener("keydown", (e) => {
+    if (
+      e.key == "s" &&
+      levelState.isBallFlying &&
+      levelState.currentFounder == "dominik"
+    ) {
+      emitter.emit("triggerSkill");
+    }
+  });
+});
 </script>
 
 <template>
@@ -9,7 +22,7 @@ const emit = defineEmits(["triggerSkill"]);
       :disabled="
         !levelState.isBallFlying || levelState.currentFounder !== 'dominik'
       "
-      @click="emit('triggerSkill')"
+      @click="emitter.emit('triggerSkill')"
     >
       {{ `Use ${levelState.currentFounder}'s Skill` }}
     </button>

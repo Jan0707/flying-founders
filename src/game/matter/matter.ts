@@ -24,6 +24,7 @@ export function createLevel(
   const Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
+    Body = Matter.Body,
     Composite = Matter.Composite,
     Constraint = Matter.Constraint,
     MouseConstraint = Matter.MouseConstraint,
@@ -187,4 +188,12 @@ export function createLevel(
   });
 
   Composite.add(engine.world, [currentBall, sling, mouseConstraint]);
+
+  return {
+    skills: {
+      powerPatron: () => {
+        Body.setSpeed(currentBall, currentBall.speed * 5);
+      },
+    },
+  };
 }
