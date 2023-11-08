@@ -19,7 +19,7 @@ function eventHandler(event: LevelEvent) {
       levelState.decrementRemainingTargetsCount();
       break;
     default:
-      console.warn("Encountered unhandled Level Event", event)
+      console.warn("Encountered unhandled Level Event", event);
   }
 }
 
