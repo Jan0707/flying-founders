@@ -9,4 +9,4 @@ const settings = {
     }
 };
 
-export { settings }
+export { settings };
