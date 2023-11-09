@@ -6,11 +6,14 @@ import { ref, watch } from "vue";
 import { levelState } from "../game/levelState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
 import SkillButton from "./SkillButton.vue";
+import { SoundSystem } from "./../SoundSystem.ts";
 
 const levelKeys = ref(1);
 const levelName = ref("1");
 
 const isLevelFinished = ref(false);
+
+const soundSystem = new SoundSystem();
 
 watch(
   () => levelState.remainingTargetsCount,
