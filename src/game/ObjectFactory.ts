@@ -2,6 +2,9 @@ import * as Matter from "matter-js";
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
+import WOOD_50_200 from "./../assets/objects/wood_50_200.png";
+import PLANT_100_200 from "./../assets/objects/plant_100_200.png";
+
 class ObjectFactory {
   createTarget(name: string, x: number, y: number): object {
     return Bodies.rectangle(x, y, 80, 80, {
@@ -68,6 +71,54 @@ class ObjectFactory {
     }
 
     const createdObject = Bodies.rectangle(x, y, length, height, options);
+
+    if (rotation) {
+      Body.rotate(createdObject, rotation);
+    }
+
+    return createdObject;
+  }
+
+  createWood_50_200(x: number,
+                    y: number,
+                    rotation: number,){
+
+    const options = {
+      render: {
+        sprite: {
+          texture: WOOD_50_200,
+          xScale: 1,
+          yScale: 1,
+        }
+      },
+      restitution: 0.9
+    };
+
+    const createdObject = Bodies.rectangle(x, y, 50, 200, options);
+
+    if (rotation) {
+      Body.rotate(createdObject, rotation);
+    }
+
+    return createdObject;
+  }
+
+  createPlant_50_100(x: number,
+                    y: number,
+                    rotation: number,){
+
+    const options = {
+      render: {
+        sprite: {
+          texture: PLANT_100_200,
+          xScale: 0.5,
+          yScale: 0.5,
+        }
+      },
+      restitution: 0.7
+    };
+
+    const createdObject = Bodies.rectangle(x, y, 50, 100, options);
 
     if (rotation) {
       Body.rotate(createdObject, rotation);

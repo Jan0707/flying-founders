@@ -9,16 +9,17 @@ function getLevel(): Level {
 
   level.objectsStatic = [
     objectFactory.createGround("ground", 400, 610, 810, 60),
-    objectFactory.createGround("platform", 600, 300, 200, 20),
+    objectFactory.createGround("platform", 600, 300, 250, 20),
   ];
 
   level.objectsMovable = [
-    objectFactory.createObject("wood", 450, 540, 20, 100, 0),
+    objectFactory.createWood_50_200(450, 540, 0),
+    objectFactory.createPlant_50_100(520, 250, 0),
   ];
 
   level.targets = [
     objectFactory.createTarget("jan", 700, 540),
-    objectFactory.createTarget("jan", 580, 250),
+    objectFactory.createTarget("jan", 640, 250),
   ];
 
   return level;
