@@ -1,13 +1,10 @@
 import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import {shuffle} from "../../util/shuffleArray.ts";
+import { shuffle } from "../../util/shuffleArray.ts";
 
 function getLevel(): Level {
   const level = new Level();
-  const possibleTargets = shuffle([
-      "jan",
-      "jan"
-  ]);
+  const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 500 };
 
   level.setStockpile(["dominik", "jens", "dominik", "jens"]);

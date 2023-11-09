@@ -13,7 +13,7 @@ const levelName = ref("1");
 
 const isLevelFinished = ref(false);
 
-const soundSystem = new SoundSystem();
+new SoundSystem();
 
 watch(
   () => levelState.remainingTargetsCount,

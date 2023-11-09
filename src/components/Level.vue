@@ -26,7 +26,7 @@ function eventHandler(event: LevelEvent) {
     case LevelEvent.EVENT_HIT:
       levelState.incrementPoints(100);
       levelState.decrementRemainingTargetsCount();
-      emitter.emit("playSound", {name: "hit"})
+      emitter.emit("playSound", { name: "hit" });
       break;
     default:
       console.warn("Encountered unhandled Level Event", event);

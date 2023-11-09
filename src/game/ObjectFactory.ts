@@ -79,19 +79,16 @@ class ObjectFactory {
     return createdObject;
   }
 
-  createWood_50_200(x: number,
-                    y: number,
-                    rotation: number,){
-
+  createWood_50_200(x: number, y: number, rotation: number) {
     const options = {
       render: {
         sprite: {
           texture: WOOD_50_200,
           xScale: 1,
           yScale: 1,
-        }
+        },
       },
-      restitution: 0.9
+      restitution: 0.9,
     };
 
     const createdObject = Bodies.rectangle(x, y, 50, 200, options);
@@ -103,19 +100,16 @@ class ObjectFactory {
     return createdObject;
   }
 
-  createPlant_50_100(x: number,
-                    y: number,
-                    rotation: number,){
-
+  createPlant_50_100(x: number, y: number, rotation: number) {
     const options = {
       render: {
         sprite: {
           texture: PLANT_100_200,
           xScale: 0.5,
           yScale: 0.5,
-        }
+        },
       },
-      restitution: 0.7
+      restitution: 0.7,
     };
 
     const createdObject = Bodies.rectangle(x, y, 50, 100, options);
