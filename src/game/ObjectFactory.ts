@@ -2,6 +2,8 @@ import * as Matter from "matter-js";
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
+import TARGET_JAN from "./../assets/targets/jan.png";
+
 import WOOD_50_200 from "./../assets/objects/wood_50_200.png";
 import PLANT_100_200 from "./../assets/objects/plant_100_200.png";
 
@@ -10,7 +12,7 @@ class ObjectFactory {
     return Bodies.rectangle(x, y, 80, 80, {
       render: {
         sprite: {
-          texture: `/${name}.png`,
+          texture: TARGET_JAN,
           xScale: 0.2,
           yScale: 0.2,
         },
