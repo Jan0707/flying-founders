@@ -91,6 +91,11 @@ class ObjectFactory {
         },
       },
       restitution: 0.9,
+      plugin: {
+        lotum: {
+          breakable: "eventually",
+        }
+      }
     };
 
     const createdObject = Bodies.rectangle(x, y, 50, 200, options);
@@ -115,6 +120,27 @@ class ObjectFactory {
     };
 
     const createdObject = Bodies.rectangle(x, y, 50, 100, options);
+
+    if (rotation) {
+      Body.rotate(createdObject, rotation);
+    }
+
+    return createdObject;
+  }
+
+  createGlass_20_100(x: number, y: number, rotation: number) {
+    const options = {
+      render: {
+        fillStyle: "lightblue",
+      },
+      plugin: {
+        lotum: {
+          breakable: "instantly",
+        }
+      }
+    };
+
+    const createdObject = Bodies.rectangle(x, y, 10, 100, options);
 
     if (rotation) {
       Body.rotate(createdObject, rotation);

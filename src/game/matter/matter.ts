@@ -30,7 +30,9 @@ export function createLevel(
     MouseConstraint = Matter.MouseConstraint,
     Detector = Matter.Detector;
 
-  const engine = Engine.create();
+  const engine = Engine.create({
+    velocityIterations: 6,
+  });
 
   const render = Render.create({
     element: targetElement,
@@ -147,12 +149,10 @@ export function createLevel(
     return;
   });
 
+  // Track target hits
   Matter.Events.on(engine, "afterUpdate", () => {
     const collisions = Detector.collisions(detector);
-
     if (collisions.length === 0) return;
-
-    console.log(collisions);
 
     collisions.forEach((collision) => {
       const bodyATarget = level.targets.indexOf(collision.bodyA);
@@ -169,6 +169,49 @@ export function createLevel(
         detector.bodies = detector.bodies.filter((body) => {
           return body !== targetToRemove;
         });
+      }
+    });
+  });
+
+  // Track hits on instantly breakable objects
+  Matter.Events.on(engine, "afterUpdate", () => {
+    const collisions = Detector.collisions(detector);
+    if (collisions.length === 0) return;
+
+    collisions.forEach((collision) => {
+      if (
+          collision.bodyA.plugin.lotum &&
+          collision.bodyA.plugin.lotum.breakable === "instantly" &&
+          collision.bodyB.speed >= settings.objects.instantBreakingSpeed
+
+      ) {
+        Composite.remove(engine.world, collision.bodyA);
+        detector.bodies = detector.bodies.filter((body) => {
+          return body !== collision.bodyA;
+        });
+      }
+      if (
+          collision.bodyB.plugin.lotum &&
+          collision.bodyB.plugin.lotum.breakable === "instantly" &&
+          collision.bodyA.speed >= settings.objects.instantBreakingSpeed
+      ) {
+        Composite.remove(engine.world, collision.bodyB);
+        detector.bodies = detector.bodies.filter((body) => {
+          return body !== collision.bodyB;
+        });
+      }
+    });
+  });
+
+  // Tracks movement of eventually breakable objects
+  Matter.Events.on(engine, "afterUpdate", () => {
+    level.objectsMovable.forEach(function (object){
+      if (object.plugin.lotum.breakable !== "eventually") return;
+      if (object.speed >= settings.objects.eventuallyBreakingSpeedStart && !object.plugin.lotum.startedMoving) {
+        object.plugin.lotum.startedMoving = true;
+      }
+      if (object.speed <= settings.objects.eventuallyBreakingSpeedStop && object.plugin.lotum.startedMoving) {
+        Composite.remove(engine.world,object);
       }
     });
   });

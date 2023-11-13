@@ -7,6 +7,11 @@ const settings = {
   ball: {
     speedAtRest: 0.2,
   },
+  objects: {
+    instantBreakingSpeed: 5,
+    eventuallyBreakingSpeedStart: 2,
+    eventuallyBreakingSpeedStop: 1,
+  },
 };
 
 export { settings };
