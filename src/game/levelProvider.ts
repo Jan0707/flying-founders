@@ -1,5 +1,6 @@
 import { getLevel as getLevel1 } from "./levels/level1.ts";
 import { getLevel as getLevel2 } from "./levels/level2.ts";
+import { getLevel as getLevel3 } from "./levels/level3.ts";
 import { LevelCreatorFunction } from "./Level.ts";
 
 class LevelProvider {
@@ -9,6 +10,7 @@ class LevelProvider {
 
     this.levels.set("1", getLevel1);
     this.levels.set("2", getLevel2);
+    this.levels.set("3", getLevel3);
   }
 
   getLevelByName(name: string): LevelCreatorFunction | undefined {

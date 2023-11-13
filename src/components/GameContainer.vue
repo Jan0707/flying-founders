@@ -9,7 +9,13 @@ import SkillButton from "./SkillButton.vue";
 import { SoundSystem } from "./../SoundSystem.ts";
 
 const levelKeys = ref(1);
-const levelName = ref("1");
+const levelNamesIndex = ref(0);
+
+const levelNames = [
+    "1",
+    "2",
+    "3",
+];
 
 const isLevelFinished = ref(false);
 
@@ -30,13 +36,12 @@ function reset() {
 
 function getNextLevel() {
   isLevelFinished.value = false;
-  if (levelName.value === "1") {
-    levelName.value = "2";
-  } else {
-    levelName.value = "1";
+
+  if (levelNamesIndex.value < levelNames.length - 1) {
+    levelNamesIndex.value++;
   }
 
-  levelKeys.value += 1;
+  reset();
 }
 </script>
 
@@ -45,7 +50,7 @@ function getNextLevel() {
     <LevelInfo />
     <MenuItems @reset="reset" />
   </div>
-  <Level :key="levelKeys" :levelName="levelName" />
+  <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]" />
   <LevelFinishedDialog
     v-if="isLevelFinished"
     class="dialog"
