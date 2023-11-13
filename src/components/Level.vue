@@ -34,7 +34,18 @@ function eventHandler(event: LevelEvent) {
 }
 
 function onTriggerSkill() {
-  level.value.skills.powerPatron();
+  console.warn("Triggering skill for: ", levelState.currentFounder);
+
+  switch (levelState.currentFounder) {
+    case "jens":
+      level.value.skills.strategySlinger();
+      break;
+    case "dominik":
+      level.value.skills.powerPatron();
+      break;
+    default:
+      console.warn("No skill available for founder: ", levelState.currentFounder);
+  }
 }
 
 onMounted(function () {

@@ -45,8 +45,6 @@ export class BallFactory {
   }
 
   getRemainingShots(): number {
-    console.log(this.level.stockpile);
-
     return this.level.stockpile.length;
   }
 }

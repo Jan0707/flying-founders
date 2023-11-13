@@ -12,6 +12,11 @@ const settings = {
     eventuallyBreakingSpeedStart: 2,
     eventuallyBreakingSpeedStop: 1,
   },
+  engine: {
+    defaults: {
+      gravity: 0.001
+    }
+  }
 };
 
 export { settings };

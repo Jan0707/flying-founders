@@ -7,8 +7,7 @@ onMounted(function () {
   window.addEventListener("keydown", (e) => {
     if (
       e.key == "s" &&
-      levelState.isBallFlying &&
-      levelState.currentFounder == "dominik"
+      levelState.isBallFlying
     ) {
       emitter.emit("triggerSkill");
     }
@@ -20,7 +19,7 @@ onMounted(function () {
   <div>
     <button
       :disabled="
-        !levelState.isBallFlying || levelState.currentFounder !== 'dominik'
+        !levelState.isBallFlying
       "
       @click="emitter.emit('triggerSkill')"
     >

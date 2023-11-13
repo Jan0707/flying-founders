@@ -94,7 +94,6 @@ export function createLevel(
     if (currentBall.speed >= settings.ball.speedAtRest) return;
 
     eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
-    console.log("Stopped");
 
     if (level.ballFactory?.getRemainingShots() === 0) {
       eventHandler(
@@ -130,6 +129,8 @@ export function createLevel(
 
     sling.bodyB = currentBall;
     isFired = false;
+    // Reset gravity before next shot (just in case strategy slinger skill is somehow still active)
+    engine.gravity.scale = settings.engine.defaults.gravity;
 
     detector.bodies.push(currentBall);
 
@@ -216,6 +217,27 @@ export function createLevel(
     });
   });
 
+  // Re-Enables gravity after hit
+  Matter.Events.on(engine, "afterUpdate", () => {
+    // If ball is at rest but gravity is still 0, reset it
+    if (currentBall.speed < 0.1 && engine.gravity.scale == 0) {
+      engine.gravity.scale = settings.engine.defaults.gravity;
+    }
+
+    // If gravity is normal, do nothing
+    if (engine.gravity.scale > 0) return;
+
+    const collisions = Detector.collisions(detector);
+    if (collisions.length === 0) return;
+
+    // If we hit something while gravity is 0, reset it.
+    collisions.forEach((collision) => {
+      if (collision.bodyA === currentBall || collision.bodyB === currentBall) {
+        engine.gravity.scale = settings.engine.defaults.gravity;
+      }
+    });
+  });
+
   Matter.Events.on(mouseConstraint, "mousedown", function () {
     // When the mouse is down, set the objects to static to prevent dragging
     level.objectsMovable
@@ -235,7 +257,14 @@ export function createLevel(
   return {
     skills: {
       powerPatron: () => {
+        console.log("Triggered skill: Power Patron");
         Body.setSpeed(currentBall, currentBall.speed * 5);
+      },
+      strategySlinger: () => {
+        console.log("Triggered skill: Strategy Slinger");
+        engine.gravity.scale = 0;
+        console.log(engine.gravity);
+
       },
     },
   };
