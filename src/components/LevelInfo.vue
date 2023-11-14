@@ -4,8 +4,8 @@ import { levelState } from "../game/levelState.ts";
 
 <template>
   <div>
-    <p class="shot-counter">Shots fired: {{ levelState.shots }}</p>
-    <p class="points-counter">Points: {{ levelState.points }}</p>
+    <span class="shot-counter">Shots fired: {{ levelState.shots }}</span>
+    <span class="points-counter">Points: {{ levelState.points }}</span>
   </div>
 </template>
 

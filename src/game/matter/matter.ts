@@ -39,6 +39,8 @@ export function createLevel(
     engine: engine,
     options: {
       wireframes: false,
+      width: targetElement.clientWidth,
+      height: targetElement.clientHeight,
     },
   });
 

@@ -46,32 +46,49 @@ function getNextLevel() {
 </script>
 
 <template>
-  <div class="top-bar">
-    <LevelInfo />
-    <MenuItems @reset="reset" />
-  </div>
-  <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]" />
-  <LevelFinishedDialog
-    v-if="isLevelFinished"
-    class="dialog"
-    :levelName="levelName"
-    @continue="getNextLevel()"
-  />
-  <div class="bottom-bar">
-    <SkillButton />
+  <div class="game-container">
+    <div class="top-bar">
+      <LevelInfo />
+      <MenuItems @reset="reset" />
+    </div>
+    <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]" />
+    <LevelFinishedDialog
+        v-if="isLevelFinished"
+        class="dialog"
+        :levelName="levelName"
+        @continue="getNextLevel()"
+    />
+    <div class="bottom-bar">
+      <SkillButton />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.game-container {
+  background-color: hotpink;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-basis: 50px;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-basis: 50px
 }
 
 .dialog {
   position: absolute;
-  top: 35%;
+  top: 2%;
   left: 25%;
 }
 </style>

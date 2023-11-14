@@ -63,8 +63,17 @@ emitter.on("triggerSkill", onTriggerSkill);
 </script>
 
 <template>
-  <div ref="domElement"></div>
+  <div class="canvas-wrapper" ref="domElement"></div>
 </template>
-// https://stackoverflow.com/a/64053073/1143315
 
-<style scoped></style>
+<style scoped>
+.canvas-wrapper {
+  flex-grow: 1;
+  background-color: yellow;
+}
+
+.canvas-wrapper canvas {
+  width: 100%;
+  object-fit: contain;
+}
+</style>
