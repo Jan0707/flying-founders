@@ -163,6 +163,10 @@ export function createLevel(
       const bodyBTarget = level.targets.indexOf(collision.bodyB);
 
       if (bodyATarget >= 0 || bodyBTarget >= 0) {
+        if (collision.bodyA.speed <= settings.targets.minimalSpeedToHit && collision.bodyB.speed <= settings.targets.minimalSpeedToHit) {
+          return;
+        }
+
         eventHandler(new LevelEvent(LevelEvent.EVENT_HIT));
 
         const targetToRemove =
@@ -255,6 +259,11 @@ export function createLevel(
     level.objectsMovable
       .concat(level.targets)
       .forEach((object) => Matter.Body.setStatic(object, false));
+  });
+
+  // an example of using mouse events on a mouse
+  Matter.Events.on(mouseConstraint, 'startdrag', function(event) {
+    console.log('startdrag', event);
   });
 
   Composite.add(engine.world, [currentBall, sling, mouseConstraint]);

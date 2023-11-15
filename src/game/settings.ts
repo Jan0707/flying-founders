@@ -12,6 +12,9 @@ const settings = {
     eventuallyBreakingSpeedStart: 2,
     eventuallyBreakingSpeedStop: 1,
   },
+  targets: {
+    minimalSpeedToHit: 1,
+  },
   engine: {
     defaults: {
       gravity: 0.001
