@@ -45,34 +45,29 @@ function getLevel(): Level {
   level.setStockpile(["dominik", "jens", "dominik"]);
 
   level.objectsStatic = [
-    objectFactory.createGround("platform", 450, 25, 50, 50),
-    objectFactory.createGround("platform", 450, 150, 50, 200),
-    objectFactory.createGround("platform", 450, 650, 50, 200),
-    objectFactory.createGround("ground", 590, 785, 1180, 70),
-    objectFactory.createGround("platform", 776, 125, 200, 50),
+    objectFactory.createObjectFromTopLeft("ground", 0, 750, 1180, 70, 0),
+    objectFactory.createObjectFromTopLeft("platform", 560, 0, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 560, 450, 20, 300, 0),
 
-    objectFactory.createGround("platform", 1150, 25, 50, 50),
-    objectFactory.createGround("platform", 1150, 150, 50, 200),
-    objectFactory.createGround("platform", 1150, 650, 50, 200),
+    objectFactory.createObjectFromTopLeft("platform", 780, 110, 20, 150, 0.5 * Math.PI),
+
+    objectFactory.createObjectFromTopLeft("platform", 1150, 0, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 1150, 450, 20, 300, 0),
   ];
 
   level.objectsMovable = [
-    // Bodies.rectangle(450, 300, 25, 98, glassOptions),
-    // Bodies.rectangle(450, 450, 25, 200, glassOptions),
-    Bodies.rectangle(450, 400, 10, 290, glassOptions),
-    tableTop,
-    Bodies.rectangle(638, 650, 25, 200, woodOptions),
-    Bodies.rectangle(962, 650, 25, 200, woodOptions),
-    Bodies.rectangle(650, 475, 50, 50, woodOptions),
-    objectFactory.createGlass_50_100(1150, 300, 0),
-    objectFactory.createGlass_50_200(1150, 450, 0),
+    objectFactory.createObjectFromTopLeft("glass", 565, 300, 10, 150, 0),
+    objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI),
+    
+    objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0),
+    objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0),
   ];
 
   level.targets = [
-    objectFactory.createTarget(possibleTargets.pop(), 1100, 710),
-    objectFactory.createTarget(possibleTargets.pop(), 720, 710),
-    objectFactory.createTarget(possibleTargets.pop(), 900, 710),
-    objectFactory.createTarget(possibleTargets.pop(), 850, 50),
+    objectFactory.createTarget(possibleTargets.pop(), 810, 720),
+    objectFactory.createTarget(possibleTargets.pop(), 900, 720),
+    objectFactory.createTarget(possibleTargets.pop(), 975, 550),
+    objectFactory.createTarget(possibleTargets.pop(), 900, 80),
   ];
 
   return level;

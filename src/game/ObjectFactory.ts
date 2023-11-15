@@ -172,7 +172,7 @@ class ObjectFactory {
       options.render = {
         fillStyle: "brown",
       };
-      options.restitution = 0.9;
+      options.restitution = 0.1;
       options.plugin = {
         lotum: {
           breakable: "eventually",
