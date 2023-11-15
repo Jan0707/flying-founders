@@ -128,6 +128,90 @@ class ObjectFactory {
     return createdObject;
   }
 
+  getCenterFromTopLeftCorner(topX: number, topY: number, width: number, height: number, rotation: number): {x: number, y: number, rotation: number} {
+
+    const centerX = topX + Math.cos(rotation) * 0.5 * width + Math.sin(rotation) * 0.5 * height;
+    const centerY = topY + Math.sin(rotation) * 0.5 * width + Math.cos(rotation) * 0.5 * height;
+
+    return {
+      x: centerX,
+      y: centerY,
+      rotation: rotation
+    }
+  }
+
+  createObjectFromTopLeft(    type: string,
+                                       x: number,
+                                       y: number,
+                                       length: number,
+                                       height: number,
+                                       rotation: number,
+                                       inputOptions = {}){
+
+    const options = {};
+
+    if (type === "ground") {
+      options.render = {
+        fillStyle: "green",
+      };
+      options.restitution = 0.8;
+      options.isStatic = true;
+    }
+
+    if (type === "platform") {
+      options.render = {
+        fillStyle: "orange",
+        strokeStyle: "red",
+        lineWidth: 3,
+      };
+      options.restitution = 0.8;
+      options.isStatic = true;
+    }
+
+    if (type === "wood") {
+      options.render = {
+        fillStyle: "brown",
+      };
+      options.restitution = 0.9;
+      options.plugin = {
+        lotum: {
+          breakable: "eventually",
+        }
+      };
+    }
+
+    if (type === "glass") {
+      options.render = {
+        fillStyle: "lightblue",
+      };
+      options.restitution = 0.9;
+      options.plugin = {
+        lotum: {
+          breakable: "instantly",
+        }
+      };
+    }
+
+    if (type === "concrete") {
+      options.render = {
+        fillStyle: "grey",
+      };
+      options.mass = 5;
+      options.restitution = 0.95;
+    }
+
+    const centerCoordinates = this.getCenterFromTopLeftCorner(x, y, length, height, rotation);
+    const combinedOptions = Object.assign({}, options, inputOptions);
+
+    const createdObject = Bodies.rectangle(centerCoordinates.x, centerCoordinates.y, length, height, combinedOptions);
+
+    if (rotation) {
+      Body.rotate(createdObject, rotation);
+    }
+
+    return createdObject;
+  }
+
   createGlass_20_100(x: number, y: number, rotation: number) {
     const options = {
       render: {
