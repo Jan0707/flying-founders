@@ -2,11 +2,11 @@
 import Level from "./Level.vue";
 import LevelInfo from "./LevelInfo.vue";
 import MenuItems from "./MenuItems.vue";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { levelState } from "../game/levelState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
-import SkillButton from "./SkillButton.vue";
 import { SoundSystem } from "./../SoundSystem.ts";
+import {emitter} from "../util/eventBus.ts";
 
 const levelKeys = ref(1);
 const levelNamesIndex = ref(0);
@@ -43,6 +43,14 @@ function getNextLevel() {
 
   reset();
 }
+
+onMounted(function () {
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "s") {
+      emitter.emit("triggerSkill");
+    }
+  });
+});
 </script>
 
 <template>
@@ -51,16 +59,13 @@ function getNextLevel() {
       <LevelInfo />
       <MenuItems @reset="reset" />
     </div>
-    <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]" />
+    <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]"/>
     <LevelFinishedDialog
         v-if="isLevelFinished"
         class="dialog"
         :levelName="levelName"
         @continue="getNextLevel()"
     />
-    <div class="bottom-bar">
-      <SkillButton />
-    </div>
   </div>
 </template>
 
@@ -73,17 +78,14 @@ function getNextLevel() {
 }
 
 .top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-basis: 50px;
-}
-
-.bottom-bar {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-basis: 50px
 }
 
 .dialog {

@@ -34,6 +34,11 @@ function eventHandler(event: LevelEvent) {
 }
 
 function onTriggerSkill() {
+  if (!levelState.isBallFlying) {
+    console.log("Ball not flying");
+    return;
+  }
+
   console.warn("Triggering skill for: ", levelState.currentFounder);
 
   switch (levelState.currentFounder) {
@@ -60,6 +65,7 @@ onMounted(function () {
 });
 
 emitter.on("triggerSkill", onTriggerSkill);
+emitter.on("canvasClicked", onTriggerSkill);
 </script>
 
 <template>

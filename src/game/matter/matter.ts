@@ -1,6 +1,7 @@
 import * as Matter from "matter-js";
 import { Level } from "../Level.ts";
 import { settings } from "../settings.ts";
+import { emitter } from "../../util/eventBus.ts";
 
 export class LevelEvent {
   static readonly EVENT_FIRED = "fired";
@@ -245,6 +246,8 @@ export function createLevel(
     level.objectsMovable
       .concat(level.targets)
       .forEach((object) => Matter.Body.setStatic(object, true));
+
+    emitter.emit("canvasClicked");
   });
 
   Matter.Events.on(mouseConstraint, "mouseup", function () {
