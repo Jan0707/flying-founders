@@ -45,22 +45,44 @@ function getLevel(): Level {
   level.setStockpile(["dominik", "jens", "dominik"]);
 
   level.objectsStatic = [
+    //ground
     objectFactory.createObjectFromTopLeft("ground", 0, 750, 1180, 70, 0),
-    objectFactory.createObjectFromTopLeft("platform", 560, 0, 20, 300, 0),
-    objectFactory.createObjectFromTopLeft("platform", 560, 450, 20, 300, 0),
 
+    //top left pillar
+    objectFactory.createObjectFromTopLeft("platform", 480, 0, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("wood", 490, 0, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 510, 0, 10, 300, 0),
+
+    //bottom left pillar
+    objectFactory.createObjectFromTopLeft("platform", 480, 450, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("wood", 490, 450, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 510, 450, 10, 300, 0),
+
+    //ceiling light
     objectFactory.createObjectFromTopLeft("platform", 780, 110, 20, 150, 0.5 * Math.PI),
 
-    objectFactory.createObjectFromTopLeft("platform", 1150, 0, 20, 300, 0),
-    objectFactory.createObjectFromTopLeft("platform", 1150, 450, 20, 300, 0),
+    //top right pillar
+    objectFactory.createObjectFromTopLeft("platform", 1130, 0, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("wood", 1140, 0, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 1160, 0, 10, 300, 0),
+
+    //bottom right pillar
+    objectFactory.createObjectFromTopLeft("platform", 1130, 450, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("wood", 1140, 450, 20, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 1160, 450, 10, 300, 0),
   ];
 
   level.objectsMovable = [
-    objectFactory.createObjectFromTopLeft("glass", 565, 300, 10, 150, 0),
-    objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI),
-    
-    objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0),
-    objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0),
+    //glass left
+    objectFactory.createObjectFromTopLeft("glass", 495, 300, 10, 150, 0),
+
+    //glas right
+    objectFactory.createObjectFromTopLeft("glass", 1145, 300, 10, 150, 0),
+
+    //table
+    objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI), //table top
+    objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0), //table leg left
+    objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0), //table leg right
   ];
 
   level.targets = [
