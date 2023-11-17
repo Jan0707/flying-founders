@@ -52,11 +52,13 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("platform", 480, 0, 10, 300, 0),
     objectFactory.createObjectFromTopLeft("wood", 490, 0, 20, 300, 0),
     objectFactory.createObjectFromTopLeft("platform", 510, 0, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 480, 300, 10, 40, 0.5 * Math.PI),
 
     //bottom left pillar
     objectFactory.createObjectFromTopLeft("platform", 480, 450, 10, 300, 0),
     objectFactory.createObjectFromTopLeft("wood", 490, 450, 20, 300, 0),
     objectFactory.createObjectFromTopLeft("platform", 510, 450, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 480, 440, 10, 40, 0.5 * Math.PI),
 
     //ceiling light
     objectFactory.createObjectFromTopLeft("platform", 780, 110, 20, 150, 0.5 * Math.PI),
@@ -65,19 +67,22 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("platform", 1130, 0, 10, 300, 0),
     objectFactory.createObjectFromTopLeft("wood", 1140, 0, 20, 300, 0),
     objectFactory.createObjectFromTopLeft("platform", 1160, 0, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 1130, 300, 10, 40, 0.5 * Math.PI),
+
 
     //bottom right pillar
     objectFactory.createObjectFromTopLeft("platform", 1130, 450, 10, 300, 0),
     objectFactory.createObjectFromTopLeft("wood", 1140, 450, 20, 300, 0),
     objectFactory.createObjectFromTopLeft("platform", 1160, 450, 10, 300, 0),
+    objectFactory.createObjectFromTopLeft("platform", 1130, 440, 10, 40, 0.5 * Math.PI),
   ];
 
   level.objectsMovable = [
     //glass left
-    objectFactory.createObjectFromTopLeft("glass", 495, 300, 10, 150, 0),
+    objectFactory.createObjectFromTopLeft("glass", 495, 310, 10, 130, 0),
 
     //glas right
-    objectFactory.createObjectFromTopLeft("glass", 1145, 300, 10, 150, 0),
+    objectFactory.createObjectFromTopLeft("glass", 1145, 310, 10, 130, 0),
 
     //table
     objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI), //table top
