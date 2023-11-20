@@ -33,6 +33,10 @@ export function createLevel(
 
   const engine = Engine.create({
     velocityIterations: 6,
+    enableSleeping: true,
+    gravity: {
+      scale: settings.engine.defaults.gravity,
+    },
   });
 
   const render = Render.create({
