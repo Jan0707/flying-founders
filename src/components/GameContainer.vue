@@ -4,12 +4,16 @@ import LevelInfo from "./LevelInfo.vue";
 import MenuItems from "./MenuItems.vue";
 import { ref, watch, onMounted } from "vue";
 import { levelState } from "../game/levelState.ts";
+import { gameState } from "../game/gameState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
+import LevelLostDialog from "./dialogs/LevelLostDialog.vue";
 import { SoundSystem } from "./../SoundSystem.ts";
 import {emitter} from "../util/eventBus.ts";
+import StartScreen from "./StartScreen.vue";
+import EndScreen from "./EndScreen.vue";
 
 const levelKeys = ref(1);
-const levelNamesIndex = ref(0);
+const levelNamesIndex = ref(-1);
 
 const levelNames = [
     "1",
@@ -18,6 +22,7 @@ const levelNames = [
 ];
 
 const isLevelFinished = ref(false);
+const isLevelLost = ref(false);
 
 new SoundSystem();
 
@@ -30,6 +35,18 @@ watch(
   },
 );
 
+watch(
+    () => levelState.remainingBallsCount,
+    () => {
+      if (levelState.remainingTargetsCount > 0 && levelState.remainingBallsCount === 0 && levelState.shots > 0
+    ) {
+        isLevelLost.value = true;
+      } else {
+        isLevelLost.value = false;
+      }
+    },
+);
+
 function reset() {
   levelKeys.value += 1;
 }
@@ -39,12 +56,17 @@ function getNextLevel() {
 
   if (levelNamesIndex.value < levelNames.length - 1) {
     levelNamesIndex.value++;
+    reset();
+  } else {
+   gameState.isGameOver = true;
+   gameState.hasWon = true;
   }
-
-  reset();
 }
 
 onMounted(function () {
+
+  getNextLevel();
+
   window.addEventListener("keydown", (e) => {
     if (e.key === "s") {
       emitter.emit("triggerSkill");
@@ -54,7 +76,13 @@ onMounted(function () {
 </script>
 
 <template>
-  <div class="game-container">
+  <div class="game-container" v-if="!gameState.hasStarted">
+    <StartScreen />
+  </div>
+  <div class="game-container" v-if="gameState.hasStarted && gameState.isGameOver && gameState.hasWon">
+    <EndScreen />
+  </div>
+  <div class="game-container" v-if="gameState.hasStarted && !gameState.isGameOver">
     <div class="top-bar">
       <LevelInfo />
       <MenuItems @reset="reset" />
@@ -65,6 +93,12 @@ onMounted(function () {
         class="dialog"
         :levelName="levelName"
         @continue="getNextLevel()"
+    />
+    <LevelLostDialog
+        v-if="isLevelLost"
+        class="dialog"
+        :levelName="levelName"
+        @reset="reset()"
     />
   </div>
 </template>
@@ -90,7 +124,7 @@ onMounted(function () {
 
 .dialog {
   position: absolute;
-  top: 2%;
+  top: 10%;
   left: 25%;
 }
 </style>
