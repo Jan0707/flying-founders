@@ -2,6 +2,8 @@ import * as Matter from "matter-js";
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
+import {settings} from "./settings.ts";
+
 import TARGET_JAN from "./../assets/targets/jan.png";
 
 import WOOD_50_200 from "./../assets/objects/wood_50_200.png";
@@ -148,7 +150,9 @@ class ObjectFactory {
                                        rotation: number,
                                        inputOptions = {}){
 
-    const options = {};
+    const options = {
+      sleepThreshold: settings.objects.sleepThreshold,
+    };
 
     if (type === "ground") {
       options.render = {
@@ -204,6 +208,8 @@ class ObjectFactory {
     const combinedOptions = Object.assign({}, options, inputOptions);
 
     const createdObject = Bodies.rectangle(centerCoordinates.x, centerCoordinates.y, length, height, combinedOptions);
+
+    //console.log(`Created ${type} object at x:${centerCoordinates.x} y:${centerCoordinates.y} with size of ${length} x ${height} from top left point of x:${x} y:${y}`);
 
     if (rotation) {
       Body.rotate(createdObject, rotation);

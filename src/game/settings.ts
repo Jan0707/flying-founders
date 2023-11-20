@@ -11,6 +11,7 @@ const settings = {
     instantBreakingSpeed: 5,
     eventuallyBreakingSpeedStart: 2,
     eventuallyBreakingSpeedStop: 1,
+    sleepThreshold: 60,
   },
   targets: {
     minimalSpeedToHit: 1,

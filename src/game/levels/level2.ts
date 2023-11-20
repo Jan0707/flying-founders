@@ -38,16 +38,7 @@ function getLevel(): Level {
 
     objectFactory.createObjectFromTopLeft("platform", 710, 290, 20, 300, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("platform", 860, 210, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("platform", 710, 400, 20, 300, 0.5 * Math.PI),
-
-
-
-
-
-
-
-
-
+    objectFactory.createObjectFromTopLeft("platform", 710, 405, 20, 300, 0.5 * Math.PI),
   ];
 
   level.objectsMovable = [
@@ -67,7 +58,6 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("glass", 710, 310, 10, 80, 0),
 
 
-
     //Stack 0
     objectFactory.createObjectFromTopLeft("glass", 390, 670, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("glass", 470, 670, 20, 80, 0),
@@ -76,7 +66,6 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("wood", 390, 660, 10, 90, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 480, 660, 10, 80, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 560, 660, 10, 90, 0.5 * Math.PI),
-
 
     //Stack 1
     objectFactory.createObjectFromTopLeft("glass", 470, 580, 20, 80, 0),
@@ -90,25 +79,13 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("glass", 630, 490, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("wood", 550, 480, 10, 100, 0.5 * Math.PI),
 
-
     //Stack 3
     objectFactory.createObjectFromTopLeft("glass", 630, 400, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 100, 0.5 * Math.PI),
-
-
-
-
-
-
-
-
-
-
   ];
 
   level.targets = [
     objectFactory.createTarget(possibleTargets.pop(), 1095, 250),
-
   ];
 
   return level;
