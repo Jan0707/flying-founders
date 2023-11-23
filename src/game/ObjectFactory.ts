@@ -177,6 +177,8 @@ class ObjectFactory {
         fillStyle: "brown",
       };
       options.restitution = 0.1;
+      options.friction = 0.95;
+      options.frictionStatic = 1000;
       options.plugin = {
         lotum: {
           breakable: "eventually",
@@ -188,7 +190,9 @@ class ObjectFactory {
       options.render = {
         fillStyle: "lightblue",
       };
-      options.restitution = 0.9;
+      options.restitution = 0.05;
+      options.friction = 0.8;
+      options.frictionStatic = 1000;
       options.plugin = {
         lotum: {
           breakable: "instantly",
@@ -201,6 +205,8 @@ class ObjectFactory {
         fillStyle: "grey",
       };
       options.mass = 5;
+      options.friction = 1;
+      options.frictionStatic = 100;
       options.restitution = 0.95;
     }
 

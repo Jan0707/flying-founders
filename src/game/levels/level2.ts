@@ -7,6 +7,27 @@ function getLevel(): Level {
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 650 };
 
+  const woodOptions = {
+    restitution: 0.5,
+    plugin: {
+      lotum: {
+        breakable: "eventually",
+      }
+    }
+  };
+
+  const glassOptions = {
+    render: {
+      fillStyle: "lightblue",
+    },
+    restitution: 0.05,
+    plugin: {
+      lotum: {
+        breakable: "instantly",
+      }
+    }
+  };
+
   level.setStockpile(["dominik", "jens", "dominik"]);
 
   level.objectsStatic = [
@@ -65,14 +86,14 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("glass", 630, 670, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("wood", 390, 660, 10, 90, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 480, 660, 10, 80, 0.5 * Math.PI),
-    objectFactory.createObjectFromTopLeft("wood", 560, 660, 10, 90, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 560, 660, 10, 95, 0.5 * Math.PI),
 
     //Stack 1
     objectFactory.createObjectFromTopLeft("glass", 470, 580, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("glass", 550, 580, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("glass", 630, 580, 20, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 470, 570, 10, 90, 0.5 * Math.PI),
-    objectFactory.createObjectFromTopLeft("wood", 560, 570, 10, 90, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 470, 570, 10, 95, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 560, 570, 10, 95, 0.5 * Math.PI),
 
     //Stack 2
     objectFactory.createObjectFromTopLeft("glass", 550, 490, 20, 80, 0),
@@ -81,7 +102,7 @@ function getLevel(): Level {
 
     //Stack 3
     objectFactory.createObjectFromTopLeft("glass", 630, 400, 20, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 100, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 110, 0.5 * Math.PI),
   ];
 
   level.targets = [
