@@ -2,6 +2,7 @@ import * as Matter from "matter-js";
 import { Level } from "../Level.ts";
 import { settings } from "../settings.ts";
 import { emitter } from "../../util/eventBus.ts";
+const Bodies = Matter.Bodies;
 
 export class LevelEvent {
   static readonly EVENT_FIRED = "fired";
@@ -280,9 +281,33 @@ export function createLevel(
       },
       strategySlinger: () => {
         console.log("Triggered skill: Strategy Slinger");
-        engine.gravity.scale = 0;
-        console.log(engine.gravity);
+        // Create Teabag
+        const teabag = Bodies.circle(currentBall.position.x, currentBall.position.y, 20, {
+            render: {
+                sprite: {
+                    texture: "src/assets/objects/teabag_300_300.png",
+                    xScale: 0.1,
+                    yScale: 0.1,
+                }
+            }
+        });
+        teabag.plugin = {
+            lotum: {
+                breakable: "instantly",
+            }
+        }
+        // Add teabag to world
+        Composite.add(engine.world, teabag);
+        console.log("Created teabag")
+        // // Add teabag to detector
+        detector.bodies.push(teabag);
 
+        // Add explosion to teabag. This should use Richard's explosion code which we should move to a seperate function
+        // with as a parameter the object to explode
+
+        // Make Jens jump using his current angle. Somehow this greatly increases his speed. Have to check
+        // the matter js docs for this
+        currentBall.angle = currentBall.angle-10;
       },
     },
   };
