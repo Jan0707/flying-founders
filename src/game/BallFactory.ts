@@ -16,14 +16,16 @@ export class BallFactory {
   getBall(): object {
     const name = this.level.stockpile.pop();
     let texture = null;
+    let scales = 0.15;
 
     if (name == "dominik") {
       texture = FOUNDER_DOMINIK;
     } else if (name === "jens") {
       texture = FOUNDER_JENS;
-    } //else if (name === "sebastian") {
-      //texture = FOUNDER_SEBASTIAN;
-    //}
+    } else if (name === "sebastian") {
+      texture = FOUNDER_SEBASTIAN;
+      scales = 0.05
+    }
 
     const ball = Bodies.circle(
       this.level.slingPosition.x,
@@ -33,8 +35,8 @@ export class BallFactory {
         render: {
           sprite: {
             texture: texture,
-            xScale: 0.15,
-            yScale: 0.15,
+            xScale: scales,
+            yScale: scales,
           },
         },
       },

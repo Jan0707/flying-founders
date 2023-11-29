@@ -90,6 +90,48 @@ export function createLevel(
     },
   });
 
+  function createExplosion(engine: Any, origin: Matter.Circle, force: number) {
+      console.log("Running explosion");
+      const bodies = Matter.Composite.allBodies(engine.world);
+      // Loop over all the bodies and calculate the distance between them and the origin
+      bodies.forEach((body) => {
+          if (body != origin && Math.abs(origin.position.y - body.position.y)<300 && Math.abs(origin.position.x - body.position.x)<300) {
+            const forceMagnitude = force * body.mass;
+            Matter.Body.applyForce(body, body.position, {
+              x: Math.min((1 / (body.position.x - origin.position.x) * forceMagnitude), 0.025),
+              y: Math.min((1 / (body.position.y - origin.position.y) * forceMagnitude), 0.025)
+            });
+          }
+      });
+  }
+
+  function createTeabag(engine, positionX, positionY) {
+    const teabag = Bodies.circle(positionX, positionY, 10, {
+      render: {
+        sprite: {
+          texture: "src/assets/objects/teabag_300_300.png",
+          xScale: 0.1,
+          yScale: 0.1,
+        }
+      },
+    });
+    teabag.plugin = {
+      lotum: {
+        breakable: "instant",
+      }
+    }
+    // Add teabag to world
+    Composite.add(engine.world, teabag);
+    detector.bodies.push(teabag);
+
+    // Add an explosion to the teabags that happen after 1 second
+    setTimeout(() => {
+      // Let the teabags disappear
+      createExplosion(engine, teabag, 0.4);
+      Composite.remove(engine.world, teabag);
+    }, 1000);
+  }
+
   Matter.Events.on(mouseConstraint, "enddrag", (event) => {
     if (event.body === currentBall) {
       isFired = true;
@@ -224,6 +266,10 @@ export function createLevel(
         object.plugin.lotum.startedMoving = true;
       }
       if (object.speed <= settings.objects.eventuallyBreakingSpeedStop && object.plugin.lotum.startedMoving) {
+        if(object.plugin.lotum.explodable == true)
+        {
+          createExplosion(engine, object, 1);
+        }
         Composite.remove(engine.world,object);
       }
     });
@@ -281,49 +327,17 @@ export function createLevel(
       },
       strategySlinger: () => {
         console.log("Triggered skill: Strategy Slinger");
-        // Create Teabag
-        const teabag = Bodies.circle(currentBall.position.x, currentBall.position.y, 20, {
-            render: {
-                sprite: {
-                    texture: "src/assets/objects/teabag_300_300.png",
-                    xScale: 0.1,
-                    yScale: 0.1,
-                }
-            }
-        });
-        teabag.plugin = {
-            lotum: {
-                breakable: "instantly",
-            }
-        }
-        // Add teabag to world
-        Composite.add(engine.world, teabag);
-        console.log("Created teabag")
-        // // Add teabag to detector
-        detector.bodies.push(teabag);
+        // Create Teabags
+        createTeabag(engine, currentBall.position.x-10, currentBall.position.y+20);
+        createTeabag(engine, currentBall.position.x+10, currentBall.position.y+20);
 
-        // Add explosion to teabag. This should use Richard's explosion code which we should move to a seperate function
-        // with as a parameter the object to explode
+        // Imitate a jump of the ball by changing the direction of the ball to a slight upwards angle
+        Matter.Body.setVelocity(currentBall, {x: 10, y: -10});
 
-        // Make Jens jump using his current angle. Somehow this greatly increases his speed. Have to check
-        // the matter js docs for this
-        currentBall.angle = currentBall.angle-10;
       },
       explodingLaugh: () => {
         console.log("Triggered skill: exploding Laugh");
-        //Body.setSpeed(currentBall, currentBall.speed * 0);
-          const bodies = Matter.Composite.allBodies(engine.world);
-          for (let i = 0; i < bodies.length; ++i) {
-            const body = bodies[i];
-            
-            if (Math.abs(currentBall.position.y - body.position.y)<300 && Math.abs(currentBall.position.x - body.position.x)<300) { //!body.isStatic && 
-              const forceMagnitude = 1.5 * body.mass;
-              Matter.Body.applyForce(body, body.position, {
-                x: Math.min((1/(body.position.x - currentBall.position.x) * forceMagnitude), 0.025),                  
-                y: Math.min((1/(body.position.y - currentBall.position.y) * forceMagnitude), 0.025)
-              });
-            } 
-          }
+        createExplosion(engine, currentBall, 1.5);
       }
     },
   };
