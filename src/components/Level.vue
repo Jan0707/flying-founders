@@ -49,6 +49,8 @@ function onTriggerSkill() {
     case "dominik":
       level.value.skills.powerPatron();
       break;
+    case "sebastian":
+      level.value.skills.explodingLaugh();
     default:
       console.warn("No skill available for founder: ", levelState.currentFounder);
   }

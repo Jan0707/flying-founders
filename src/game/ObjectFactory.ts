@@ -8,6 +8,7 @@ import TARGET_JAN from "./../assets/targets/jan.png";
 
 import WOOD_50_200 from "./../assets/objects/wood_50_200.png";
 import PLANT_100_200 from "./../assets/objects/plant_100_200.png";
+import PRESENT_100_120 from "./../assets/objects/plant_100_200.png";
 
 class ObjectFactory {
   createTarget(name: string, x: number, y: number): object {
@@ -177,6 +178,8 @@ class ObjectFactory {
         fillStyle: "brown",
       };
       options.restitution = 0.1;
+      options.friction = 0.95;
+      options.frictionStatic = 1000;
       options.plugin = {
         lotum: {
           breakable: "eventually",
@@ -188,7 +191,9 @@ class ObjectFactory {
       options.render = {
         fillStyle: "lightblue",
       };
-      options.restitution = 0.9;
+      options.restitution = 0.05;
+      options.friction = 0.8;
+      options.frictionStatic = 1000;
       options.plugin = {
         lotum: {
           breakable: "instantly",
@@ -201,6 +206,8 @@ class ObjectFactory {
         fillStyle: "grey",
       };
       options.mass = 5;
+      options.friction = 1;
+      options.frictionStatic = 100;
       options.restitution = 0.95;
     }
 
@@ -236,6 +243,26 @@ class ObjectFactory {
       Body.rotate(createdObject, rotation);
     }
 
+    return createdObject;
+  }
+
+  createPresent_100_120() {
+    const options = {
+      render: {
+        sprite: {
+          texture: PRESENT_100_120,
+          xScale: 1,
+          yScale: 1,
+        },
+      },
+      plugin: {
+        lotum: {
+          explodable: true,
+        }
+      }
+    };
+
+    const createdObject = Bodies.rectangle(x, y, 10, 100, options);
     return createdObject;
   }
 }

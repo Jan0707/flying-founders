@@ -2,6 +2,7 @@ import * as Matter from "matter-js";
 import { Level } from "../Level.ts";
 import { settings } from "../settings.ts";
 import { emitter } from "../../util/eventBus.ts";
+const Bodies = Matter.Bodies;
 
 export class LevelEvent {
   static readonly EVENT_FIRED = "fired";
@@ -33,7 +34,7 @@ export function createLevel(
 
   const engine = Engine.create({
     velocityIterations: 6,
-    enableSleeping: true,
+    //enableSleeping: true,
     gravity: {
       scale: settings.engine.defaults.gravity,
     },
@@ -88,6 +89,48 @@ export function createLevel(
       },
     },
   });
+
+  function createExplosion(engine: Any, origin: Matter.Circle, force: number) {
+      console.log("Running explosion");
+      const bodies = Matter.Composite.allBodies(engine.world);
+      // Loop over all the bodies and calculate the distance between them and the origin
+      bodies.forEach((body) => {
+          if (body != origin && Math.abs(origin.position.y - body.position.y)<300 && Math.abs(origin.position.x - body.position.x)<300) {
+            const forceMagnitude = force * body.mass;
+            Matter.Body.applyForce(body, body.position, {
+              x: Math.min((1 / (body.position.x - origin.position.x) * forceMagnitude), 0.025),
+              y: Math.min((1 / (body.position.y - origin.position.y) * forceMagnitude), 0.025)
+            });
+          }
+      });
+  }
+
+  function createTeabag(engine, positionX, positionY) {
+    const teabag = Bodies.circle(positionX, positionY, 10, {
+      render: {
+        sprite: {
+          texture: "src/assets/objects/teabag_300_300.png",
+          xScale: 0.1,
+          yScale: 0.1,
+        }
+      },
+    });
+    teabag.plugin = {
+      lotum: {
+        breakable: "instant",
+      }
+    }
+    // Add teabag to world
+    Composite.add(engine.world, teabag);
+    detector.bodies.push(teabag);
+
+    // Add an explosion to the teabags that happen after 1 second
+    setTimeout(() => {
+      // Let the teabags disappear
+      createExplosion(engine, teabag, 0.4);
+      Composite.remove(engine.world, teabag);
+    }, 1000);
+  }
 
   Matter.Events.on(mouseConstraint, "enddrag", (event) => {
     if (event.body === currentBall) {
@@ -223,6 +266,10 @@ export function createLevel(
         object.plugin.lotum.startedMoving = true;
       }
       if (object.speed <= settings.objects.eventuallyBreakingSpeedStop && object.plugin.lotum.startedMoving) {
+        if(object.plugin.lotum.explodable == true)
+        {
+          createExplosion(engine, object, 1);
+        }
         Composite.remove(engine.world,object);
       }
     });
@@ -280,10 +327,18 @@ export function createLevel(
       },
       strategySlinger: () => {
         console.log("Triggered skill: Strategy Slinger");
-        engine.gravity.scale = 0;
-        console.log(engine.gravity);
+        // Create Teabags
+        createTeabag(engine, currentBall.position.x-10, currentBall.position.y+20);
+        createTeabag(engine, currentBall.position.x+10, currentBall.position.y+20);
+
+        // Imitate a jump of the ball by changing the direction of the ball to a slight upwards angle
+        Matter.Body.setVelocity(currentBall, {x: 10, y: -10});
 
       },
+      explodingLaugh: () => {
+        console.log("Triggered skill: exploding Laugh");
+        createExplosion(engine, currentBall, 1.5);
+      }
     },
   };
 }
