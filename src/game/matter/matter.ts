@@ -34,7 +34,7 @@ export function createLevel(
 
   const engine = Engine.create({
     velocityIterations: 6,
-    enableSleeping: true,
+    //enableSleeping: true,
     gravity: {
       scale: settings.engine.defaults.gravity,
     },
@@ -309,6 +309,22 @@ export function createLevel(
         // the matter js docs for this
         currentBall.angle = currentBall.angle-10;
       },
+      explodingLaugh: () => {
+        console.log("Triggered skill: exploding Laugh");
+        //Body.setSpeed(currentBall, currentBall.speed * 0);
+          const bodies = Matter.Composite.allBodies(engine.world);
+          for (let i = 0; i < bodies.length; ++i) {
+            const body = bodies[i];
+            
+            if (Math.abs(currentBall.position.y - body.position.y)<300 && Math.abs(currentBall.position.x - body.position.x)<300) { //!body.isStatic && 
+              const forceMagnitude = 1.5 * body.mass;
+              Matter.Body.applyForce(body, body.position, {
+                x: Math.min((1/(body.position.x - currentBall.position.x) * forceMagnitude), 0.025),                  
+                y: Math.min((1/(body.position.y - currentBall.position.y) * forceMagnitude), 0.025)
+              });
+            } 
+          }
+      }
     },
   };
 }

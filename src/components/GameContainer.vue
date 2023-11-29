@@ -66,10 +66,28 @@ function getNextLevel() {
 onMounted(function () {
 
   getNextLevel();
-
+ 
   window.addEventListener("keydown", (e) => {
     if (e.key === "s") {
       emitter.emit("triggerSkill");
+    }
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "3") {
+      levelNamesIndex.value = 1;
+      isLevelFinished.value = true;
+    }
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "2") {
+      levelNamesIndex.value = 0;
+      isLevelFinished.value = true;
+    }
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "1") {
+      levelNamesIndex.value = -1;
+      isLevelFinished.value = true;
     }
   });
 });
@@ -125,6 +143,6 @@ onMounted(function () {
 .dialog {
   position: absolute;
   top: 10%;
-  left: 25%;
+  left: 50%;
 }
 </style>
