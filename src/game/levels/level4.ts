@@ -7,27 +7,6 @@ function getLevel(): Level {
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 650 };
 
-  const woodOptions = {
-    restitution: 0.5,
-    plugin: {
-      lotum: {
-        breakable: "eventually",
-      }
-    }
-  };
-
-  const glassOptions = {
-    render: {
-      fillStyle: "lightblue",
-    },
-    restitution: 0.05,
-    plugin: {
-      lotum: {
-        breakable: "instantly",
-      }
-    }
-  };
-
   level.setStockpile(["dominik", "jens", "dominik"]);
 
   level.objectsStatic = [
