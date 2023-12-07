@@ -111,6 +111,8 @@ function getLevel(): Level {
     objectFactory.createTarget(possibleTargets.pop(), 1140, 440),
   ];
 
+  level.misc = [];
+
   return level;
 }
 

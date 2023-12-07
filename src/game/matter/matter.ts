@@ -73,7 +73,9 @@ export function createLevel(
     stiffness: settings.sling.stiffness,
     length: settings.sling.length,
     render: {
-      visible: false,
+      visible: true,
+      lineWidth: 5,  
+      strokeStyle: '#FF0000'
     },
   });
 
@@ -162,6 +164,7 @@ export function createLevel(
 
     sling.bodyB = currentBall;
     isFired = false;
+    
 
     detector.bodies.push(currentBall);
 
@@ -177,8 +180,11 @@ export function createLevel(
 
     currentBall = level.ballFactory?.getBall();
 
+    console.log("does it go visible? yes :) ")
+    sling.render.visible = true;
     sling.bodyB = currentBall;
     isFired = false;
+
     // Reset gravity before next shot (just in case strategy slinger skill is somehow still active)
     engine.gravity.scale = settings.engine.defaults.gravity;
 
@@ -197,6 +203,7 @@ export function createLevel(
     if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
     sling.bodyB = null;
+    sling.render.visible = false;
     return;
   });
 
@@ -295,22 +302,22 @@ export function createLevel(
       }
     });
   });
+//Commented because it causes crash when combined with beamer. Can we limit it to less objects?
+  // Matter.Events.on(mouseConstraint, "mousedown", function () {
+  //   // When the mouse is down, set the objects to static to prevent dragging
+  //   level.objectsMovable
+  //     .concat(level.targets)
+  //     .forEach((object) => Matter.Body.setStatic(object, true));
 
-  Matter.Events.on(mouseConstraint, "mousedown", function () {
-    // When the mouse is down, set the objects to static to prevent dragging
-    level.objectsMovable
-      .concat(level.targets)
-      .forEach((object) => Matter.Body.setStatic(object, true));
+  //   emitter.emit("canvasClicked");
+  // });
 
-    emitter.emit("canvasClicked");
-  });
-
-  Matter.Events.on(mouseConstraint, "mouseup", function () {
-    // When the mouse is up, set the object back to not static to enable physics interaction and collision
-    level.objectsMovable
-      .concat(level.targets)
-      .forEach((object) => Matter.Body.setStatic(object, false));
-  });
+  // Matter.Events.on(mouseConstraint, "mouseup", function () {
+  //   // When the mouse is up, set the object back to not static to enable physics interaction and collision
+  //   level.objectsMovable
+  //     .concat(level.targets)
+  //     .forEach((object) => Matter.Body.setStatic(object, false));
+  // });
 
   // an example of using mouse events on a mouse
   Matter.Events.on(mouseConstraint, 'startdrag', function(event) {
