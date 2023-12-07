@@ -1,15 +1,32 @@
 <script setup lang="ts">
-import {onMounted } from "vue";
+import {onMounted} from "vue";
 import {gameState} from "../game/gameState.ts";
+import RiveAnimation from "./rive-animation.vue";
+import animationAsset from "../assets/animations/flying_founders_lobby.riv?url";
+import type {Event} from "@rive-app/canvas";
 
 onMounted(function () {
 });
+
+const startGame = function () {
+  gameState.hasStarted = true;
+};
+
+const handleAnimationStateChange = function (event: Event) {
+  if (Array.isArray(event.data) && event.data?.[0] === "exit") {
+    startGame()
+  }
+};
 </script>
 
 <template>
   <div class="start-screen">
-    <h1>Flying Founders</h1>
-    <button v-on:click="gameState.hasStarted = true">Start</button>
+    <rive-animation
+        class="rive-animation"
+        :src="animationAsset"
+        :state-machines="['state_machine']"
+        @state-change="(event) => handleAnimationStateChange(event)"
+    />
   </div>
 </template>
 
@@ -26,5 +43,10 @@ onMounted(function () {
   align-items: center;
   justify-content: space-around;
   flex-flow: column;
+}
+
+.rive-animation {
+  position: absolute;
+  inset: 0;
 }
 </style>
