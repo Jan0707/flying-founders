@@ -7,14 +7,15 @@ class Level {
   slingPosition: { x: number; y: number };
   stockpile: string[];
   ballFactory: BallFactory | undefined;
-
+  misc: any[];
+  
   setStockpile(stockpile: string[]) {
     this.stockpile = stockpile;
     this.ballFactory = new BallFactory(this);
   }
 
   getAllBodies(): [any] {
-    return this.targets.concat(this.objectsMovable).concat(this.objectsStatic);
+    return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
   }
 }
 
