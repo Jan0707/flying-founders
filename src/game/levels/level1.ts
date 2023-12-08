@@ -18,7 +18,7 @@ const Composites = Matter.Composites;
 function getLevel(): Level {
 
   const woodOptions = {
-    restitution: 0.5,
+    restitution: 0.5, friction:0.9, frictionstatic: 6,
     plugin: {
       lotum: {
         breakable: "eventually",
@@ -30,7 +30,7 @@ function getLevel(): Level {
     render: {
       fillStyle: "lightblue",
     },
-    restitution: 0.05,
+    restitution: 0.05, friction:0.9, frictionstatic: 6,
     plugin: {
       lotum: {
         breakable: "instantly",
@@ -46,7 +46,7 @@ function getLevel(): Level {
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 650 };
 
-  level.setStockpile(["sebastian", "sebastian", "sebastian","sebastian","sebastian"]);
+  level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
 
   level.objectsStatic = [
     //ground
@@ -126,7 +126,7 @@ function getLevel(): Level {
     ropeB,
     ropeC,
     Beamerbar
-  ]  
+  ];
 
 
   level.objectsMovable = [

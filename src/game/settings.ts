@@ -9,7 +9,7 @@ const settings = {
   },
   objects: {
     instantBreakingSpeed: 5,
-    eventuallyBreakingSpeedStart: 2,
+    eventuallyBreakingSpeedStart: 2.5,
     eventuallyBreakingSpeedStop: 1,
     sleepThreshold: 60,
   },

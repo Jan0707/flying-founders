@@ -8,7 +8,7 @@ function getLevel(): Level {
   level.slingPosition = { x: 100, y: 650 };
 
   const woodOptions = {
-    restitution: 0.1,
+    restitution: 0.01, friction:0.95, frictionstatic: 9, slop: 0.001,
     plugin: {
       lotum: {
         breakable: "eventually",
@@ -20,7 +20,7 @@ function getLevel(): Level {
     render: {
       fillStyle: "lightblue",
     },
-    restitution: 0.05,
+    restitution: 0.01, friction:0.95, frictionstatic: 9, slop: 0.001,
     plugin: {
       lotum: {
         breakable: "instantly",
@@ -28,9 +28,9 @@ function getLevel(): Level {
     }
   };
 
-  level.setStockpile(["dominik", "jens", "dominik", "jens"]);
+  level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
 
-  level.objectsStatic = [
+level.objectsStatic = [
     //Ground
     objectFactory.createObjectFromTopLeft("ground", 0, 750, 1180, 70, 0),
 
@@ -42,7 +42,7 @@ function getLevel(): Level {
 
     //TV
     objectFactory.createObjectFromTopLeft("platform", 1000, 300, 30, 300, 0),
-
+    objectFactory.createObjectFromTopLeft("platform", 1181, 0, 70, 820, 0),
   ];
 
   level.objectsMovable = [
@@ -82,16 +82,16 @@ function getLevel(): Level {
 
     //Back Shelf
     objectFactory.createObjectFromTopLeft("glass", 1030, 670, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1170, 670, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("glass", 1030, 660, 10, 150, 0.5 * Math.PI),
-    objectFactory.createObjectFromTopLeft("glass", 1030, 580, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1170, 580, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1030, 570, 10, 150, 0.5 * Math.PI),
-    objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1170, 490, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1030, 470, 20, 150, 0.5 * Math.PI),
-    objectFactory.createObjectFromTopLeft("wood", 1030, 390, 10, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 1170, 390, 10, 80, 0),
+                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 670, 10, 80, 0),
+                            objectFactory.createObjectFromTopLeft("glass", 1030, 660, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("glass", 1030, 579, 10, 80, 0),
+                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 579, 10, 80, 0),
+                            objectFactory.createObjectFromTopLeft("wood", 1030, 570, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 1030, 500, 10, 80, 0),
+                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 500, 10, 80, 0),
+                            objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 1030, 410, 10, 80, 0),
+                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
   ];
 
   level.targets = [
@@ -104,11 +104,11 @@ function getLevel(): Level {
     objectFactory.createTarget(possibleTargets.pop(), 731, 722),
 
     //Shelf Balls
-    objectFactory.createTarget(possibleTargets.pop(), 1070, 540),
-    objectFactory.createTarget(possibleTargets.pop(), 1140, 540),
+    //objectFactory.createTarget(possibleTargets.pop(), 1070, 540),
+    objectFactory.createTarget(possibleTargets.pop(), 1120, 540),
 
-    objectFactory.createTarget(possibleTargets.pop(), 1070, 440),
-    objectFactory.createTarget(possibleTargets.pop(), 1140, 440),
+    //objectFactory.createTarget(possibleTargets.pop(), 1070, 440),
+    objectFactory.createTarget(possibleTargets.pop(), 1120, 440),
   ];
 
   level.misc = [];
