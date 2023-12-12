@@ -3,45 +3,9 @@ import objectFactory from "../ObjectFactory.ts";
 import { shuffle } from "../../util/shuffleArray.ts";
 import * as Matter from "matter-js";
 
-import WOOD_50_200 from "./../../assets/objects/wood_50_200.png";
-
-
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
 const Constraint = Matter.Constraint;
-const Composite = Matter.Composite;
-const Composites = Matter.Composites;
-
-
-
 
 function getLevel(): Level {
-
-  const woodOptions = {
-    restitution: 0.5, friction:0.9, frictionstatic: 6,
-    plugin: {
-      lotum: {
-        breakable: "eventually",
-      }
-    }
-  };
-
-  const glassOptions = {
-    render: {
-      fillStyle: "lightblue",
-    },
-    restitution: 0.05, friction:0.9, frictionstatic: 6,
-    plugin: {
-      lotum: {
-        breakable: "instantly",
-      }
-    }
-  };
-
-  const tableTop = Bodies.rectangle(800, 525, 50, 400, woodOptions)
-  Body.rotate(tableTop, 0.5 * Math.PI);
-
-
   const level = new Level();
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 650 };

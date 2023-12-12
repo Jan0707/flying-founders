@@ -8,33 +8,7 @@ function getLevel(): Level {
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 150, y: 650 };
 
-  const Bodies = Matter.Bodies;
-  const Body = Matter.Body;
   const Constraint = Matter.Constraint;
-  const Composite = Matter.Composite;
-  const Composites = Matter.Composites;
-
-
-  const woodOptions = {
-    restitution: 0.01, friction:0.95, frictionstatic: 9, slop: 0.001,
-    plugin: {
-      lotum: {
-        breakable: "eventually",
-      }
-    }
-  };
-
-  const glassOptions = {
-    render: {
-      fillStyle: "lightblue",
-    },
-    restitution: 0.01, friction:0.95, frictionstatic: 9, slop: 0.001,
-    plugin: {
-      lotum: {
-        breakable: "instantly",
-      }
-    }
-  };
 
   level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
 
@@ -87,7 +61,6 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("ground", 0, 750, 1180, 70, 0),
 
     //right pillar
-    //objectFactory.createObjectFromTopLeft("platform", 1170, 670, 10, 80, 0),
     objectFactory.createObjectFromTopLeft("platform", 1170, 370, 10, 300, 0),
     objectFactory.createObjectFromTopLeft("platform", 1170, 290, 10, 80, 0),
     objectFactory.createObjectFromTopLeft("platform", 1170, 130, 10, 150, 0),

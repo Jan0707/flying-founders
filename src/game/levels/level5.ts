@@ -10,26 +10,6 @@ function getLevel(): Level {
   level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
 
 
-  const woodOptions = {
-    restitution: 0.5, friction:0.9, frictionstatic: 6,
-    plugin: {
-      lotum: {
-        breakable: "eventually",
-      }
-    }
-  };
-
-  const glassOptions = {
-    render: {
-      fillStyle: "lightblue",
-    },
-    restitution: 0.05, friction:0.9, frictionstatic: 6,
-    plugin: {
-      lotum: {
-        breakable: "instantly",
-      }
-    }
-  };
 // Define the number of steps
 //const stairCount = 25;
 
@@ -49,7 +29,6 @@ function getLevel(): Level {
   ];
 
   level.objectsMovable = [
-    
 
   ];
 
@@ -58,10 +37,9 @@ function getLevel(): Level {
     objectFactory.createTarget(possibleTargets.pop(), 200, 50),
   ];
 
-  /level.misc = [
+  level.misc = [
     //stairstack
-
-  ];*/
+  ];
 
   return level;
 }
