@@ -181,8 +181,6 @@ export function createLevel(
 
     currentBall = level.ballFactory?.getBall();
 
-    console.log("does it go visible? yes :) ")
-    sling.render.visible = true;
     sling.bodyB = currentBall;
     isFired = false;
 
@@ -204,7 +202,6 @@ export function createLevel(
     if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
     sling.bodyB = null;
-    sling.render.visible = false;
     return;
   });
 

@@ -55,6 +55,7 @@ function onTriggerSkill() {
       break;
     case "sebastian":
       level.value.skills.explodingLaugh();
+      break;
     default:
       console.warn("No skill available for founder: ", levelState.currentFounder);
   }

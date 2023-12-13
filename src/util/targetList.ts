@@ -92,6 +92,6 @@ enum targetList {
     Vanessa = Path_Vanessa,
     Wessel = Path_Wessel,
     Yann = Path_Yann,
-};
+}
 
 export { targetList }

@@ -62,6 +62,6 @@ enum objectList {
     wood_20_200 = Path_wood_20_200,
     wood_20_300 = Path_wood_20_300,
     wood_50_200 = Path_wood_50_200,
-};
+}
 
 export { objectList }

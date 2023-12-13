@@ -64,8 +64,6 @@ function getLevel(): Level {
     ]);
     level.slingPosition = {x: 150, y: 650};
 
-    const Constraint = Matter.Constraint;
-
     level.setStockpile([
         "sebastian",
         "jens",
