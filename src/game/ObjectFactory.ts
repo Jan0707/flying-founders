@@ -13,7 +13,7 @@ class ObjectFactory {
     return Bodies.rectangle(x, y, 80, 80, {
       render: {
         sprite: {
-          texture: 'targets/' + name,
+          texture: name,
           xScale: 80/175,
           yScale: 80/175,
         },
