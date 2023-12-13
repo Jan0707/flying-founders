@@ -169,7 +169,7 @@ function getLevel(): Level {
     objectFactory.createObjectFromTopLeft("glass", 470, 670, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("glass", 550, 670, 20, 80, 0),
     objectFactory.createObjectFromTopLeft("glass", 630, 670, 20, 80, 0),
-    objectFactory.createObjectFromTopLeft("wood", 390, 660, 10, 90, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 390, 660, 10, 95, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 480, 660, 10, 80, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 560, 660, 10, 95, 0.5 * Math.PI),
 
