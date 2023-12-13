@@ -47,6 +47,7 @@ export function createLevel(
       wireframes: false,
       width: targetElement.clientWidth,
       height: targetElement.clientHeight,
+      background: "transparent",
     },
   });
 

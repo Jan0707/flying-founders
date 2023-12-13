@@ -1,11 +1,19 @@
+import * as Matter from "matter-js";
+
 import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
 import { shuffle } from "../../util/shuffleArray.ts";
-import * as Matter from "matter-js";
 import {targetList} from "../../util/targetList.ts";
+
+import LEVEL_BACKGROUND from "./../../assets/levels/level_2.jpg";
+
+const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
   const level = new Level();
+
+  level.background = LEVEL_BACKGROUND;
+
   const possibleTargets = shuffle([
     targetList.AK,
     targetList.Alex,

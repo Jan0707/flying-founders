@@ -3,8 +3,13 @@ import objectFactory from "../ObjectFactory.ts";
 import { shuffle } from "../../util/shuffleArray.ts";
 import {targetList} from "../../util/targetList.ts";
 
+import LEVEL_BACKGROUND from "./../../assets/levels/level_3.jpg";
+
 function getLevel(): Level {
   const level = new Level();
+
+  level.background = LEVEL_BACKGROUND;
+
   const possibleTargets = shuffle([
     targetList.AK,
     targetList.Alex,

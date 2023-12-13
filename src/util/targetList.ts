@@ -28,7 +28,7 @@ enum targetList {
     Julia = 'Julia.png',
     Julian = 'Julian.png',
     Kayleigh = 'Kayleigh.png',
-    Lars = 'Lard.png',
+    Lars = 'Lars.png',
     Maren = 'Maren.png',
     Matthias = 'Matthias.png',
     Michael = 'Michael.png',
