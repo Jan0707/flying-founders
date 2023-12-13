@@ -1,10 +1,58 @@
 import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
 import { shuffle } from "../../util/shuffleArray.ts";
+import {targetList} from "../../util/targetList.ts";
 
 function getLevel(): Level {
   const level = new Level();
-  const possibleTargets = shuffle(["jan", "jan"]);
+  const possibleTargets = shuffle([
+    targetList.AK,
+    targetList.Alex,
+    targetList.Alexandra,
+    targetList.Alisa,
+    targetList.Andrzej,
+    targetList.Anja,
+    targetList.Anselm,
+    targetList.Anton,
+    targetList.Arthur,
+    targetList.Beko,
+    targetList.Beni,
+    targetList.Carlo,
+    targetList.Dave,
+    targetList.David,
+    targetList.Dennis,
+    targetList.Diana,
+    targetList.Etienne,
+    targetList.Fabian,
+    targetList.Falk,
+    targetList.Gabriel,
+    targetList.Garrelt,
+    targetList.Grebiel,
+    targetList.Jan_D,
+    targetList.Jan_G,
+    targetList.Jo,
+    targetList.Joel,
+    targetList.Julia,
+    targetList.Julian,
+    targetList.Kayleigh,
+    targetList.Lars,
+    targetList.Maren,
+    targetList.Matthias,
+    targetList.Michael,
+    targetList.Petra,
+    targetList.Richard,
+    targetList.Robin,
+    targetList.Sasha,
+    targetList.Sebi,
+    targetList.Sinead,
+    targetList.Sophie,
+    targetList.Sven,
+    targetList.Thomas,
+    targetList.Tobias,
+    targetList.Vanessa,
+    targetList.Wessel,
+    targetList.Yann,
+  ]);
   level.slingPosition = { x: 100, y: 650 };
 
   level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
@@ -21,6 +69,8 @@ level.objectsStatic = [
 
     //TV
     objectFactory.createObjectFromTopLeft("platform", 1000, 300, 30, 300, 0),
+
+    // Back wall, NO asset available
     objectFactory.createObjectFromTopLeft("platform", 1181, 0, 70, 820, 0),
   ];
 
@@ -61,16 +111,16 @@ level.objectsStatic = [
 
     //Back Shelf
     objectFactory.createObjectFromTopLeft("glass", 1030, 670, 10, 80, 0),
-                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 670, 10, 80, 0),
-                            objectFactory.createObjectFromTopLeft("glass", 1030, 660, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 1170, 670, 10, 80, 0),
+    objectFactory.createObjectFromTopLeft("glass", 1030, 660, 10, 150, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("glass", 1030, 579, 10, 80, 0),
-                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 579, 10, 80, 0),
-                            objectFactory.createObjectFromTopLeft("wood", 1030, 570, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 1170, 579, 10, 80, 0),
+    objectFactory.createObjectFromTopLeft("wood", 1030, 570, 10, 150, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 1030, 500, 10, 80, 0),
-                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 500, 10, 80, 0),
-                            objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 150, 0.5 * Math.PI),
+    objectFactory.createObjectFromTopLeft("wood", 1170, 500, 10, 80, 0),
+    objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 150, 0.5 * Math.PI),
     objectFactory.createObjectFromTopLeft("wood", 1030, 410, 10, 80, 0),
-                                                                              objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
+    objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
   ];
 
   level.targets = [

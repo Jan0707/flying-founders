@@ -1,8 +1,9 @@
 // https://stackoverflow.com/a/2450976/1143315
 
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
+function shuffle(inputArray: any[]): any[] {
+  let array = [...inputArray];
+
+  let currentIndex = array.length, randomIndex;
 
   // While there remain elements to shuffle.
   while (currentIndex > 0) {

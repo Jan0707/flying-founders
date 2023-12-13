@@ -1,10 +1,58 @@
 import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
 import { shuffle } from "../../util/shuffleArray.ts";
+import {targetList} from "../../util/targetList.ts";
 
 function getLevel(): Level {
   const level = new Level();
-  const possibleTargets = shuffle(["jan", "jan"]);
+  const possibleTargets = shuffle([
+    targetList.AK,
+    targetList.Alex,
+    targetList.Alexandra,
+    targetList.Alisa,
+    targetList.Andrzej,
+    targetList.Anja,
+    targetList.Anselm,
+    targetList.Anton,
+    targetList.Arthur,
+    targetList.Beko,
+    targetList.Beni,
+    targetList.Carlo,
+    targetList.Dave,
+    targetList.David,
+    targetList.Dennis,
+    targetList.Diana,
+    targetList.Etienne,
+    targetList.Fabian,
+    targetList.Falk,
+    targetList.Gabriel,
+    targetList.Garrelt,
+    targetList.Grebiel,
+    targetList.Jan_D,
+    targetList.Jan_G,
+    targetList.Jo,
+    targetList.Joel,
+    targetList.Julia,
+    targetList.Julian,
+    targetList.Kayleigh,
+    targetList.Lars,
+    targetList.Maren,
+    targetList.Matthias,
+    targetList.Michael,
+    targetList.Petra,
+    targetList.Richard,
+    targetList.Robin,
+    targetList.Sasha,
+    targetList.Sebi,
+    targetList.Sinead,
+    targetList.Sophie,
+    targetList.Sven,
+    targetList.Thomas,
+    targetList.Tobias,
+    targetList.Vanessa,
+    targetList.Wessel,
+    targetList.Yann,
+  ]);
   level.slingPosition = { x: 100, y: 650 };
 
   level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);

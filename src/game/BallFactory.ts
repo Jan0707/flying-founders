@@ -1,7 +1,7 @@
 import * as Matter from "matter-js";
 const Bodies = Matter.Bodies;
 
-import Level from "./Level.ts";
+import { Level } from "./Level.ts";
 
 import FOUNDER_DOMINIK from "./../assets/founders/dominik.png";
 import FOUNDER_JENS from "./../assets/founders/jens.png";

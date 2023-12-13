@@ -4,8 +4,6 @@ const Body = Matter.Body;
 
 import {settings} from "./settings.ts";
 
-import TARGET_JAN from "./../assets/targets/jan.png";
-
 import WOOD_50_200 from "./../assets/objects/wood_50_200.png";
 import PLANT_100_200 from "./../assets/objects/plant_100_200.png";
 import PRESENT_100_120 from "./../assets/objects/plant_100_200.png";
@@ -15,9 +13,9 @@ class ObjectFactory {
     return Bodies.rectangle(x, y, 80, 80, {
       render: {
         sprite: {
-          texture: TARGET_JAN,
-          xScale: 0.2,
-          yScale: 0.2,
+          texture: 'targets/' + name,
+          xScale: 80/175,
+          yScale: 80/175,
         },
       },
     });
