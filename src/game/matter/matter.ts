@@ -74,7 +74,7 @@ export function createLevel(
     stiffness: settings.sling.stiffness,
     length: settings.sling.length,
     render: {
-      visible: true,
+      visible: false,
       lineWidth: 5,  
       strokeStyle: '#FF0000'
     },
