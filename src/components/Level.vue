@@ -11,6 +11,10 @@ const props = defineProps<{ levelName: string }>();
 const domElement = ref();
 const level = ref();
 
+const wrapperStyle = ref({
+  background: "none"
+});
+
 function eventHandler(event: LevelEvent) {
   switch (event.name) {
     case LevelEvent.EVENT_UPDATE_FOUNDER:
@@ -51,6 +55,7 @@ function onTriggerSkill() {
       break;
     case "sebastian":
       level.value.skills.explodingLaugh();
+      break;
     default:
       console.warn("No skill available for founder: ", levelState.currentFounder);
   }
@@ -58,6 +63,7 @@ function onTriggerSkill() {
 
 onMounted(function () {
   levelState.reset();
+
   const levelCreator = levelProvider.getLevelByName(props.levelName);
 
   if (levelCreator) {
@@ -65,6 +71,17 @@ onMounted(function () {
     levelState.setRemainingTargetsCount(createdLevel.targets.length);
     levelState.remainingBallsCount = createdLevel.ballFactory.getRemainingShots();
     level.value = createLevel(domElement.value, createdLevel, eventHandler);
+
+    if (createdLevel.background) {
+      wrapperStyle.value = {
+        backgroundImage: `url(${createdLevel.background})`,
+        backgroundRepeat: "no-repeat",
+      };
+    } else {
+      wrapperStyle.value = {
+        background: "transparent"
+      };
+    }
   }
 });
 
@@ -73,7 +90,7 @@ emitter.on("canvasClicked", onTriggerSkill);
 </script>
 
 <template>
-  <div class="canvas-wrapper" ref="domElement"></div>
+  <div class="canvas-wrapper" :style="wrapperStyle" ref="domElement"></div>
 </template>
 
 <style scoped>

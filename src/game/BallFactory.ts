@@ -1,7 +1,7 @@
 import * as Matter from "matter-js";
 const Bodies = Matter.Bodies;
 
-import Level from "./Level.ts";
+import { Level } from "./Level.ts";
 
 import FOUNDER_DOMINIK from "./../assets/founders/dominik.png";
 import FOUNDER_JENS from "./../assets/founders/jens.png";
@@ -16,7 +16,6 @@ export class BallFactory {
   getBall(): object {
     const name = this.level.stockpile.pop();
     let texture = null;
-    let scales = 0.15;
 
     if (name == "dominik") {
       texture = FOUNDER_DOMINIK;
@@ -24,7 +23,6 @@ export class BallFactory {
       texture = FOUNDER_JENS;
     } else if (name === "sebastian") {
       texture = FOUNDER_SEBASTIAN;
-      scales = 0.05
     }
 
     const ball = Bodies.circle(
@@ -35,8 +33,8 @@ export class BallFactory {
         render: {
           sprite: {
             texture: texture,
-            xScale: scales,
-            yScale: scales,
+            xScale: 60/175,
+            yScale: 60/175,
           },
         },
       },

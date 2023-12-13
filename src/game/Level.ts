@@ -1,6 +1,7 @@
 import { BallFactory } from "./BallFactory.ts";
 
 class Level {
+  background: string | undefined;
   targets: any[];
   objectsMovable: any[];
   objectsStatic: any[];
