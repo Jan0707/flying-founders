@@ -47,6 +47,7 @@ export function createLevel(
       wireframes: false,
       width: targetElement.clientWidth,
       height: targetElement.clientHeight,
+      background: "transparent",
     },
   });
 
@@ -73,7 +74,7 @@ export function createLevel(
     stiffness: settings.sling.stiffness,
     length: settings.sling.length,
     render: {
-      visible: true,
+      visible: false,
       lineWidth: 5,  
       strokeStyle: '#FF0000'
     },
@@ -180,8 +181,6 @@ export function createLevel(
 
     currentBall = level.ballFactory?.getBall();
 
-    console.log("does it go visible? yes :) ")
-    sling.render.visible = true;
     sling.bodyB = currentBall;
     isFired = false;
 
@@ -203,7 +202,6 @@ export function createLevel(
     if (!(distanceX <= minDistance && distanceY <= minDistance)) return;
 
     sling.bodyB = null;
-    sling.render.visible = false;
     return;
   });
 
