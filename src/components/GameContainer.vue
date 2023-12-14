@@ -2,7 +2,7 @@
 import Level from "./Level.vue";
 import LevelInfo from "./LevelInfo.vue";
 import MenuItems from "./MenuItems.vue";
-import { ref, watch, onMounted } from "vue";
+import {ref, watch, onMounted, computed} from "vue";
 import { levelState } from "../game/levelState.ts";
 import { gameState } from "../game/gameState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
@@ -11,16 +11,12 @@ import { SoundSystem } from "./../SoundSystem.ts";
 import {emitter} from "../util/eventBus.ts";
 import StartScreen from "./StartScreen.vue";
 import EndScreen from "./EndScreen.vue";
+import {levelNames} from "../game/levelProvider.ts";
 
 const levelKeys = ref(1);
 const levelNamesIndex = ref(-1);
 
-const levelNames = [
-    "1",
-    "2",
-    "3",
-    "4",
-];
+const levelName = computed(() => levelNames[levelNamesIndex.value])
 
 const isLevelFinished = ref(false);
 const isLevelLost = ref(false);
@@ -112,7 +108,7 @@ onMounted(function () {
       <LevelInfo />
       <MenuItems @reset="reset" />
     </div>
-    <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]"/>
+    <Level :key="levelKeys" :levelName="levelName"/>
     <LevelFinishedDialog
         v-if="isLevelFinished"
         class="dialog"
