@@ -1,19 +1,19 @@
 import * as Matter from "matter-js";
 
 const Bodies = Matter.Bodies;
-const Body = Matter.Body;
 
 import {settings} from "./settings.ts";
 import {objectList} from "../util/objectList.ts";
 import {Target} from "../util/Target.ts";
+import {Body} from "matter-js";
 
 class ObjectFactory {
 
-    createFromTargets(targets: Target[]): object[] {
+    createFromTargets(targets: Target[]) {
         return targets.map(target => this.createTarget(target.imagePath, target.startPosition.x, target.startPosition.y))
     }
 
-    createTarget(imagePath: string, x: number, y: number): object {
+    createTarget(imagePath: string, x: number, y: number): Body {
         return Bodies.rectangle(x, y, 80, 80, {
             render: {
                 sprite: {

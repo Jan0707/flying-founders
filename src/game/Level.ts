@@ -1,9 +1,10 @@
 import {BallFactory} from "./BallFactory.ts";
 import {Target} from "../util/Target.ts";
 import objectFactory from "./ObjectFactory.ts";
+import {Body} from "matter-js";
 
 export class Level {
-    readonly targets: object[];
+    readonly targets: Body[];
 
     constructor(
         readonly background: string,
