@@ -64,30 +64,6 @@ function getLevel(): Level {
     ]);
     level.slingPosition = {x: 150, y: 650};
 
-    level.setStockpile([
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-    ]);
-
     var Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
 
     //var group = Body.nextGroup(true);

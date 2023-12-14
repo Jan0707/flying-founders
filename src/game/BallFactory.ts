@@ -14,7 +14,7 @@ export class BallFactory {
   }
 
   getBall(): object {
-    const name = this.level.stockpile.pop();
+    const name = this.level.getFounderFromStockpile()
     let texture = null;
 
     if (name == "dominik") {

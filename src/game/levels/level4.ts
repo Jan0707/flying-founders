@@ -60,30 +60,6 @@ function getLevel(): Level {
     ]);
     level.slingPosition = {x: 100, y: 650};
 
-    level.setStockpile([
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-    ]);
-
     level.objectsStatic = [
         //ground
         objectFactory.createObjectFromTopLeft("ground", 0, 750, 1180, 70, 0),

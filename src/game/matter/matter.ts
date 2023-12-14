@@ -93,7 +93,7 @@ export function createLevel(
     },
   });
 
-  function createExplosion(engine: Any, origin: Matter.Circle, force: number) {
+  function createExplosion(engine: any, origin: Matter.Circle, force: number) {
       console.log("Running explosion");
       const bodies = Matter.Composite.allBodies(engine.world);
       // Loop over all the bodies and calculate the distance between them and the origin

@@ -7,8 +7,6 @@ function getLevel(): Level {
   const possibleTargets = shuffle(["jan", "jan"]);
   level.slingPosition = { x: 100, y: 650 };
 
-  level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
-
 
 // Define the number of steps
 //const stairCount = 25;
@@ -25,7 +23,7 @@ function getLevel(): Level {
 
 
   level.objectsStatic = [
-   
+
   ];
 
   level.objectsMovable = [
