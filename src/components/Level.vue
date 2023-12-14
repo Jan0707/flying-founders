@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 
-import { levelProvider } from "../game/levelProvider.ts";
-import { createLevel, LevelEvent } from "./../game/matter/matter.ts";
-import { levelState } from "./../game/levelState.ts";
-import { emitter } from "../util/eventBus.ts";
+import {getLevelByName, LevelName} from "../game/levelProvider.ts";
+import {createLevel, LevelEvent} from "./../game/matter/matter.ts";
+import {levelState} from "./../game/levelState.ts";
+import {emitter} from "../util/eventBus.ts";
 
-const props = defineProps<{ levelName: string }>();
+const props = defineProps<{ levelName: LevelName }>();
 
 const domElement = ref();
 const level = ref();
@@ -31,7 +31,7 @@ function eventHandler(event: LevelEvent) {
     case LevelEvent.EVENT_HIT:
       levelState.incrementPoints(100);
       levelState.decrementRemainingTargetsCount();
-      emitter.emit("playSound", { name: "hit" });
+      emitter.emit("playSound", {name: "hit"});
       break;
     default:
       console.warn("Encountered unhandled Level Event", event);
@@ -64,24 +64,20 @@ function onTriggerSkill() {
 onMounted(function () {
   levelState.reset();
 
-  const levelCreator = levelProvider.getLevelByName(props.levelName);
+  const createdLevel = getLevelByName(props.levelName)
+  levelState.setRemainingTargetsCount(createdLevel.targets.length);
+  levelState.remainingBallsCount = createdLevel.ballFactory.getRemainingShots();
+  level.value = createLevel(domElement.value, createdLevel, eventHandler);
 
-  if (levelCreator) {
-    const createdLevel = levelCreator();
-    levelState.setRemainingTargetsCount(createdLevel.targets.length);
-    levelState.remainingBallsCount = createdLevel.ballFactory.getRemainingShots();
-    level.value = createLevel(domElement.value, createdLevel, eventHandler);
-
-    if (createdLevel.background) {
-      wrapperStyle.value = {
-        backgroundImage: `url(${createdLevel.background})`,
-        backgroundRepeat: "no-repeat",
-      };
-    } else {
-      wrapperStyle.value = {
-        background: "transparent"
-      };
-    }
+  if (createdLevel.background) {
+    wrapperStyle.value = {
+      backgroundImage: `url(${createdLevel.background})`,
+      backgroundRepeat: "no-repeat",
+    };
+  } else {
+    wrapperStyle.value = {
+      background: "transparent"
+    };
   }
 });
 

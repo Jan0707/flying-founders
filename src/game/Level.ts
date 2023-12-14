@@ -1,6 +1,6 @@
 import {BallFactory} from "./BallFactory.ts";
 
-class Level {
+export class Level {
 
     constructor(
         readonly background: string,
@@ -37,7 +37,3 @@ class Level {
         return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
     }
 }
-
-type LevelCreatorFunction = () => Level;
-
-export {Level, LevelCreatorFunction};
