@@ -21,10 +21,10 @@ function getLevel(): Level {
 
     const level = new Level(LEVEL_BACKGROUND, targets, {x: 150, y: 650})
 
-    var Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
+    const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
 
     //var group = Body.nextGroup(true);
-    var ropeC = Matter.Composites.stack(275, 50, 1, 3, 5, 5, function (x, y) {
+    let ropeC = Matter.Composites.stack(275, 50, 1, 3, 5, 5, function (x: number, y: number) {
         return Matter.Bodies.rectangle(x, y, 5, 25/*, { collisionFilter: { group: group } }*/);
     });
     Matter.Composites.chain(ropeC, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
@@ -34,7 +34,7 @@ function getLevel(): Level {
         pointA: {x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y - 5},
         damping: 0.1
     }));
-    var ropeB = Matter.Composites.stack(435, 50, 1, 3, 5, 5, function (x, y) {
+    let ropeB = Matter.Composites.stack(435, 50, 1, 3, 5, 5, function (x: number, y: number) {
         return Matter.Bodies.rectangle(x, y, 5, 25);
     });
     Matter.Composites.chain(ropeB, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
