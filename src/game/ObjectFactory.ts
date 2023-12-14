@@ -5,6 +5,8 @@ const Body = Matter.Body;
 import {settings} from "./settings.ts";
 import {objectList} from "../util/objectList.ts";
 
+import PRESENT_45_60 from "./../assets/objects/present_45_60.png"
+
 class ObjectFactory {
   createTarget(name: string, x: number, y: number): object {
     return Bodies.rectangle(x, y, 80, 80, {
@@ -17,6 +19,27 @@ class ObjectFactory {
       },
     });
   }
+
+    createPresent_45_60(x: number, y:number) {
+      const options = {
+        render: {
+          sprite: {
+            texture: PRESENT_45_60,
+            xScale: 1,
+            yScale: 1,
+          },
+        },
+        plugin: {
+          lotum: {
+            explodable: true,
+          }
+        }
+      };
+  
+      const createdObject = Bodies.rectangle(x, y, 45, 60, options);
+      return createdObject;
+    }
+  
 
   getCenterFromTopLeftCorner(topX: number, topY: number, width: number, height: number, rotation: number): {x: number, y: number, rotation: number} {
 
@@ -67,6 +90,7 @@ class ObjectFactory {
       options.restitution = 0.1;
       options.friction = 0.95;
       options.frictionStatic = 1000;
+      options.slop = 0.00;
       options.plugin = {
         lotum: {
           breakable: "eventually",
@@ -81,6 +105,7 @@ class ObjectFactory {
       options.restitution = 0.05;
       options.friction = 0.8;
       options.frictionStatic = 1000;
+      options.slop = 0.00;
       options.plugin = {
         lotum: {
           breakable: "instantly",

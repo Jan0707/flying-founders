@@ -183,6 +183,8 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI), //table top
         objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0), //table leg left
         objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0), //table leg right
+
+        objectFactory.createPresent_45_60(740,520)
     ];
 
     level.targets = [

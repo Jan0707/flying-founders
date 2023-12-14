@@ -28,13 +28,13 @@ export class BallFactory {
     const ball = Bodies.circle(
       this.level.slingPosition.x,
       this.level.slingPosition.y,
-      30,
+      40,
       {
         render: {
           sprite: {
             texture: texture,
-            xScale: 60/175,
-            yScale: 60/175,
+            xScale: 80/175,
+            yScale: 80/175,
           },
         },
       },

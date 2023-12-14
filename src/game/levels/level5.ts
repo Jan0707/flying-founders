@@ -5,13 +5,28 @@ import { shuffle } from "../../util/shuffleArray.ts";
 import * as Matter from "matter-js";
 
 import { settings } from "../settings.ts";
+import {targetList} from "../../util/targetList.ts";
 
 import STAIRS_100_1000 from "./../../assets/objects/stairs_100_1000.png";
-import LOTUM_BANNER_346_102 from "./../../assets/objects/lotum_banner_346_102.svg"
+import LOTUM_BANNER_346_102 from "./../../assets/objects/lotum_banner_346_102.svg";
+import LEVEL_BACKGROUND from "./../../assets/levels/credit_background.jpg";
+import SZ_CONCEPT_342_129 from "./../../assets/objects/sz_concept_342_129.png";
 
 function getLevel(): Level {
   const level = new Level();
-  const possibleTargets = shuffle(["jan", "jan"]);
+  const possibleTargets = shuffle([
+    targetList.Alisa,
+    targetList.Diana,
+    targetList.Kayleigh,
+    targetList.Maren,
+    targetList.Matthias,
+    targetList.Richard,
+    targetList.Robin,
+    targetList.Sven,
+    targetList.Julian,
+    targetList.Carlo,
+    targetList.Jan_G
+    ]);
   level.slingPosition = { x: 1500, y: 1500 };
 
   const Bodies = Matter.Bodies;
@@ -35,6 +50,8 @@ function getLevel(): Level {
     }
   };
 
+  
+
   const glassOptions = {
     render: {
       fillStyle: "lightblue",
@@ -52,9 +69,11 @@ const stairCount = 35;
 // Array to hold all the steps
 var stairstack = [];
 
+
+
 // Loop to create each step
   var stairstack = Matter.Composites.stack(0, 0, stairCount, 2, 0, 0, function(x, y, column) {
-    return Matter.Bodies.rectangle(x - 63, y + column * stairCount, 100, 1000, {
+    return Matter.Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
         isStatic: true, friction:0.01, frictionstatic: 0,
         render: {
             sprite: {
@@ -77,6 +96,15 @@ let lotumbannercomposite = Matter.Composite.create({
   bodies: lotumbanner // Füge den Körper der Composite hinzu
 });
 
+let Schriftzug_Concept = Bodies.rectangle(170, -700, 342, 129, {
+  friction: 0.1, frictionstatic: 0,
+  render: {
+    sprite: {
+      texture: SZ_CONCEPT_342_129 // Provide the correct path to your texture image here
+    }
+  } 
+});
+
   //stairstack.render.sprite.texture = STAIRS_100_500;
 
   level.objectsStatic = [
@@ -85,12 +113,12 @@ let lotumbannercomposite = Matter.Composite.create({
   ];
 
   level.objectsMovable = [
-    objectFactory.createObjectFromTopLeft("wood", 170, -700, 100, 350, 0),
+    //objectFactory.createObjectFromTopLeft("wood", 170, -700, 100, 350, 0),
 
   ];
 
 
-  const numberOfTargets = 10; // You can adjust this number as needed
+  const numberOfTargets = 9; // You can adjust this number as needed
 
      // Initialize an array to store the coordinate pairs
         let values = [];
@@ -111,14 +139,22 @@ let lotumbannercomposite = Matter.Composite.create({
     ...values.map(([x, y]) => {
         return objectFactory.createTarget(possibleTargets.pop(), x, y);
     }),
-];
+  ];
 
+  
+  level.background = LEVEL_BACKGROUND;  
+  
   level.misc = [
     stairstack,
-    lotumbannercomposite
+    lotumbannercomposite,
+    Schriftzug_Concept
   ];
 
   return level;
 }
 
+
+
+
 export { getLevel };
+

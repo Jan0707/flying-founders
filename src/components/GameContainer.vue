@@ -20,6 +20,7 @@ const levelNames = [
     "2",
     "3",
     "4",
+    "5"
 ];
 
 const isLevelFinished = ref(false);
@@ -71,6 +72,12 @@ onMounted(function () {
   window.addEventListener("keydown", (e) => {
     if (e.key === "s") {
       emitter.emit("triggerSkill");
+    }
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "5") {
+      levelNamesIndex.value = 3;
+      isLevelFinished.value = true;
     }
   });
   window.addEventListener("keydown", (e) => {

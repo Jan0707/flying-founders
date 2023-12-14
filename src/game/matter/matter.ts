@@ -265,16 +265,19 @@ export function createLevel(
 
   // Tracks movement of eventually breakable objects
   Matter.Events.on(engine, "afterUpdate", () => {
-    level.objectsMovable.forEach(function (object){
-      if (object.plugin.lotum.breakable !== "eventually") return;
+      level.objectsMovable.forEach(function (object){
+       if (object.plugin.lotum.explodable == true && object.speed >= 4) {
+        createExplosion(engine, object, 1);
+        Composite.remove(engine.world,object);
+      }
+        if (object.plugin.lotum.breakable !== "eventually") {
+        return
+      };
+      
       if (object.speed >= settings.objects.eventuallyBreakingSpeedStart && !object.plugin.lotum.startedMoving) {
         object.plugin.lotum.startedMoving = true;
       }
       if (object.speed <= settings.objects.eventuallyBreakingSpeedStop && object.plugin.lotum.startedMoving) {
-        if(object.plugin.lotum.explodable == true)
-        {
-          createExplosion(engine, object, 1);
-        }
         Composite.remove(engine.world,object);
       }
     });
