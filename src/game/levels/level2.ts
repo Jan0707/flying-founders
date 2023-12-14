@@ -10,9 +10,7 @@ import LEVEL_BACKGROUND from "./../../assets/levels/level_2.jpg";
 const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
-    const level = new Level();
-
-    level.background = LEVEL_BACKGROUND;
+    const level = new Level(LEVEL_BACKGROUND, {x: 150, y: 650})
 
     const possibleTargets = shuffle([
         targetList.AK,
@@ -62,7 +60,6 @@ function getLevel(): Level {
         targetList.Wessel,
         targetList.Yann,
     ]);
-    level.slingPosition = {x: 150, y: 650};
 
     var Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
 

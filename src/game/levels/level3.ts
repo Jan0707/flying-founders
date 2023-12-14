@@ -6,9 +6,7 @@ import {targetList} from "../../util/targetList.ts";
 import LEVEL_BACKGROUND from "./../../assets/levels/level_3.jpg";
 
 function getLevel(): Level {
-    const level = new Level();
-
-    level.background = LEVEL_BACKGROUND;
+    const level = new Level(LEVEL_BACKGROUND)
 
     const possibleTargets = shuffle([
         targetList.AK,
@@ -58,7 +56,7 @@ function getLevel(): Level {
         targetList.Wessel,
         targetList.Yann,
     ]);
-    level.slingPosition = {x: 100, y: 650};
+
 
     level.objectsStatic = [
         //Ground

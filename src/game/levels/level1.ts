@@ -10,9 +10,7 @@ import LEVEL_BACKGROUND from "./../../assets/levels/level_1.jpg";
 const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
-    const level = new Level();
-
-    level.background = LEVEL_BACKGROUND;
+    const level = new Level(LEVEL_BACKGROUND)
 
     const possibleTargets = shuffle([
         targetList.AK,
@@ -62,7 +60,6 @@ function getLevel(): Level {
         targetList.Wessel,
         targetList.Yann,
     ]);
-    level.slingPosition = {x: 100, y: 650};
 
     level.objectsStatic = [
         //ground

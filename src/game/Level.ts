@@ -1,19 +1,20 @@
 import {BallFactory} from "./BallFactory.ts";
 
 class Level {
-    background: string | undefined;
+
+    constructor(
+        readonly background: string,
+        readonly slingPosition: { x: number; y: number } = { x: 100, y: 650 },
+    ) {}
+
     targets: any[];
     objectsMovable: any[];
     objectsStatic: any[];
-    slingPosition: { x: number; y: number };
-    private stockpile = ['sebastian', 'jens', 'dominik']
-    ballFactory: BallFactory | undefined;
     misc: any[];
 
-    setStockpile(stockpile: string[]) {
-        this.stockpile = stockpile;
-        this.ballFactory = new BallFactory(this);
-    }
+    private stockpile = ['sebastian', 'jens', 'dominik']
+
+    readonly ballFactory = new BallFactory(this)
 
     readonly getFounderFromStockpile = (() => {
         let founderIdx = 0
@@ -28,7 +29,11 @@ class Level {
         }
     })()
 
-    getAllBodies(): [any] {
+    setStockpile(stockpile: string[]) {
+        this.stockpile = stockpile;
+    }
+
+    getAllBodies(): unknown[] {
         return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
     }
 }
