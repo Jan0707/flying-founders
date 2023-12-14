@@ -92,12 +92,14 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("platform", 710, 290, 20, 300, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("platform", 860, 210, 10, 80, 0),
         objectFactory.createObjectFromTopLeft("platform", 710, 405, 20, 300, 0.5 * Math.PI),
-    ];
+    ]
+
     level.misc = [
         ropeB,
         ropeC,
         Beamerbar
-    ];
+    ]
+
     level.objectsMovable = [
         //Lift right
         objectFactory.createObjectFromTopLeft("glass", 1155, 590, 10, 160, 0),
@@ -139,7 +141,7 @@ function getLevel(): Level {
         //Stack 3
         objectFactory.createObjectFromTopLeft("glass", 630, 400, 20, 80, 0),
         objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 110, 0.5 * Math.PI),
-    ];
+    ]
 
     return level;
 }

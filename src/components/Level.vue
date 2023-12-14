@@ -22,7 +22,6 @@ function eventHandler(event: LevelEvent) {
       break;
     case LevelEvent.EVENT_FIRED:
       levelState.incrementShots();
-      levelState.decrementRemainingShots();
       levelState.isBallFlying = true;
       break;
     case LevelEvent.EVENT_STOPPED:
@@ -66,7 +65,6 @@ onMounted(function () {
 
   const createdLevel = getLevelByName(props.levelName)
   levelState.setRemainingTargetsCount(createdLevel.targets.length);
-  levelState.remainingBallsCount = createdLevel.ballFactory.getRemainingShots();
   level.value = createLevel(domElement.value, createdLevel, eventHandler);
 
   if (createdLevel.background) {

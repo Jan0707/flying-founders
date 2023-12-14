@@ -6,7 +6,6 @@ import {ref, watch, onMounted, computed} from "vue";
 import { levelState } from "../game/levelState.ts";
 import { gameState } from "../game/gameState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
-import LevelLostDialog from "./dialogs/LevelLostDialog.vue";
 import { SoundSystem } from "./../SoundSystem.ts";
 import {emitter} from "../util/eventBus.ts";
 import StartScreen from "./StartScreen.vue";
@@ -19,7 +18,6 @@ const levelNamesIndex = ref(-1);
 const levelName = computed(() => levelNames[levelNamesIndex.value])
 
 const isLevelFinished = ref(false);
-const isLevelLost = ref(false);
 
 new SoundSystem();
 
@@ -30,18 +28,6 @@ watch(
       isLevelFinished.value = true;
     }
   },
-);
-
-watch(
-    () => levelState.remainingBallsCount,
-    () => {
-      if (levelState.remainingTargetsCount > 0 && levelState.remainingBallsCount === 0 && levelState.shots > 0
-    ) {
-        isLevelLost.value = true;
-      } else {
-        isLevelLost.value = false;
-      }
-    },
 );
 
 function reset() {
@@ -114,12 +100,6 @@ onMounted(function () {
         class="dialog"
         :levelName="levelName"
         @continue="getNextLevel()"
-    />
-    <LevelLostDialog
-        v-if="isLevelLost"
-        class="dialog"
-        :levelName="levelName"
-        @reset="reset()"
     />
   </div>
 </template>

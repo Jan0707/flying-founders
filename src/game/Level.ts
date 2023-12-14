@@ -1,10 +1,14 @@
 import {BallFactory} from "./BallFactory.ts";
 import {Target} from "../util/Target.ts";
 import objectFactory from "./ObjectFactory.ts";
-import {Body} from "matter-js";
+import {Body, Composite} from "matter-js";
 
 export class Level {
     readonly targets: Body[];
+
+    objectsMovable: (Body|Composite)[] = [];
+    objectsStatic: (Body|Composite)[] = [];
+    misc: (Body|Composite)[] = [];
 
     constructor(
         readonly background: string,
@@ -13,10 +17,6 @@ export class Level {
     ) {
         this.targets = objectFactory.createFromTargets(targets)
     }
-
-    objectsMovable: any[];
-    objectsStatic: any[];
-    misc: any[];
 
     private stockpile = ['sebastian', 'jens', 'dominik']
 
@@ -39,7 +39,7 @@ export class Level {
         this.stockpile = stockpile;
     }
 
-    getAllBodies(): unknown[] {
+    getAllBodies() {
         return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
     }
 }

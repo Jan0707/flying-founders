@@ -13,7 +13,7 @@ export class BallFactory {
     this.level = level;
   }
 
-  getBall(): object {
+  getBall() {
     const name = this.level.getFounderFromStockpile()
     let texture = null;
 
@@ -45,9 +45,5 @@ export class BallFactory {
     };
 
     return ball;
-  }
-
-  getRemainingShots(): number {
-    return this.level.stockpile.length;
   }
 }

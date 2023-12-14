@@ -49,7 +49,7 @@ function getLevel(): Level {
 
         objectFactory.createObjectFromTopLeft("platform", 1160, 450, 10, 300, 0),
         objectFactory.createObjectFromTopLeft("platform", 1130, 440, 10, 40, 0.5 * Math.PI),
-    ];
+    ]
 
     const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 765, 112, 180, 10, 0);
 
@@ -96,7 +96,7 @@ function getLevel(): Level {
         ropeB,
         ropeC,
         Beamerbar
-    ];
+    ]
 
     level.objectsMovable = [
         objectFactory.createObjectFromTopLeft("wood", 1140, 0, 20, 300, 0),//top right pillar
@@ -114,7 +114,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI), //table top
         objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0), //table leg left
         objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0), //table leg right
-    ];
+    ]
 
     return level;
 }

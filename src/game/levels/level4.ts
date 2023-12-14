@@ -26,7 +26,7 @@ function getLevel(): Level {
 
         objectFactory.createObjectFromTopLeft("platform", 660, 160, 10, 80, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("platform", 740, 160, 10, 80, 0.5 * Math.PI),
-    ];
+    ]
 
     level.objectsMovable = [
         //Glass Pillar
@@ -87,9 +87,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1010, 390, 10, 80, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("wood", 1090, 390, 10, 80, 0.5 * Math.PI),
 
-    ];
-
-    level.misc = [];
+    ]
 
     return level;
 }

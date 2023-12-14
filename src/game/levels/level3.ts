@@ -39,7 +39,7 @@ function getLevel(): Level {
 
         // Back wall, NO asset available
         objectFactory.createObjectFromTopLeft("platform", 1181, 0, 70, 820, 0),
-    ];
+    ]
 
     level.objectsMovable = [
         //Table 1
@@ -88,9 +88,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 150, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("wood", 1030, 410, 10, 80, 0),
         objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
-    ];
-
-    level.misc = [];
+    ]
 
     return level;
 }

@@ -147,14 +147,6 @@ export function createLevel(
 
     eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
 
-    if (level.ballFactory?.getRemainingShots() === 0) {
-      eventHandler(
-        new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, { name: null }),
-      );
-      sling.bodyB = null;
-      return;
-    }
-
     currentBall = level.ballFactory?.getBall();
     eventHandler(
       new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
@@ -175,8 +167,6 @@ export function createLevel(
     if (currentBall.position.y < 1000) return;
     Composite.remove(engine.world, currentBall);
     eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
-
-    if (level.ballFactory?.getRemainingShots() === 0) return;
 
     currentBall = level.ballFactory?.getBall();
 
