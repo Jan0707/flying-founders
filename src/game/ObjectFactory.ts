@@ -1,11 +1,6 @@
-import * as Matter from "matter-js";
-
-const Bodies = Matter.Bodies;
-
-import {settings} from "./settings.ts";
-import {objectList} from "../util/objectList.ts";
 import {Target} from "../util/Target.ts";
-import {Body} from "matter-js";
+import {Bodies, Body} from "matter-js";
+import {GameObject, ObjectLength, ObjectType, ObjectWidth} from "../util/objectList.ts";
 
 class ObjectFactory {
 
@@ -41,89 +36,21 @@ class ObjectFactory {
     }
 
     createObjectFromTopLeft(
-        type: string,
+        type: ObjectType,
         x: number,
         y: number,
-        length: number,
-        height: number,
+        length: ObjectLength,
+        height: ObjectWidth,
         rotation: number,
         inputOptions = {}
-    ) {
-        const options = {
-            sleepThreshold: settings.objects.sleepThreshold,
-        };
+    ): Body {
 
-        if (type === "ground") {
-            options.render = {
-                fillStyle: "transparent",
-            };
-            options.restitution = 0.8;
-            options.isStatic = true;
-        }
-
-        if (type === "platform") {
-            options.render = {
-                fillStyle: "orange",
-                strokeStyle: "red",
-                lineWidth: 3,
-            };
-            options.restitution = 0.8;
-            options.isStatic = true;
-        }
-
-        if (type === "wood") {
-            options.render = {
-                fillStyle: "brown",
-            };
-            options.restitution = 0.1;
-            options.friction = 0.95;
-            options.frictionStatic = 1000;
-            options.plugin = {
-                lotum: {
-                    breakable: "eventually",
-                }
-            };
-        }
-
-        if (type === "glass") {
-            options.render = {
-                fillStyle: "lightblue",
-            };
-            options.restitution = 0.05;
-            options.friction = 0.8;
-            options.frictionStatic = 1000;
-            options.plugin = {
-                lotum: {
-                    breakable: "instantly",
-                }
-            };
-        }
-
-        if (type === "concrete") {
-            options.render = {
-                fillStyle: "grey",
-            };
-            options.mass = 5;
-            options.friction = 1;
-            options.frictionStatic = 100;
-            options.restitution = 0.95;
-        }
-
-        const assetName = `${type}_${length}_${height}`;
-        if (Object.keys(objectList).includes(assetName)) {
-            options.render = {
-                sprite: {
-                    texture: objectList[assetName],
-                },
-            };
-        }
+        const obj = new GameObject(type, length, height)
 
         const centerCoordinates = this.getCenterFromTopLeftCorner(x, y, length, height, rotation);
-        const combinedOptions = Object.assign({}, options, inputOptions);
+        const combinedOptions = Object.assign({}, obj.renderOptions, inputOptions);
 
         const createdObject = Bodies.rectangle(centerCoordinates.x, centerCoordinates.y, length, height, combinedOptions);
-
-        //console.log(`Created ${type} object at x:${centerCoordinates.x} y:${centerCoordinates.y} with size of ${length} x ${height} from top left point of x:${x} y:${y}`);
 
         if (rotation) {
             Body.rotate(createdObject, rotation);

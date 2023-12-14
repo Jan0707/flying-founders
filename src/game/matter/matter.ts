@@ -1,7 +1,6 @@
 import * as Matter from "matter-js";
 import { Level } from "../Level.ts";
 import { settings } from "../settings.ts";
-import { emitter } from "../../util/eventBus.ts";
 const Bodies = Matter.Bodies;
 
 export class LevelEvent {

@@ -40,7 +40,6 @@ export class Level {
     }
 
     getAllBodies(): unknown[] {
-        console.debug('AHAAAAAAA ', this.targets)
         return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
     }
 }
