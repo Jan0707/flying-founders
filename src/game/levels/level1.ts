@@ -93,8 +93,8 @@ function getLevel(): Level {
     }));
 
     level.misc = [
-        ropeB,
-        ropeC,
+        ...ropeB.bodies,
+        ...ropeC.bodies,
         Beamerbar
     ]
 

@@ -1,14 +1,14 @@
 import {BallFactory} from "./BallFactory.ts";
 import {Target} from "../util/Target.ts";
 import objectFactory from "./ObjectFactory.ts";
-import {Body, Composite} from "matter-js";
+import {Body} from "matter-js";
 
 export class Level {
     readonly targets: Body[];
 
-    objectsMovable: (Body|Composite)[] = [];
-    objectsStatic: (Body|Composite)[] = [];
-    misc: (Body|Composite)[] = [];
+    objectsMovable: Body[] = [];
+    objectsStatic: Body[] = [];
+    misc: Body[] = [];
 
     constructor(
         readonly background: string,
