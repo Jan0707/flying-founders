@@ -1,13 +1,18 @@
 import {BallFactory} from "./BallFactory.ts";
+import {Target} from "../util/Target.ts";
+import objectFactory from "./ObjectFactory.ts";
 
 export class Level {
+    readonly targets: object[];
 
     constructor(
         readonly background: string,
-        readonly slingPosition: { x: number; y: number } = { x: 100, y: 650 },
-    ) {}
+        targets: Target[],
+        readonly slingPosition: { x: number; y: number } = {x: 100, y: 650},
+    ) {
+        this.targets = objectFactory.createFromTargets(targets)
+    }
 
-    targets: any[];
     objectsMovable: any[];
     objectsStatic: any[];
     misc: any[];
@@ -34,6 +39,7 @@ export class Level {
     }
 
     getAllBodies(): unknown[] {
+        console.debug('AHAAAAAAA ', this.targets)
         return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
     }
 }

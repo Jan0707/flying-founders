@@ -2,64 +2,22 @@ import * as Matter from "matter-js";
 
 import {Level} from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import {shuffle} from "../../util/shuffleArray.ts";
-import {targetList} from "../../util/targetList.ts";
+import {Target} from "../../util/Target.ts";
 
 import LEVEL_BACKGROUND from "./../../assets/levels/level_1.jpg";
 
 const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
-    const level = new Level(LEVEL_BACKGROUND)
 
-    const possibleTargets = shuffle([
-        targetList.AK,
-        targetList.Alex,
-        targetList.Alexandra,
-        targetList.Alisa,
-        targetList.Andrzej,
-        targetList.Anja,
-        targetList.Anselm,
-        targetList.Anton,
-        targetList.Arthur,
-        targetList.Beko,
-        targetList.Beni,
-        targetList.Carlo,
-        targetList.Dave,
-        targetList.David,
-        targetList.Dennis,
-        targetList.Diana,
-        targetList.Etienne,
-        targetList.Fabian,
-        targetList.Falk,
-        targetList.Gabriel,
-        targetList.Garrelt,
-        targetList.Grebiel,
-        targetList.Jan_D,
-        targetList.Jan_G,
-        targetList.Jo,
-        targetList.Joel,
-        targetList.Julia,
-        targetList.Julian,
-        targetList.Kayleigh,
-        targetList.Lars,
-        targetList.Maren,
-        targetList.Matthias,
-        targetList.Michael,
-        targetList.Petra,
-        targetList.Richard,
-        targetList.Robin,
-        targetList.Sasha,
-        targetList.Sebi,
-        targetList.Sinead,
-        targetList.Sophie,
-        targetList.Sven,
-        targetList.Thomas,
-        targetList.Tobias,
-        targetList.Vanessa,
-        targetList.Wessel,
-        targetList.Yann,
-    ]);
+    const targets = [
+        new Target({x: 810, y: 720}),
+        new Target({x: 900, y: 720}),
+        new Target({x: 975, y: 550}),
+        new Target({x: 848, y: 90}),
+    ]
+
+    const level = new Level(LEVEL_BACKGROUND, targets)
 
     level.objectsStatic = [
         //ground
@@ -156,13 +114,6 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 700, 580, 20, 300, 0.5 * Math.PI), //table top
         objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0), //table leg left
         objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0), //table leg right
-    ];
-
-    level.targets = [
-        objectFactory.createTarget(possibleTargets.pop(), 810, 720),
-        objectFactory.createTarget(possibleTargets.pop(), 900, 720),
-        objectFactory.createTarget(possibleTargets.pop(), 975, 550),
-        objectFactory.createTarget(possibleTargets.pop(), 848, 90),
     ];
 
     return level;

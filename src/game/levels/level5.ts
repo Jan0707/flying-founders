@@ -1,10 +1,9 @@
 import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import { shuffle } from "../../util/shuffleArray.ts";
 
 function getLevel(): Level {
   const level = new Level();
-  const possibleTargets = shuffle(["jan", "jan"]);
+  const possibleTargets = ["jan", "jan"]
   level.slingPosition = { x: 100, y: 650 };
 
 

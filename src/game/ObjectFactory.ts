@@ -5,13 +5,19 @@ const Body = Matter.Body;
 
 import {settings} from "./settings.ts";
 import {objectList} from "../util/objectList.ts";
+import {Target} from "../util/Target.ts";
 
 class ObjectFactory {
-    createTarget(name: string, x: number, y: number): object {
+
+    createFromTargets(targets: Target[]): object[] {
+        return targets.map(target => this.createTarget(target.imagePath, target.startPosition.x, target.startPosition.y))
+    }
+
+    createTarget(imagePath: string, x: number, y: number): object {
         return Bodies.rectangle(x, y, 80, 80, {
             render: {
                 sprite: {
-                    texture: name,
+                    texture: imagePath,
                     xScale: 80 / 175,
                     yScale: 80 / 175,
                 },
