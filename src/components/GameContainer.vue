@@ -127,5 +127,6 @@ onMounted(function () {
   position: absolute;
   top: 10%;
   left: 50%;
+  translate: -50%;
 }
 </style>
