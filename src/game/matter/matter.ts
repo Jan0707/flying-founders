@@ -218,6 +218,7 @@ export function createLevel(
                 const targetToRemove =
                     level.targets[Math.max(bodyATarget, bodyBTarget)];
 
+                level.removeBody(targetToRemove)
                 Composite.remove(engine.world, targetToRemove);
 
                 detector.bodies = detector.bodies.filter((body) => {
@@ -239,6 +240,7 @@ export function createLevel(
                 collision.bodyB.speed >= settings.objects.instantBreakingSpeed
 
             ) {
+                level.removeBody(collision.bodyA)
                 Composite.remove(engine.world, collision.bodyA);
                 detector.bodies = detector.bodies.filter((body) => {
                     return body !== collision.bodyA;
@@ -249,6 +251,7 @@ export function createLevel(
                 collision.bodyB.plugin.lotum.breakable === "instantly" &&
                 collision.bodyA.speed >= settings.objects.instantBreakingSpeed
             ) {
+                level.removeBody(collision.bodyB)
                 Composite.remove(engine.world, collision.bodyB);
                 detector.bodies = detector.bodies.filter((body) => {
                     return body !== collision.bodyB;
@@ -269,6 +272,7 @@ export function createLevel(
                 if (object.plugin.lotum.explodable == true) {
                     createExplosion(engine, object, 1);
                 }
+                level.removeBody(object)
                 Composite.remove(engine.world, object);
             }
         });

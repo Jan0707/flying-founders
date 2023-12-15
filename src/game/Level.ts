@@ -5,10 +5,10 @@ import {Body, Composite} from "matter-js";
 import {FounderName, Founders} from "./Founders.ts";
 
 export class Level {
-    readonly targets: Body[];
     readonly founders: Founders
     readonly ballFactory = new BallFactory(this)
 
+    targets: Body[]
     objectsMovable: Body[] = [];
     objectsStatic: Body[] = [];
     misc: Body[] = [];
@@ -22,6 +22,13 @@ export class Level {
     ) {
         this.targets = objectFactory.createTargetBodies(targets)
         this.founders = new Founders(stockPile)
+    }
+
+    removeBody(body: Body) {
+        this.objectsMovable = this.objectsMovable.filter(b => b !== body)
+        this.objectsStatic = this.objectsStatic.filter(b => b !== body)
+        this.misc = this.misc.filter(b => b !== body)
+        this.targets = this.targets.filter(b => b !== body)
     }
 
     getAllBodies() {
