@@ -65,7 +65,7 @@ export function createLevel(
     let currentBall = level.ballFactory.getBall();
     eventHandler(
         new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
-            name: currentBall.plugin.lotum.name,
+            name: currentBall.plugin.lotum.founder.name,
         }),
     );
 
@@ -152,10 +152,10 @@ export function createLevel(
 
         eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
 
-        currentBall = level.ballFactory?.getBall();
+        currentBall = level.ballFactory.getBall();
         eventHandler(
             new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
-                name: currentBall.plugin.lotum.name,
+                name: currentBall.plugin.lotum.founder.name,
             }),
         );
 

@@ -30,8 +30,8 @@ function getLevel(): Level {
   ];
 
   level.targets = [
-    objectFactory.createTarget(possibleTargets.pop(), 1095, 250),
-    objectFactory.createTarget(possibleTargets.pop(), 200, 50),
+    objectFactory.createTargetBody(possibleTargets.pop(), 1095, 250),
+    objectFactory.createTargetBody(possibleTargets.pop(), 200, 50),
   ];
 
   level.misc = [

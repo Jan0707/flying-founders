@@ -4,15 +4,20 @@ import {GameObject, ObjectLength, ObjectType, ObjectWidth} from "../util/objectL
 
 class ObjectFactory {
 
-    createFromTargets(targets: Target[]) {
-        return targets.map(target => this.createTarget(target.imagePath, target.startPosition.x, target.startPosition.y))
+    createTargetBodies(targets: Target[]) {
+        return targets.map(target => this.createTargetBody(target))
     }
 
-    createTarget(imagePath: string, x: number, y: number): Body {
-        return Bodies.rectangle(x, y, 80, 80, {
+    createTargetBody(target: Target): Body {
+        return Bodies.rectangle(target.startPosition.x, target.startPosition.y, 80, 80, {
+            plugin: {
+                lotum: {
+                    target
+                }
+            },
             render: {
                 sprite: {
-                    texture: imagePath,
+                    texture: target.imagePath,
                     xScale: 80 / 175,
                     yScale: 80 / 175,
                 },
