@@ -95,9 +95,12 @@ function getLevel(): Level {
     ]
 
     level.misc = [
-        ...ropeB.bodies,
-        ...ropeC.bodies,
         Beamerbar
+    ]
+
+    level.composites = [
+        ropeB,
+        ropeC,
     ]
 
     level.objectsMovable = [

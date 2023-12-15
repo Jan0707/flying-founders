@@ -1,12 +1,11 @@
-import * as Matter from "matter-js";
 
 import {Level} from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
 import {Target} from "../../util/Target.ts";
 
 import LEVEL_BACKGROUND from "./../../assets/levels/level_1.jpg";
+import {Bodies, Composite, Composites, Constraint} from "matter-js";
 
-const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
 
@@ -53,22 +52,23 @@ function getLevel(): Level {
 
     const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 765, 112, 180, 10, 0);
 
-    //var group = Body.nextGroup(true);
-    let ropeC = Matter.Composites.stack(775, 50, 1, 3, 5, 5, function (x: number, y: number) {
-        return Matter.Bodies.rectangle(x, y, 5, 25/*, { collisionFilter: { group: group } }*/);
+    let ropeC = Composites.stack(775, 50, 1, 3, 5, 5, function (x: number, y: number) {
+        return Bodies.rectangle(x, y, 5, 25/*, { collisionFilter: { group: group } }*/);
     });
-    Matter.Composites.chain(ropeC, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
-    Matter.Composite.add(ropeC, Constraint.create({
+
+    Composites.chain(ropeC, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
+
+    Composite.add(ropeC, Constraint.create({
         bodyB: ropeC.bodies[0],
         pointB: {x: 0, y: -5},
         pointA: {x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y - 5},
         /*stiffness: 1.0,*/  damping: 0.1
     }));
-    let ropeB = Matter.Composites.stack(935, 50, 1, 3, 5, 5, function (x: number, y: number) {
-        return Matter.Bodies.rectangle(x, y, 5, 25);
+    let ropeB = Composites.stack(935, 50, 1, 3, 5, 5, function (x: number, y: number) {
+        return Bodies.rectangle(x, y, 5, 25);
     });
-    Matter.Composites.chain(ropeB, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
-    ropeB = Matter.Composite.add(ropeB, Constraint.create({
+    Composites.chain(ropeB, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
+    ropeB = Composite.add(ropeB, Constraint.create({
         bodyB: ropeB.bodies[0],
         pointB: {x: 0, y: -5},
         pointA: {x: ropeB.bodies[0].position.x, y: ropeB.bodies[0].position.y - 5},
@@ -76,7 +76,7 @@ function getLevel(): Level {
     }));
 
 
-    ropeB = Matter.Composite.add(ropeB, Constraint.create({
+    ropeB = Composite.add(ropeB, Constraint.create({
         bodyB: ropeB.bodies[2],
         pointB: {x: 0, y: 5},
         bodyA: Beamerbar,
@@ -84,7 +84,7 @@ function getLevel(): Level {
         /*stiffness: 1.0,*/ damping: 0.1
     }));
 
-    ropeC = Matter.Composite.add(ropeC, Constraint.create({
+    ropeC = Composite.add(ropeC, Constraint.create({
         bodyB: ropeC.bodies[2],
         pointB: {x: 0, y: 5},
         bodyA: Beamerbar,
@@ -93,9 +93,12 @@ function getLevel(): Level {
     }));
 
     level.misc = [
-        ...ropeB.bodies,
-        ...ropeC.bodies,
         Beamerbar
+    ]
+
+    level.composites = [
+        ropeB,
+        ropeC,
     ]
 
     level.objectsMovable = [

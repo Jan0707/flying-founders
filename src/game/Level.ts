@@ -1,7 +1,7 @@
 import {BallFactory} from "./BallFactory.ts";
 import {Target} from "../util/Target.ts";
 import objectFactory from "./ObjectFactory.ts";
-import {Body} from "matter-js";
+import {Body, Composite} from "matter-js";
 
 export class Level {
     readonly targets: Body[];
@@ -9,6 +9,7 @@ export class Level {
     objectsMovable: Body[] = [];
     objectsStatic: Body[] = [];
     misc: Body[] = [];
+    composites: Composite[] = []
 
     constructor(
         readonly background: string,
@@ -40,6 +41,9 @@ export class Level {
     }
 
     getAllBodies() {
-        return this.targets.concat(this.objectsMovable).concat(this.objectsStatic).concat(this.misc);
+        return this.targets
+            .concat(this.objectsMovable)
+            .concat(this.objectsStatic)
+            .concat(this.misc)
     }
 }

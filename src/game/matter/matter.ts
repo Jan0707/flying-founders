@@ -1,6 +1,18 @@
 import {Level} from "../Level.ts";
 import {settings} from "../settings.ts";
-import {Bodies, Body, Composite, Constraint, Detector, Engine, Mouse, MouseConstraint, Render, Runner, Events} from "matter-js";
+import {
+    Bodies,
+    Body,
+    Composite,
+    Constraint,
+    Detector,
+    Engine,
+    Mouse,
+    MouseConstraint,
+    Render,
+    Runner,
+    Events,
+} from "matter-js";
 
 export class LevelEvent {
     static readonly EVENT_FIRED = "fired";
@@ -47,6 +59,7 @@ export function createLevel(
     Runner.run(runner, engine);
 
     Composite.add(engine.world, level.getAllBodies());
+    Composite.add(engine.world, level.composites)
 
     let isFired = false;
     let currentBall = level.ballFactory.getBall();
