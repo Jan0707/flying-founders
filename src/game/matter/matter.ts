@@ -13,6 +13,7 @@ import {
     Runner,
     Events,
 } from "matter-js";
+import teabagImage from "../../assets/objects/teabag_300_300.png"
 import {Founder} from "../Founders.ts";
 import {Target} from "../../util/Target.ts";
 import {playSound} from "../../SoundSystem.ts";
@@ -146,7 +147,7 @@ export function createLevel(
         const teabag = Bodies.circle(positionX, positionY, 10, {
             render: {
                 sprite: {
-                    texture: "src/assets/objects/teabag_300_300.png",
+                    texture: teabagImage,
                     xScale: 0.1,
                     yScale: 0.1,
                 }
