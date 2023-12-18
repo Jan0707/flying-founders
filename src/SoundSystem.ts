@@ -15,6 +15,8 @@ import RichardSound from "./assets/sounds/richard.mp3"
 import VanessaSound from "./assets/sounds/vanessa.mp3"
 import WesselSound from "./assets/sounds/wessel.mp3"
 import YannSound from "./assets/sounds/yann.mp3"
+import JulianSound from "./assets/sounds/julian.mp3"
+
 import bells from "./assets/sounds/bells.mp3"
 import smallExplosion from "./assets/sounds/small-explosion.mp3"
 import wooDominik from "./assets/sounds/start-dominik.mp3"
@@ -38,6 +40,7 @@ export function playSound(key: TargetName | "levelSuccess" | 'bells' | 'smallExp
         Vanessa: new Howl({src: [VanessaSound]}),
         Wessel: new Howl({src: [WesselSound]}),
         Yann: new Howl({src: [YannSound]}),
+        Julian: new Howl({src: [JulianSound]}),
         wooDominik: new Howl({src: [wooDominik]}),
         startSebastian: new Howl({src: [startSebastian]}),
         laughSebastian: new Howl({src: [laughSebastian]}),
