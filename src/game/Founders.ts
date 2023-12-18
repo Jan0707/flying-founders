@@ -1,6 +1,8 @@
 import dominik from "./../assets/founders/dominik.png";
 import jens from "./../assets/founders/jens.png";
 import sebastian from "./../assets/founders/sebastian.png";
+import {when} from "../util/when.ts";
+import {IBodyDefinition} from "matter-js";
 
 const founderImagePaths = {
     dominik,
@@ -14,6 +16,16 @@ export class Founder {
     readonly imagePath: string
     constructor(readonly name: FounderName) {
         this.imagePath = founderImagePaths[this.name]
+    }
+
+    get additionalOptions(): IBodyDefinition {
+        return when(this.name)({
+            dominik: {
+                density: 10,
+                mass: 5,
+            },
+            else: {}
+        })
     }
 }
 

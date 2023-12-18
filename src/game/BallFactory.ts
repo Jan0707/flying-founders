@@ -23,6 +23,7 @@ export class BallFactory {
                         yScale: 60 / 175,
                     },
                 },
+                ...founder.additionalOptions,
             },
         );
 
