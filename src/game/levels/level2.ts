@@ -19,7 +19,7 @@ function getLevel(): Level {
         new Target({x: 360, y: 90}),
     ]
 
-    const level = new Level(LEVEL_BACKGROUND, targets, {x: 150, y: 650})
+    const level = new Level(2, LEVEL_BACKGROUND, targets, {x: 150, y: 650})
 
     const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
 

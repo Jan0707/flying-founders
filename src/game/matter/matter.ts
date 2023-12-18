@@ -68,7 +68,7 @@ export function createLevel(
         velocityIterations: 6,
         //enableSleeping: true,
         gravity: {
-            scale: settings.engine.defaults.gravity,
+            scale: level.idx < 5 ? settings.engine.defaults.gravity : 0.0005,
         },
     });
 
@@ -214,6 +214,7 @@ export function createLevel(
 
     // out of bounds checks
     Events.on(engine, "afterUpdate", () => {
+        if(level.idx >= 5) return
 
         onOutOfBounds(currentBall, () => {
             console.log("Founder out of bounds", currentBall.position)

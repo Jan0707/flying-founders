@@ -8,9 +8,9 @@ function getLevel(): Level {
     const targets = [
         new Target({x: 1095, y: 250}),
         new Target({x: 200, y: 50}),
-        ]
+    ]
 
-    const level = new Level(LEVEL_BACKGROUND, targets)
+    const level = new Level(4, LEVEL_BACKGROUND, targets)
 
     level.objectsStatic = [
         //ground
@@ -89,12 +89,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1010, 390, 10, 80, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("wood", 1090, 390, 10, 80, 0.5 * Math.PI),
 
-        objectFactory.createPresent_45_60(810,625)
-    ]
-
-    level.targets = [
-        objectFactory.createTarget(possibleTargets.pop(), 1095, 250),
-        objectFactory.createTarget(possibleTargets.pop(), 200, 50),
+        objectFactory.createPresent_45_60(810, 625)
     ]
 
     level.misc = [];

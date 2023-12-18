@@ -53,6 +53,18 @@ onMounted(function () {
     }
   });
   window.addEventListener("keydown", (e) => {
+    if (e.key === "7") {
+      levelNamesIndex.value = 5;
+      isLevelFinished.value = true;
+    }
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "6") {
+      levelNamesIndex.value = 4;
+      isLevelFinished.value = true;
+    }
+  });
+  window.addEventListener("keydown", (e) => {
     if (e.key === "5") {
       levelNamesIndex.value = 3;
       isLevelFinished.value = true;

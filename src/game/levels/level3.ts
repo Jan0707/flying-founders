@@ -22,7 +22,7 @@ function getLevel(): Level {
         new Target({x: 1120, y: 440}),
         ]
 
-    const level = new Level(LEVEL_BACKGROUND, targets)
+    const level = new Level(3, LEVEL_BACKGROUND, targets)
 
     level.objectsStatic = [
         //Ground

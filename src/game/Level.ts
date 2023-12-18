@@ -15,6 +15,7 @@ export class Level {
     composites: Composite[] = []
 
     constructor(
+        readonly idx: number,
         readonly background: string,
         targets: Target[],
         readonly slingPosition: { x: number; y: number } = {x: 100, y: 650},
