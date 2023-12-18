@@ -1,4 +1,5 @@
 import { reactive } from "vue";
+import {Founder} from "./Founders.ts";
 
 export const levelState = reactive({
   shots: 0,
@@ -6,13 +7,13 @@ export const levelState = reactive({
   remainingTargetsCount: 0,
   isBallFlying: false,
   startTime: Date.now(),
-  currentFounder: null,
+  currentFounder: <Founder | undefined>undefined,
 
   reset() {
     this.shots = 0;
     this.points = 0;
     this.isBallFlying = false;
-    this.currentFounder = null;
+    this.currentFounder = undefined;
     this.startTime = Date.now();
   },
   incrementShots() {

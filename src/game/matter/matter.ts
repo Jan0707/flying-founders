@@ -13,21 +13,49 @@ import {
     Runner,
     Events,
 } from "matter-js";
+import {Founder} from "../Founders.ts";
+import {Target} from "../../util/Target.ts";
 
-export class LevelEvent {
-    static readonly EVENT_FIRED = "fired";
-    static readonly EVENT_HIT = "hit";
-    static readonly EVENT_STOPPED = "stopped";
-    static readonly EVENT_UPDATE_FOUNDER = "update_founder";
+export abstract class LevelEvent {
+    readonly name: 'fired' | 'hit' | 'stopped' | 'update_founder'
 
-    name: string;
-    payload: object;
-
-    constructor(name: string, payload: object = {}) {
+    protected constructor(name: LevelEvent['name']) {
         this.name = name;
-        this.payload = payload;
     }
 }
+
+export class LevelEventUpdateFounder extends LevelEvent {
+    override readonly name = 'update_founder'
+
+    constructor(readonly founder: Founder) {
+        super('update_founder')
+    }
+}
+
+export class LevelEventFired extends LevelEvent {
+    override readonly name = 'fired'
+
+    constructor() {
+        super('fired')
+    }
+}
+
+export class LevelEventHit extends LevelEvent {
+    override readonly name = 'hit'
+
+    constructor(readonly target: Target) {
+        super('hit')
+    }
+}
+
+export class LevelEventStopped extends LevelEvent {
+    override readonly name = 'stopped'
+
+    constructor() {
+        super('stopped')
+    }
+}
+
 
 export function createLevel(
     targetElement: HTMLElement,
@@ -64,9 +92,7 @@ export function createLevel(
     let isFired = false;
     let currentBall = level.ballFactory.getBall();
     eventHandler(
-        new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
-            name: currentBall.plugin.lotum.founder.name,
-        }),
+        new LevelEventUpdateFounder(currentBall.plugin.lotum.founder),
     );
 
     const sling = Constraint.create({
@@ -139,51 +165,53 @@ export function createLevel(
         }, 1000);
     }
 
+    function setNewFounder() {
+        console.log('placing new founder')
+        currentBall = level.ballFactory.getBall();
+
+        sling.bodyB = currentBall;
+        isFired = false;
+
+        detector.bodies.push(currentBall);
+        Composite.add(engine.world, currentBall);
+
+        eventHandler(
+            new LevelEventUpdateFounder(currentBall.plugin.lotum.founder),
+        );
+    }
+
     Events.on(mouseConstraint, "enddrag", (event) => {
         if ('body' in event && event.body === currentBall) {
             isFired = true;
-            eventHandler(new LevelEvent(LevelEvent.EVENT_FIRED));
+            eventHandler(new LevelEventFired())
         }
     });
 
+    // changes founders when coming to rest
     Events.on(engine, "afterUpdate", () => {
         if (!isFired) return;
         if (currentBall.speed >= settings.ball.speedAtRest) return;
 
-        eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
+        eventHandler(new LevelEventStopped())
 
-        currentBall = level.ballFactory.getBall();
-        eventHandler(
-            new LevelEvent(LevelEvent.EVENT_UPDATE_FOUNDER, {
-                name: currentBall.plugin.lotum.founder.name,
-            }),
-        );
-
-        sling.bodyB = currentBall;
-        isFired = false;
-
-
-        detector.bodies.push(currentBall);
-
-        Composite.add(engine.world, [currentBall]);
+        setNewFounder()
     });
 
+    // removes founders when out of bounds
     Events.on(engine, "afterUpdate", () => {
-        if (currentBall.position.y < 1000) return;
-        Composite.remove(engine.world, currentBall);
-        eventHandler(new LevelEvent(LevelEvent.EVENT_STOPPED));
+        const {x, y} = currentBall.position;
+        if (y < 0 || x < 0 || x > 1200 || y > 1000) {
 
-        currentBall = level.ballFactory?.getBall();
+            console.log("Founder out of bounds", currentBall.position)
 
-        sling.bodyB = currentBall;
-        isFired = false;
+            Composite.remove(engine.world, currentBall);
+            eventHandler(new LevelEventStopped())
 
-        // Reset gravity before next shot (just in case strategy slinger skill is somehow still active)
-        engine.gravity.scale = settings.engine.defaults.gravity;
+            setNewFounder()
 
-        detector.bodies.push(currentBall);
-
-        Composite.add(engine.world, [currentBall]);
+            // Reset gravity before next shot (just in case strategy slinger skill is somehow still active)
+            engine.gravity.scale = settings.engine.defaults.gravity;
+        }
     });
 
     Events.on(engine, "afterUpdate", () => {
@@ -205,26 +233,22 @@ export function createLevel(
         if (collisions.length === 0) return;
 
         collisions.forEach((collision) => {
-            const bodyATarget = level.targets.indexOf(collision.bodyA);
-            const bodyBTarget = level.targets.indexOf(collision.bodyB);
+            const targetHit = level.targets.find(b => b === collision.bodyA) ?? level.targets.find(b => b === collision.bodyB);
+            if (!targetHit) return;
 
-            if (bodyATarget >= 0 || bodyBTarget >= 0) {
-                if (collision.bodyA.speed <= settings.targets.minimalSpeedToHit && collision.bodyB.speed <= settings.targets.minimalSpeedToHit) {
-                    return;
-                }
-
-                eventHandler(new LevelEvent(LevelEvent.EVENT_HIT));
-
-                const targetToRemove =
-                    level.targets[Math.max(bodyATarget, bodyBTarget)];
-
-                level.removeBody(targetToRemove)
-                Composite.remove(engine.world, targetToRemove);
-
-                detector.bodies = detector.bodies.filter((body) => {
-                    return body !== targetToRemove;
-                });
+            if (collision.bodyA.speed <= settings.targets.minimalSpeedToHit && collision.bodyB.speed <= settings.targets.minimalSpeedToHit) {
+                return;
             }
+
+            console.log("Target hit", targetHit.plugin.lotum.target, targetHit.plugin.lotum.target.name)
+            eventHandler(new LevelEventHit(targetHit.plugin.lotum.target))
+
+            level.removeBody(targetHit)
+            Composite.remove(engine.world, targetHit)
+
+            detector.bodies = detector.bodies.filter((body) => {
+                return body !== targetHit
+            });
         });
     });
 
@@ -316,9 +340,9 @@ export function createLevel(
     // });
 
     // an example of using mouse events on a mouse
-    Events.on(mouseConstraint, 'startdrag', function (event) {
-        console.log('startdrag', event);
-    });
+    //Events.on(mouseConstraint, 'startdrag', function (event) {
+    //    console.log('startdrag', event);
+    //});
 
     Composite.add(engine.world, [currentBall, sling, mouseConstraint]);
 
@@ -326,7 +350,7 @@ export function createLevel(
         skills: {
             powerPatron: () => {
                 console.log("Triggered skill: Power Patron");
-                Body.setSpeed(currentBall, currentBall.speed * 5);
+                Body.setSpeed(currentBall, 40);
             },
             strategySlinger: () => {
                 console.log("Triggered skill: Strategy Slinger");

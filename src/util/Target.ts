@@ -47,9 +47,10 @@ import Yann from "./../assets/targets/Yann.png";
 
 export class Target {
     constructor(
-        readonly startPosition: {x: number, y: number},
+        readonly startPosition: { x: number, y: number },
         readonly name: TargetName = getRandomTargetName(),
     ) {}
+
     get imagePath() {
         return targets[this.name]
     }
@@ -116,7 +117,7 @@ const getRandomTargetName = (() => {
     const possibleTargets = getRandomTargets(Object.keys(targets).length)
     let unusedTargets = [...possibleTargets]
     return () => {
-        if(unusedTargets.length === 0) {
+        if (unusedTargets.length === 0) {
             unusedTargets = [...possibleTargets]
         }
 

@@ -22,6 +22,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.11",
     "@types/matter-js": "^0.19.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",

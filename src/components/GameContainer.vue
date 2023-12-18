@@ -6,7 +6,6 @@ import {ref, watch, onMounted, computed} from "vue";
 import { levelState } from "../game/levelState.ts";
 import { gameState } from "../game/gameState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
-import { SoundSystem } from "./../SoundSystem.ts";
 import {emitter} from "../util/eventBus.ts";
 import StartScreen from "./StartScreen.vue";
 import EndScreen from "./EndScreen.vue";
@@ -18,8 +17,6 @@ const levelNamesIndex = ref(-1);
 const levelName = computed(() => levelNames[levelNamesIndex.value])
 
 const isLevelFinished = ref(false);
-
-new SoundSystem();
 
 watch(
   () => levelState.remainingTargetsCount,
