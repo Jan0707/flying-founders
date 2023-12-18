@@ -15,6 +15,7 @@ import {
 } from "matter-js";
 import {Founder} from "../Founders.ts";
 import {Target} from "../../util/Target.ts";
+import {playSound} from "../../SoundSystem.ts";
 
 export abstract class LevelEvent {
     readonly name: 'fired' | 'hit' | 'stopped' | 'update_founder'
@@ -136,6 +137,9 @@ export function createLevel(
                 });
             }
         });
+
+        playSound('smallExplosion')
+        playSound('bells')
     }
 
     function createTeabag(engine: Engine, positionX: number, positionY: number) {
@@ -180,6 +184,17 @@ export function createLevel(
         );
     }
 
+    function removeTarget(target: Body) {
+        eventHandler(new LevelEventHit(target.plugin.lotum.target))
+
+        level.removeBody(target)
+        Composite.remove(engine.world, target)
+
+        detector.bodies = detector.bodies.filter((body) => {
+            return body !== target
+        });
+    }
+
     Events.on(mouseConstraint, "enddrag", (event) => {
         if ('body' in event && event.body === currentBall) {
             isFired = true;
@@ -197,11 +212,10 @@ export function createLevel(
         setNewFounder()
     });
 
-    // removes founders when out of bounds
+    // out of bounds checks
     Events.on(engine, "afterUpdate", () => {
-        const {x, y} = currentBall.position;
-        if (y < 0 || x < 0 || x > 1200 || y > 1000) {
 
+        onOutOfBounds(currentBall, () => {
             console.log("Founder out of bounds", currentBall.position)
 
             Composite.remove(engine.world, currentBall);
@@ -211,6 +225,20 @@ export function createLevel(
 
             // Reset gravity before next shot (just in case strategy slinger skill is somehow still active)
             engine.gravity.scale = settings.engine.defaults.gravity;
+        })
+
+        level.targets.forEach((target) => {
+            onOutOfBounds(target, () => {
+                console.log("Target out of bounds", target.position)
+                removeTarget(target)
+            })
+        })
+
+        function onOutOfBounds(body: Body, callback: () => void) {
+            const {x, y} = body.position;
+            if (y < 0 || x < 0 || x > 1200 || y > 1000) {
+                callback()
+            }
         }
     });
 
@@ -241,14 +269,8 @@ export function createLevel(
             }
 
             console.log("Target hit", targetHit.plugin.lotum.target, targetHit.plugin.lotum.target.name)
-            eventHandler(new LevelEventHit(targetHit.plugin.lotum.target))
 
-            level.removeBody(targetHit)
-            Composite.remove(engine.world, targetHit)
-
-            detector.bodies = detector.bodies.filter((body) => {
-                return body !== targetHit
-            });
+            removeTarget(targetHit)
         });
     });
 
@@ -351,9 +373,11 @@ export function createLevel(
             powerPatron: () => {
                 console.log("Triggered skill: Power Patron");
                 Body.setSpeed(currentBall, 40);
+                playSound('wooDominik')
             },
             strategySlinger: () => {
                 console.log("Triggered skill: Strategy Slinger");
+                playSound('allrightyright')
                 // Create Teabags
                 createTeabag(engine, currentBall.position.x - 10, currentBall.position.y + 20);
                 createTeabag(engine, currentBall.position.x + 10, currentBall.position.y + 20);
@@ -365,6 +389,7 @@ export function createLevel(
             explodingLaugh: () => {
                 console.log("Triggered skill: exploding Laugh");
                 createExplosion(engine, currentBall, 1.5);
+                playSound('laughSebastian')
             }
         },
     };

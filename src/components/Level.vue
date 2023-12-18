@@ -30,6 +30,7 @@ function eventHandler(event: LevelEvent) {
   } else if (event instanceof LevelEventFired) {
     levelState.incrementShots()
     levelState.isBallFlying = true;
+    playSound('fired')
   } else if (event instanceof LevelEventStopped) {
     levelState.isBallFlying = false;
   } else if (event instanceof LevelEventHit) {
