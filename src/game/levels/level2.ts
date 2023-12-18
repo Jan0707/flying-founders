@@ -144,6 +144,8 @@ function getLevel(): Level {
         //Stack 3
         objectFactory.createObjectFromTopLeft("glass", 630, 400, 20, 80, 0),
         objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 110, 0.5 * Math.PI),
+
+        objectFactory.createPresent_45_60(580,510)
     ]
 
     return level;

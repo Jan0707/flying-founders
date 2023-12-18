@@ -26,6 +26,8 @@ function getLevel(): Level {
 
         objectFactory.createObjectFromTopLeft("platform", 660, 160, 10, 80, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("platform", 740, 160, 10, 80, 0.5 * Math.PI),
+
+        objectFactory.createObjectFromTopLeft("platform", 1181, 0, 70, 820, 0),
     ]
 
     level.objectsMovable = [
@@ -87,7 +89,15 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1010, 390, 10, 80, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("wood", 1090, 390, 10, 80, 0.5 * Math.PI),
 
+        objectFactory.createPresent_45_60(810,625)
     ]
+
+    level.targets = [
+        objectFactory.createTarget(possibleTargets.pop(), 1095, 250),
+        objectFactory.createTarget(possibleTargets.pop(), 200, 50),
+    ]
+
+    level.misc = [];
 
     return level;
 }

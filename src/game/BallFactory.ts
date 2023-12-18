@@ -11,21 +11,21 @@ export class BallFactory {
     getBall() {
         const founder = this.level.founders.next
 
-        const ball = Bodies.circle(
-            this.level.slingPosition.x,
-            this.level.slingPosition.y,
-            30,
-            {
-                render: {
-                    sprite: {
-                        texture: founder.imagePath,
-                        xScale: 60 / 175,
-                        yScale: 60 / 175,
-                    },
-                },
-                ...founder.additionalOptions,
-            },
-        );
+    const ball = Bodies.circle(
+      this.level.slingPosition.x,
+      this.level.slingPosition.y,
+      40,
+      {
+        render: {
+          sprite: {
+            texture: founder.imagePath,
+            xScale: 80/175,
+            yScale: 80/175,
+          },
+        },
+          ...founder.additionalOptions,
+      },
+    );
 
         ball.plugin.lotum = {
             founder

@@ -88,6 +88,8 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1030, 490, 10, 150, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("wood", 1030, 410, 10, 80, 0),
         objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
+
+        objectFactory.createPresent_45_60(330,690)
     ]
 
     return level;

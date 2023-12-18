@@ -2,6 +2,8 @@ import {Target} from "../util/Target.ts";
 import {Bodies, Body} from "matter-js";
 import {GameObject, ObjectLength, ObjectType, ObjectWidth} from "../util/objectList.ts";
 
+import PRESENT_45_60 from "./../assets/objects/present_45_60.png"
+
 class ObjectFactory {
 
     createTargetBodies(targets: Target[]) {
@@ -23,6 +25,26 @@ class ObjectFactory {
                 },
             },
         });
+    }
+
+    createPresent_45_60(x: number, y:number) {
+        const options = {
+            render: {
+                sprite: {
+                    texture: PRESENT_45_60,
+                    xScale: 1,
+                    yScale: 1,
+                },
+            },
+            plugin: {
+                lotum: {
+                    explodable: true,
+                }
+            }
+        };
+
+        const createdObject = Bodies.rectangle(x, y, 45, 60, options);
+        return createdObject;
     }
 
     getCenterFromTopLeftCorner(topX: number, topY: number, width: number, height: number, rotation: number): {
