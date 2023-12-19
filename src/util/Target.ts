@@ -16,6 +16,7 @@ import Dennis from "./../assets/targets/Dennis.png";
 import Diana from "./../assets/targets/Diana.png";
 import Etienne from "./../assets/targets/Etienne.png";
 import Fabian from "./../assets/targets/Fabian.png";
+import Fabi from "./../assets/targets/Fabi.png";
 import Falk from "./../assets/targets/Falk.png";
 import Gabriel from "./../assets/targets/Gabriel.png";
 import Garrelt from "./../assets/targets/Garrelt.png";
@@ -75,6 +76,7 @@ const targets = {
     Diana,
     Etienne,
     Fabian,
+    Fabi,
     Falk,
     Gabriel,
     Garrelt,
