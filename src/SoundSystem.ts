@@ -1,6 +1,5 @@
 import {Howl} from "howler";
 
-import SOUND_PARTYLICIOUS from "./assets/sounds/partylicious.mp3";
 import shoot from "./assets/sounds/shoot.mp3";
 
 import AlisaSound from "./assets/sounds/alisa.mp3"
@@ -27,6 +26,7 @@ import employee2 from "./assets/sounds/employee-2.mp3"
 import employee3 from "./assets/sounds/employee-3.mp3"
 import employee4 from "./assets/sounds/employee-4.mp3"
 import employee5 from "./assets/sounds/employee-5.mp3"
+import levelSuccess from "./assets/sounds/level-success.mp3"
 
 import {TargetName} from "./util/Target.ts";
 
@@ -66,7 +66,7 @@ const howls: Partial<Record<TargetName, Howl>> &
     fired: new Howl({src: [shoot]}),
     bells: new Howl({src: [bells]}),
     smallExplosion: new Howl({src: [smallExplosion]}),
-    levelSuccess: new Howl({src: [SOUND_PARTYLICIOUS]}),
+    levelSuccess: new Howl({src: [levelSuccess]}),
     employee1: new Howl({src: [employee1]}),
     employee2: new Howl({src: [employee2]}),
     employee3: new Howl({src: [employee3]}),
