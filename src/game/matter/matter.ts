@@ -18,6 +18,8 @@ import { Founder } from "../Founders.ts";
 import { Target } from "../../util/Target.ts";
 import { playSound } from "../../SoundSystem.ts";
 import { when } from "../../util/when.ts";
+import { emitter } from "../../util/eventBus.ts";
+import * as Matter from "matter-js";
 
 export abstract class LevelEvent {
   readonly name: "fired" | "hit" | "stopped" | "update_founder";
@@ -392,27 +394,9 @@ export function createLevel(
       }
     });
   });
-  //Commented because it causes crash when combined with beamer. Can we limit it to less objects?
-  // Matter.Events.on(mouseConstraint, "mousedown", function () {
-  //   // When the mouse is down, set the objects to static to prevent dragging
-  //   level.objectsMovable
-  //     .concat(level.targets)
-  //     .forEach((object) => Matter.Body.setStatic(object, true));
-
-  //   emitter.emit("canvasClicked");
-  // });
-
-  // Matter.Events.on(mouseConstraint, "mouseup", function () {
-  //   // When the mouse is up, set the object back to not static to enable physics interaction and collision
-  //   level.objectsMovable
-  //     .concat(level.targets)
-  //     .forEach((object) => Matter.Body.setStatic(object, false));
-  // });
-
-  // an example of using mouse events on a mouse
-  //Events.on(mouseConstraint, 'startdrag', function (event) {
-  //    console.log('startdrag', event);
-  //});
+  Matter.Events.on(mouseConstraint, "mousedown", function () {
+    emitter.emit("canvasClicked");
+  });
 
   Composite.add(engine.world, [currentBall, sling, mouseConstraint]);
 
