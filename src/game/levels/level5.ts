@@ -11,9 +11,8 @@ import {Target, TargetName} from "../../util/Target.ts";
 import {Bodies, Composite, Composites} from "matter-js";
 
 function getLevel(): Level {
-    const numberOfTargets = 9; // You can adjust this number as needed
 
-    const conceptContributors: TargetName[] = [
+    const contributors: TargetName[] = [
         "Alisa",
         "Diana",
         "Kayleigh",
@@ -28,11 +27,11 @@ function getLevel(): Level {
     ]
 
 
-    const targets = Array.from({length: numberOfTargets}, (_, i) => new Target(
+    const targets = contributors.map((c) => new Target(
         {
             x: Math.floor(Math.random() * 50) + 180,
             y: Math.floor(Math.random() * 400) - 1000
-        }, conceptContributors[i]))
+        }, c))
 
     const level = new Level(
         5,
@@ -49,7 +48,7 @@ function getLevel(): Level {
     const stairCount = 35;
 
     // Loop to create each step
-    var stairstack = Composites.stack(0, 0, stairCount, 2, 0, 0, function (x, y, column) {
+    const stairstack = Composites.stack(0, 0, stairCount, 2, 0, 0, function (x, y, column) {
         return Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
             isStatic: true, friction: 0.01, frictionstatic: 0,
             render: {
@@ -60,7 +59,7 @@ function getLevel(): Level {
         });
     });
 
-    let lotumbanner = Bodies.rectangle(175, 700, 346, 102, {
+    const lotumbanner = Bodies.rectangle(175, 700, 346, 102, {
         isStatic: true,
         render: {
             sprite: {
@@ -69,11 +68,11 @@ function getLevel(): Level {
         }
     });
 
-    let lotumbannercomposite = Composite.create({
-        bodies: lotumbanner // Füge den Körper der Composite hinzu
+    const lotumbannercomposite = Composite.create({
+        bodies: [lotumbanner] // Füge den Körper der Composite hinzu
     });
 
-    let Schriftzug_Concept = Bodies.rectangle(170, -700, 342, 129, {
+    const Schriftzug_Concept = Bodies.rectangle(170, -700, 342, 129, {
         friction: 0.1, frictionstatic: 0,
         render: {
             sprite: {
@@ -82,23 +81,19 @@ function getLevel(): Level {
         }
     });
 
-    //stairstack.render.sprite.texture = STAIRS_100_500;
-
     level.objectsStatic = [
         objectFactory.createObjectFromTopLeft("ground", 0, 0, 5, -1000, 0),
         objectFactory.createObjectFromTopLeft("ground", 1280, 820, 5, 5, 0),
     ];
 
-    level.objectsMovable = [
-        //objectFactory.createObjectFromTopLeft("wood", 170, -700, 100, 350, 0),
-
-    ];
-
     level.misc = [
-        stairstack,
-        lotumbannercomposite,
         Schriftzug_Concept
     ];
+
+    level.composites = [
+        stairstack,
+        lotumbannercomposite,
+    ]
 
     return level;
 }

@@ -1,157 +1,91 @@
-import { Level } from "../Level.ts";
+import {Level} from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import { shuffle } from "../../util/shuffleArray.ts";
 
-import * as Matter from "matter-js";
-
-import { settings } from "../settings.ts";
-import {targetList} from "../../util/targetList.ts";
+import {settings} from "../settings.ts";
 
 import STAIRS_100_1000 from "./../../assets/objects/stairs_100_1000.png";
 import LOTUM_BANNER_346_102 from "./../../assets/objects/lotum_banner_346_102.svg";
 import LEVEL_BACKGROUND from "./../../assets/levels/credit_background.jpg";
 import SZ_DEVELOPMENT_342_129 from "./../../assets/objects/sz_development_342_129.png";
+import {Target, TargetName} from "../../util/Target.ts";
+import {Bodies, Composite, Composites} from "matter-js";
 
 function getLevel(): Level {
-  const level = new Level();
-  const possibleTargets = shuffle([
-    targetList.Sven,
-    targetList.Julian, 
-    targetList.Jan_G,
-    targetList.Wessel,
-    targetList.Anton,
-    targetList.Richard
-    targetList.Dave
-    ]);
-  level.slingPosition = { x: 1500, y: 1500 };
+    const contributors: TargetName[] = [
+        "Sven",
+        "Julian",
+        "Jan_G",
+        "Wessel",
+        "Anton",
+        "Richard",
+        "Dave"
+    ]
+    const targets = contributors.map((c) => new Target({
+        x: Math.floor(Math.random() * 50) + 180,
+        y: Math.floor(Math.random() * 400) - 1000
+    }, c))
+    const level = new Level(7, LEVEL_BACKGROUND, targets, {x: 1500, y: 1500});
 
-  const Bodies = Matter.Bodies;
-  const Body = Matter.Body;
-  const Constraint = Matter.Constraint;
-  const Composite = Matter.Composite;
-  const Composites = Matter.Composites;
+    settings.targets.minimalSpeedToHit = 100;
+    settings.objects.eventuallyBreakingSpeedStart = 100;
+    settings.objects.instantBreakingSpeed = 100;
 
-  level.setStockpile(["sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik","sebastian", "jens", "dominik"]);
+    // Define the number of steps
+    const stairCount = 35;
 
-  settings.targets.minimalSpeedToHit = 100;
-  settings.objects.eventuallyBreakingSpeedStart = 100;
-  settings.objects.instantBreakingSpeed = 100;
+    // Loop to create each step
+    const stairstack = Composites.stack(0, 0, stairCount, 2, 0, 0, function (x, y, column) {
+        return Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
+            isStatic: true, friction: 0.01, frictionstatic: 0,
+            render: {
+                sprite: {
+                    texture: STAIRS_100_1000 // Provide the correct path to your texture image here
+                }
+            }
+        });
+    });
 
-  const woodOptions = {
-    restitution: 0.5, friction:0.01, frictionstatic: 0,
-    plugin: {
-      lotum: {
-        breakable: "eventually",
-      }
-    }
-  };
-
-  
-
-  const glassOptions = {
-    render: {
-      fillStyle: "lightblue",
-    },
-    restitution: 0.05, friction:0.01, frictionstatic: 0,
-    plugin: {
-      lotum: {
-        breakable: "instantly",
-      }
-    }
-  };
-// Define the number of steps
-const stairCount = 35;
-
-// Array to hold all the steps
-var stairstack = [];
-
-
-
-// Loop to create each step
-  var stairstack = Matter.Composites.stack(0, 0, stairCount, 2, 0, 0, function(x, y, column) {
-    return Matter.Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
-        isStatic: true, friction:0.01, frictionstatic: 0,
+    const lotumbanner = Bodies.rectangle(175, 700, 346, 102, {
+        isStatic: true,
         render: {
             sprite: {
-                texture: STAIRS_100_1000 // Provide the correct path to your texture image here
+                texture: LOTUM_BANNER_346_102 // Stelle sicher, dass dies ein gültiger Pfad/URL ist
             }
         }
     });
-});
 
-let lotumbanner = Matter.Bodies.rectangle(175, 700, 346, 102, {
-  isStatic: true,
-  render: {
-    sprite: {
-      texture: LOTUM_BANNER_346_102 // Stelle sicher, dass dies ein gültiger Pfad/URL ist
-    }
-  }
-});
-
-let lotumbannercomposite = Matter.Composite.create({
-  bodies: lotumbanner // Füge den Körper der Composite hinzu
-});
+    const lotumbannercomposite = Composite.create({
+        bodies: [lotumbanner] // Füge den Körper der Composite hinzu
+    });
 
 
-let Schriftzug_Development = Bodies.rectangle(170, -700, 342, 129, {
-  friction:0.01, frictionstatic: 0,
-  render: {
-    sprite: {
-      texture: SZ_DEVELOPMENT_342_129 // Provide the correct path to your texture image here
-    }
-  } 
-});
+    const Schriftzug_Development = Bodies.rectangle(170, -700, 342, 129, {
+        friction: 0.01, frictionstatic: 0,
+        render: {
+            sprite: {
+                texture: SZ_DEVELOPMENT_342_129 // Provide the correct path to your texture image here
+            }
+        }
+    });
 
-  //stairstack.render.sprite.texture = STAIRS_100_500;
-
-  level.objectsStatic = [
-    objectFactory.createObjectFromTopLeft("ground", 0, 0, 5, -1000, 0),
-    objectFactory.createObjectFromTopLeft("ground", 1280, 820, 5, 5, 0),
-  ];
-
-  level.objectsMovable = [
-    //objectFactory.createObjectFromTopLeft("wood", 170, -700, 100, 350, 0),
-
-  ];
+    level.objectsStatic = [
+        objectFactory.createObjectFromTopLeft("ground", 0, 0, 5, -1000, 0),
+        objectFactory.createObjectFromTopLeft("ground", 1280, 820, 5, 5, 0),
+    ];
 
 
-  const numberOfTargets = 9; // You can adjust this number as needed
+    level.misc = [
+        Schriftzug_Development
+    ];
 
-     // Initialize an array to store the coordinate pairs
-        let values = [];
+    level.composites = [
+        stairstack,
+        lotumbannercomposite,
+    ]
 
-    for (let i = 0; i < numberOfTargets; i++) {
-    // Generate a random y coordinate between -1000 and 0
-    const y = Math.floor(Math.random() * (1 - (-1000))) - 1000;
-
-    // Generate a random x coordinate between 180 and 250
-    const x = Math.floor(Math.random() * (250 - 180 + 1)) + 180;
-
-    // Add the coordinates to the values array
-    values.push([x, y]); // Replace with objectFactory.createTarget(possibleTargets.pop(), x, y); if necessary
-    }
-
-    // Use the values array to create objects
-    level.targets = [
-    ...values.map(([x, y]) => {
-        return objectFactory.createTarget(possibleTargets.pop(), x, y);
-    }),
-  ];
-
-  
-  level.background = LEVEL_BACKGROUND;  
-  
-  level.misc = [
-    stairstack,
-    lotumbannercomposite,
-    Schriftzug_Concept
-  ];
-
-  return level;
+    return level;
 }
 
 
-
-
-export { getLevel };
+export {getLevel};
 
