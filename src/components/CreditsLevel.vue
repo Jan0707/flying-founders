@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 
-import {CreditsName, getCreditsLevelByName} from "../game/levelProvider.ts";
-import {createLevel, LevelEvent, LevelEventHit} from "./../game/matter/matter.ts";
-import {levelState} from "./../game/levelState.ts";
-import {playSound} from "../SoundSystem.ts";
+import { CreditsName, getCreditsLevelByName } from "../game/levelProvider.ts";
+import {
+  createLevel,
+  LevelEvent,
+  LevelEventHit,
+} from "./../game/matter/matter.ts";
+import { levelState } from "./../game/levelState.ts";
+import { playSound } from "../SoundSystem.ts";
 
 const props = defineProps<{ levelName: CreditsName }>();
 
@@ -12,16 +16,15 @@ const domElement = ref();
 const level = ref();
 
 const wrapperStyle = ref({
-  background: "none"
+  background: "none",
 });
 
 function eventHandler(event: LevelEvent) {
-
   if (event instanceof LevelEventHit) {
-    console.log("Hit target", event.target)
+    console.log("Hit target", event.target);
     levelState.incrementPoints(100);
     levelState.decrementRemainingTargetsCount();
-    playSound(event.target.name)
+    playSound(event.target.name);
   } else {
     console.error("Encountered unhandled Level Event", event);
   }
@@ -30,7 +33,7 @@ function eventHandler(event: LevelEvent) {
 onMounted(function () {
   levelState.reset();
 
-  const createdLevel = getCreditsLevelByName(props.levelName)
+  const createdLevel = getCreditsLevelByName(props.levelName);
   levelState.setRemainingTargetsCount(createdLevel.targets.length);
   level.value = createLevel(domElement.value, createdLevel, eventHandler);
 
@@ -41,7 +44,7 @@ onMounted(function () {
     };
   } else {
     wrapperStyle.value = {
-      background: "transparent"
+      background: "transparent",
     };
   }
 });

@@ -18,9 +18,9 @@ const settings = {
   },
   engine: {
     defaults: {
-      gravity: 0.001
-    }
-  }
+      gravity: 0.001,
+    },
+  },
 };
 
 export { settings };

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import {onMounted} from "vue";
-import {gameState} from "../game/gameState.ts";
+import { onMounted } from "vue";
+import { gameState } from "../game/gameState.ts";
 import RiveAnimation from "./rive-animation.vue";
 import animationAsset from "../assets/animations/flying_founders_lobby.riv?url";
-import type {Event} from "@rive-app/canvas";
+import type { Event } from "@rive-app/canvas";
 
-onMounted(function () {
-});
+onMounted(function () {});
 
 const startGame = function () {
   gameState.hasStarted = true;
@@ -14,7 +13,7 @@ const startGame = function () {
 
 const handleAnimationStateChange = function (event: Event) {
   if (Array.isArray(event.data) && event.data?.[0] === "exit") {
-    startGame()
+    startGame();
   }
 };
 </script>
@@ -22,10 +21,10 @@ const handleAnimationStateChange = function (event: Event) {
 <template>
   <div class="start-screen">
     <rive-animation
-        class="rive-animation"
-        :src="animationAsset"
-        :state-machines="['state_machine']"
-        @state-change="(event) => handleAnimationStateChange(event)"
+      class="rive-animation"
+      :src="animationAsset"
+      :state-machines="['state_machine']"
+      @state-change="(event) => handleAnimationStateChange(event)"
     />
   </div>
 </template>

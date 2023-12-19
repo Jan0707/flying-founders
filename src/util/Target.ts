@@ -47,102 +47,102 @@ import Wessel from "./../assets/targets/Wessel.png";
 import Yann from "./../assets/targets/Yann.png";
 
 export class Target {
-    constructor(
-        readonly startPosition: { x: number, y: number },
-        readonly name: TargetName = getRandomTargetName(),
-    ) {}
+  constructor(
+    readonly startPosition: { x: number; y: number },
+    readonly name: TargetName = getRandomTargetName(),
+  ) {}
 
-    get imagePath() {
-        return targets[this.name]
-    }
+  get imagePath() {
+    return targets[this.name];
+  }
 }
 
 const targets = {
-    AK,
-    Alex,
-    Alexandra,
-    Alisa,
-    Andrzej,
-    Anja,
-    Anselm,
-    Anton,
-    Arthur,
-    Beko,
-    Beni,
-    Carlo,
-    Dave,
-    David,
-    Dennis,
-    Diana,
-    Etienne,
-    Fabian,
-    Fabi,
-    Falk,
-    Gabriel,
-    Garrelt,
-    Grebiel,
-    Jan_D,
-    Jan_G,
-    Jo,
-    Joel,
-    Julia,
-    Julian,
-    Kayleigh,
-    Lars,
-    Maren,
-    Matthias,
-    Michael,
-    Petra,
-    Richard,
-    Robin,
-    Sasha,
-    Sebi,
-    Sinead,
-    Sophie,
-    Sven,
-    Thomas,
-    Tobias,
-    Vanessa,
-    Wessel,
-    Yann,
-} as const
+  AK,
+  Alex,
+  Alexandra,
+  Alisa,
+  Andrzej,
+  Anja,
+  Anselm,
+  Anton,
+  Arthur,
+  Beko,
+  Beni,
+  Carlo,
+  Dave,
+  David,
+  Dennis,
+  Diana,
+  Etienne,
+  Fabian,
+  Fabi,
+  Falk,
+  Gabriel,
+  Garrelt,
+  Grebiel,
+  Jan_D,
+  Jan_G,
+  Jo,
+  Joel,
+  Julia,
+  Julian,
+  Kayleigh,
+  Lars,
+  Maren,
+  Matthias,
+  Michael,
+  Petra,
+  Richard,
+  Robin,
+  Sasha,
+  Sebi,
+  Sinead,
+  Sophie,
+  Sven,
+  Thomas,
+  Tobias,
+  Vanessa,
+  Wessel,
+  Yann,
+} as const;
 
-export type TargetName = keyof typeof targets
+export type TargetName = keyof typeof targets;
 
 function getRandomTargets(count: number): TargetName[] {
-    const possibleTargets = Object.keys(targets) as TargetName[]
-    const shuffledTargets = shuffle(possibleTargets)
-    return shuffledTargets.slice(0, count)
+  const possibleTargets = Object.keys(targets) as TargetName[];
+  const shuffledTargets = shuffle(possibleTargets);
+  return shuffledTargets.slice(0, count);
 }
 
 const getRandomTargetName = (() => {
-    const possibleTargets = getRandomTargets(Object.keys(targets).length)
-    let unusedTargets = [...possibleTargets]
-    return () => {
-        if (unusedTargets.length === 0) {
-            unusedTargets = [...possibleTargets]
-        }
-
-        return unusedTargets.pop()!
+  const possibleTargets = getRandomTargets(Object.keys(targets).length);
+  let unusedTargets = [...possibleTargets];
+  return () => {
+    if (unusedTargets.length === 0) {
+      unusedTargets = [...possibleTargets];
     }
-})()
 
+    return unusedTargets.pop()!;
+  };
+})();
 
 function shuffle(array: TargetName[]) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
 
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex -= 1
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex]
-        array[currentIndex] = array[randomIndex]
-        array[randomIndex] = temporaryValue
-    }
-
-    return array
+  return array;
 }

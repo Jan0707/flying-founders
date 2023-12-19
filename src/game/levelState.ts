@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import {Founder} from "./Founders.ts";
+import { Founder } from "./Founders.ts";
 
 export const levelState = reactive({
   shots: 0,
