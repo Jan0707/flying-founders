@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { levelState } from "../../game/levelState.ts";
-import { emitter } from "../../util/eventBus.ts";
 import { onMounted } from "vue";
+import {playSound} from "../../SoundSystem.ts";
 
 defineProps<{ levelName: string }>();
 
 const emit = defineEmits(["continue"]);
 
 onMounted(function () {
-  emitter.emit("playSound", { name: "openLevelFinishedDialog" });
+  playSound('levelSuccess')
 });
 </script>
 

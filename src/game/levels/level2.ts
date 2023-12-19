@@ -2,96 +2,29 @@ import * as Matter from "matter-js";
 
 import {Level} from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import {shuffle} from "../../util/shuffleArray.ts";
-import {targetList} from "../../util/targetList.ts";
+import {Target} from "../../util/Target.ts";
 
 import LEVEL_BACKGROUND from "./../../assets/levels/level_2.jpg";
 
 const Constraint = Matter.Constraint;
 
 function getLevel(): Level {
-    const level = new Level();
 
-    level.background = LEVEL_BACKGROUND;
+    const targets = [
+        new Target({x: 1095, y: 248}),
+        new Target({x: 410, y: 625}),
+        new Target({x: 950, y: 700}),
+        new Target({x: 950, y: 280}),
+        new Target({x: 950, y: 380}),
+        new Target({x: 360, y: 90}),
+    ]
 
-    const possibleTargets = shuffle([
-        targetList.AK,
-        targetList.Alex,
-        targetList.Alexandra,
-        targetList.Alisa,
-        targetList.Andrzej,
-        targetList.Anja,
-        targetList.Anselm,
-        targetList.Anton,
-        targetList.Arthur,
-        targetList.Beko,
-        targetList.Beni,
-        targetList.Carlo,
-        targetList.Dave,
-        targetList.David,
-        targetList.Dennis,
-        targetList.Diana,
-        targetList.Etienne,
-        targetList.Fabian,
-        targetList.Falk,
-        targetList.Gabriel,
-        targetList.Garrelt,
-        targetList.Grebiel,
-        targetList.Jan_D,
-        targetList.Jan_G,
-        targetList.Jo,
-        targetList.Joel,
-        targetList.Julia,
-        targetList.Julian,
-        targetList.Kayleigh,
-        targetList.Lars,
-        targetList.Maren,
-        targetList.Matthias,
-        targetList.Michael,
-        targetList.Petra,
-        targetList.Richard,
-        targetList.Robin,
-        targetList.Sasha,
-        targetList.Sebi,
-        targetList.Sinead,
-        targetList.Sophie,
-        targetList.Sven,
-        targetList.Thomas,
-        targetList.Tobias,
-        targetList.Vanessa,
-        targetList.Wessel,
-        targetList.Yann,
-    ]);
-    level.slingPosition = {x: 150, y: 650};
+    const level = new Level(2, LEVEL_BACKGROUND, targets, {x: 150, y: 650})
 
-    level.setStockpile([
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-    ]);
-
-    var Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
+    const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 260, 140, 180, 10, 0);
 
     //var group = Body.nextGroup(true);
-    var ropeC = Matter.Composites.stack(275, 50, 1, 3, 5, 5, function (x, y) {
+    let ropeC = Matter.Composites.stack(275, 50, 1, 3, 5, 5, function (x: number, y: number) {
         return Matter.Bodies.rectangle(x, y, 5, 25/*, { collisionFilter: { group: group } }*/);
     });
     Matter.Composites.chain(ropeC, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
@@ -101,7 +34,7 @@ function getLevel(): Level {
         pointA: {x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y - 5},
         damping: 0.1
     }));
-    var ropeB = Matter.Composites.stack(435, 50, 1, 3, 5, 5, function (x, y) {
+    let ropeB = Matter.Composites.stack(435, 50, 1, 3, 5, 5, function (x: number, y: number) {
         return Matter.Bodies.rectangle(x, y, 5, 25);
     });
     Matter.Composites.chain(ropeB, 0, 0.5, 0, -0.5, {stiffness: 1, damping: 0.1});
@@ -159,12 +92,17 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("platform", 710, 290, 20, 300, 0.5 * Math.PI),
         objectFactory.createObjectFromTopLeft("platform", 860, 210, 10, 80, 0),
         objectFactory.createObjectFromTopLeft("platform", 710, 405, 20, 300, 0.5 * Math.PI),
-    ];
+    ]
+
     level.misc = [
+        Beamerbar
+    ]
+
+    level.composites = [
         ropeB,
         ropeC,
-        Beamerbar
-    ];
+    ]
+
     level.objectsMovable = [
         //Lift right
         objectFactory.createObjectFromTopLeft("glass", 1155, 590, 10, 160, 0),
@@ -207,18 +145,8 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("glass", 630, 400, 20, 80, 0),
         objectFactory.createObjectFromTopLeft("wood", 630, 390, 10, 110, 0.5 * Math.PI),
 
-
         objectFactory.createPresent_45_60(580,510)
-    ];
-
-    level.targets = [
-        objectFactory.createTarget(possibleTargets.pop(), 1095, 248),
-        objectFactory.createTarget(possibleTargets.pop(), 410, 625),
-        objectFactory.createTarget(possibleTargets.pop(), 950, 700),
-        objectFactory.createTarget(possibleTargets.pop(), 950, 280),
-        objectFactory.createTarget(possibleTargets.pop(), 950, 380),
-        objectFactory.createTarget(possibleTargets.pop(), 360, 90),
-    ];
+    ]
 
     return level;
 }

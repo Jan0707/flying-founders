@@ -2,82 +2,57 @@
 import Level from "./Level.vue";
 import LevelInfo from "./LevelInfo.vue";
 import MenuItems from "./MenuItems.vue";
-import { ref, watch, onMounted } from "vue";
-import { levelState } from "../game/levelState.ts";
-import { gameState } from "../game/gameState.ts";
+import {ref, watch, onMounted, computed} from "vue";
+import {levelState} from "../game/levelState.ts";
+import {gameState} from "../game/gameState.ts";
 import LevelFinishedDialog from "./dialogs/LevelFinishedDialog.vue";
-import LevelLostDialog from "./dialogs/LevelLostDialog.vue";
-import { SoundSystem } from "./../SoundSystem.ts";
 import {emitter} from "../util/eventBus.ts";
 import StartScreen from "./StartScreen.vue";
 import EndScreen from "./EndScreen.vue";
+import {levelNames} from "../game/levelProvider.ts";
+import CreditsLevel from "./CreditsLevel.vue";
 
 const levelKeys = ref(1);
 const levelNamesIndex = ref(-1);
 
-const levelNames = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5"
-];
+const levelName = computed(() => levelNames[levelNamesIndex.value])
 
 const isLevelFinished = ref(false);
-const isLevelLost = ref(false);
-
-new SoundSystem();
 
 watch(
-  () => levelState.remainingTargetsCount,
-  () => {
-    if (levelState.remainingTargetsCount === 0) {
-      isLevelFinished.value = true;
-    }
-  },
-);
-
-watch(
-    () => levelState.remainingBallsCount,
+    () => levelState.remainingTargetsCount,
     () => {
-      if (levelState.remainingTargetsCount > 0 && levelState.remainingBallsCount === 0 && levelState.shots > 0
-    ) {
-        isLevelLost.value = true;
-      } else {
-        isLevelLost.value = false;
+      if (levelState.remainingTargetsCount === 0) {
+        isLevelFinished.value = true;
       }
     },
 );
 
 function reset() {
   levelKeys.value += 1;
+  levelState.reset();
 }
 
 function getNextLevel() {
+  console.log('next level')
   isLevelFinished.value = false;
 
+  console.log('levelNamesIndex', levelNamesIndex.value, levelNames.length - 1)
   if (levelNamesIndex.value < levelNames.length - 1) {
     levelNamesIndex.value++;
     reset();
   } else {
-   gameState.isGameOver = true;
-   gameState.hasWon = true;
+    gameState.isGameOver = true;
   }
 }
 
 onMounted(function () {
 
   getNextLevel();
- 
+
   window.addEventListener("keydown", (e) => {
     if (e.key === "s") {
       emitter.emit("triggerSkill");
-    }
-  });
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "5") {
-      levelNamesIndex.value = 3;
-      isLevelFinished.value = true;
     }
   });
   window.addEventListener("keydown", (e) => {
@@ -109,28 +84,25 @@ onMounted(function () {
 
 <template>
   <div class="game-container" v-if="!gameState.hasStarted">
-    <StartScreen />
+    <StartScreen/>
   </div>
-  <div class="game-container" v-if="gameState.hasStarted && gameState.isGameOver && gameState.hasWon">
-    <EndScreen />
+  <div class="game-container" v-else-if="gameState.isGameOver">
+    <CreditsLevel v-if="gameState.postGameScreen === 'concept'" :level-name="'concept'"/>
+    <CreditsLevel v-else-if="gameState.postGameScreen === 'design'" :level-name="'design'"/>
+    <CreditsLevel v-else-if="gameState.postGameScreen === 'development'" :level-name="'development'"/>
+    <EndScreen v-else/>
   </div>
-  <div class="game-container" v-if="gameState.hasStarted && !gameState.isGameOver">
+  <div class="game-container" v-else-if="!gameState.isGameOver">
     <div class="top-bar">
-      <LevelInfo />
-      <MenuItems @reset="reset" />
+      <LevelInfo/>
+      <MenuItems @reset="reset"/>
     </div>
-    <Level :key="levelKeys" :levelName="levelNames[levelNamesIndex]"/>
+    <Level :key="levelKeys" :levelName="levelName"/>
     <LevelFinishedDialog
         v-if="isLevelFinished"
         class="dialog"
         :levelName="levelName"
         @continue="getNextLevel()"
-    />
-    <LevelLostDialog
-        v-if="isLevelLost"
-        class="dialog"
-        :levelName="levelName"
-        @reset="reset()"
     />
   </div>
 </template>
@@ -158,5 +130,6 @@ onMounted(function () {
   position: absolute;
   top: 10%;
   left: 50%;
+  translate: -50%;
 }
 </style>

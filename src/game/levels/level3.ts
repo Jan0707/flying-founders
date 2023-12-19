@@ -1,88 +1,28 @@
 import {Level} from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
-import {shuffle} from "../../util/shuffleArray.ts";
-import {targetList} from "../../util/targetList.ts";
+import {Target} from "../../util/Target.ts";
 
 import LEVEL_BACKGROUND from "./../../assets/levels/level_3.jpg";
 
 function getLevel(): Level {
-    const level = new Level();
+    const targets = [
+        //Glass Boxes Balls
+        new Target({x: 430, y: 400}),
+        new Target({x: 730, y: 400}),
 
-    level.background = LEVEL_BACKGROUND;
+        //Table Balls
+        new Target({x: 508, y: 620}),
+        new Target({x: 731, y: 722}),
 
-    const possibleTargets = shuffle([
-        targetList.AK,
-        targetList.Alex,
-        targetList.Alexandra,
-        targetList.Alisa,
-        targetList.Andrzej,
-        targetList.Anja,
-        targetList.Anselm,
-        targetList.Anton,
-        targetList.Arthur,
-        targetList.Beko,
-        targetList.Beni,
-        targetList.Carlo,
-        targetList.Dave,
-        targetList.David,
-        targetList.Dennis,
-        targetList.Diana,
-        targetList.Etienne,
-        targetList.Fabian,
-        targetList.Falk,
-        targetList.Gabriel,
-        targetList.Garrelt,
-        targetList.Grebiel,
-        targetList.Jan_D,
-        targetList.Jan_G,
-        targetList.Jo,
-        targetList.Joel,
-        targetList.Julia,
-        targetList.Julian,
-        targetList.Kayleigh,
-        targetList.Lars,
-        targetList.Maren,
-        targetList.Matthias,
-        targetList.Michael,
-        targetList.Petra,
-        targetList.Richard,
-        targetList.Robin,
-        targetList.Sasha,
-        targetList.Sebi,
-        targetList.Sinead,
-        targetList.Sophie,
-        targetList.Sven,
-        targetList.Thomas,
-        targetList.Tobias,
-        targetList.Vanessa,
-        targetList.Wessel,
-        targetList.Yann,
-    ]);
-    level.slingPosition = {x: 100, y: 650};
+        //Shelf Balls
+        //new Target({x: 1070, y: 540}),
+        new Target({x: 1120, y: 540}),
 
-    level.setStockpile([
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-        "sebastian",
-        "jens",
-        "dominik",
-    ]);
+        //new Target({x: 1070, y: 440}),
+        new Target({x: 1120, y: 440}),
+        ]
+
+    const level = new Level(3, LEVEL_BACKGROUND, targets)
 
     level.objectsStatic = [
         //Ground
@@ -99,7 +39,7 @@ function getLevel(): Level {
 
         // Back wall, NO asset available
         objectFactory.createObjectFromTopLeft("platform", 1181, 0, 70, 820, 0),
-    ];
+    ]
 
     level.objectsMovable = [
         //Table 1
@@ -150,26 +90,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 1170, 410, 10, 80, 0),
 
         objectFactory.createPresent_45_60(330,690)
-    ];
-
-    level.targets = [
-        //Glass Boxes Balls
-        objectFactory.createTarget(possibleTargets.pop(), 430, 400),
-        objectFactory.createTarget(possibleTargets.pop(), 730, 400),
-
-        //Table Balls
-        objectFactory.createTarget(possibleTargets.pop(), 508, 620),
-        objectFactory.createTarget(possibleTargets.pop(), 731, 722),
-
-        //Shelf Balls
-        //objectFactory.createTarget(possibleTargets.pop(), 1070, 540),
-        objectFactory.createTarget(possibleTargets.pop(), 1120, 540),
-
-        //objectFactory.createTarget(possibleTargets.pop(), 1070, 440),
-        objectFactory.createTarget(possibleTargets.pop(), 1120, 440),
-    ];
-
-    level.misc = [];
+    ]
 
     return level;
 }

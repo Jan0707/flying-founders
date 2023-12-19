@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import {onMounted, ref} from "vue";
 
-import { levelProvider } from "../game/levelProvider.ts";
-import { createLevel, LevelEvent } from "./../game/matter/matter.ts";
-import { levelState } from "./../game/levelState.ts";
-import { emitter } from "../util/eventBus.ts";
+import {getLevelByName, LevelName} from "../game/levelProvider.ts";
+import {
+  createLevel,
+  LevelEvent,
+  LevelEventFired, LevelEventHit,
+  LevelEventStopped,
+  LevelEventUpdateFounder
+} from "./../game/matter/matter.ts";
+import {levelState} from "./../game/levelState.ts";
+import {emitter} from "../util/eventBus.ts";
+import {when} from "../util/when.ts";
+import {playSound} from "../SoundSystem.ts";
 
-const props = defineProps<{ levelName: string }>();
+const props = defineProps<{ levelName: LevelName }>();
 
 const domElement = ref();
 const level = ref();
@@ -16,25 +24,22 @@ const wrapperStyle = ref({
 });
 
 function eventHandler(event: LevelEvent) {
-  switch (event.name) {
-    case LevelEvent.EVENT_UPDATE_FOUNDER:
-      levelState.currentFounder = event.payload.name;
-      break;
-    case LevelEvent.EVENT_FIRED:
-      levelState.incrementShots();
-      levelState.decrementRemainingShots();
-      levelState.isBallFlying = true;
-      break;
-    case LevelEvent.EVENT_STOPPED:
-      levelState.isBallFlying = false;
-      break;
-    case LevelEvent.EVENT_HIT:
-      levelState.incrementPoints(100);
-      levelState.decrementRemainingTargetsCount();
-      emitter.emit("playSound", { name: "hit" });
-      break;
-    default:
-      console.warn("Encountered unhandled Level Event", event);
+
+  if (event instanceof LevelEventUpdateFounder) {
+    levelState.currentFounder = event.founder
+  } else if (event instanceof LevelEventFired) {
+    levelState.incrementShots()
+    levelState.isBallFlying = true;
+    playSound('fired')
+  } else if (event instanceof LevelEventStopped) {
+    levelState.isBallFlying = false;
+  } else if (event instanceof LevelEventHit) {
+    console.log("Hit target", event.target)
+    levelState.incrementPoints(100);
+    levelState.decrementRemainingTargetsCount();
+    playSound(event.target.name)
+  } else {
+    console.error("Encountered unhandled Level Event", event);
   }
 }
 
@@ -44,44 +49,36 @@ function onTriggerSkill() {
     return;
   }
 
-  console.warn("Triggering skill for: ", levelState.currentFounder);
+  console.log("Triggering skill for: ", levelState.currentFounder);
 
-  switch (levelState.currentFounder) {
-    case "jens":
-      level.value.skills.strategySlinger();
-      break;
-    case "dominik":
-      level.value.skills.powerPatron();
-      break;
-    case "sebastian":
-      level.value.skills.explodingLaugh();
-      break;
-    default:
-      console.warn("No skill available for founder: ", levelState.currentFounder);
+  if (!levelState.currentFounder) {
+    console.error("Current Founder is undefined!!");
+    return
   }
+
+  when(levelState.currentFounder?.name)({
+    dominik: () => level.value.skills.powerPatron(),
+    jens: () => level.value.skills.strategySlinger(),
+    sebastian: () => level.value.skills.explodingLaugh(),
+  })
 }
 
 onMounted(function () {
   levelState.reset();
 
-  const levelCreator = levelProvider.getLevelByName(props.levelName);
+  const createdLevel = getLevelByName(props.levelName)
+  levelState.setRemainingTargetsCount(createdLevel.targets.length);
+  level.value = createLevel(domElement.value, createdLevel, eventHandler);
 
-  if (levelCreator) {
-    const createdLevel = levelCreator();
-    levelState.setRemainingTargetsCount(createdLevel.targets.length);
-    levelState.remainingBallsCount = createdLevel.ballFactory.getRemainingShots();
-    level.value = createLevel(domElement.value, createdLevel, eventHandler);
-
-    if (createdLevel.background) {
-      wrapperStyle.value = {
-        backgroundImage: `url(${createdLevel.background})`,
-        backgroundRepeat: "no-repeat",
-      };
-    } else {
-      wrapperStyle.value = {
-        background: "transparent"
-      };
-    }
+  if (createdLevel.background) {
+    wrapperStyle.value = {
+      backgroundImage: `url(${createdLevel.background})`,
+      backgroundRepeat: "no-repeat",
+    };
+  } else {
+    wrapperStyle.value = {
+      background: "transparent"
+    };
   }
 });
 

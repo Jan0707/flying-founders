@@ -1,29 +1,15 @@
-import * as Matter from "matter-js";
-const Bodies = Matter.Bodies;
-
-import { Level } from "./Level.ts";
-
-import FOUNDER_DOMINIK from "./../assets/founders/dominik.png";
-import FOUNDER_JENS from "./../assets/founders/jens.png";
-import FOUNDER_SEBASTIAN from "./../assets/founders/sebastian.png";
+import {Level} from "./Level.ts";
+import {Bodies} from "matter-js";
 
 export class BallFactory {
-  level: Level;
-  constructor(level: Level) {
-    this.level = level;
-  }
+    level: Level;
 
-  getBall(): object {
-    const name = this.level.stockpile.pop();
-    let texture = null;
-
-    if (name == "dominik") {
-      texture = FOUNDER_DOMINIK;
-    } else if (name === "jens") {
-      texture = FOUNDER_JENS;
-    } else if (name === "sebastian") {
-      texture = FOUNDER_SEBASTIAN;
+    constructor(level: Level) {
+        this.level = level;
     }
+
+    getBall() {
+        const founder = this.level.founders.next
 
     const ball = Bodies.circle(
       this.level.slingPosition.x,
@@ -32,22 +18,19 @@ export class BallFactory {
       {
         render: {
           sprite: {
-            texture: texture,
+            texture: founder.imagePath,
             xScale: 80/175,
             yScale: 80/175,
           },
         },
+          ...founder.additionalOptions,
       },
     );
 
-    ball.plugin.lotum = {
-      name: name,
-    };
+        ball.plugin.lotum = {
+            founder
+        };
 
-    return ball;
-  }
-
-  getRemainingShots(): number {
-    return this.level.stockpile.length;
-  }
+        return ball;
+    }
 }
