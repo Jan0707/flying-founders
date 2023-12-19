@@ -1,108 +1,110 @@
-import {Level} from "../Level.ts";
+import { Level } from "../Level.ts";
 import objectFactory from "../ObjectFactory.ts";
 
-import {settings} from "../settings.ts";
+import { settings } from "../settings.ts";
 
 import STAIRS_100_1000 from "./../../assets/objects/stairs_100_1000.png";
 import LOTUM_BANNER_346_102 from "./../../assets/objects/lotum_banner_346_102.svg";
 import LEVEL_BACKGROUND from "./../../assets/levels/credit_background.jpg";
 import SZ_CONCEPT_342_129 from "./../../assets/objects/sz_concept_342_129.png";
-import {Target, TargetName} from "../../util/Target.ts";
-import {Bodies, Composite, Composites} from "matter-js";
-import {gameState} from "../gameState.ts";
+import { Target, TargetName } from "../../util/Target.ts";
+import { Bodies, Composite, Composites } from "matter-js";
+import { gameState } from "../gameState.ts";
 
 function getLevel(): Level {
+  setTimeout(() => {
+    gameState.postGameScreen = "design";
+  }, 10000);
 
-    setTimeout(() => {
-        gameState.postGameScreen = 'design'
-    }, 10000)
+  const contributors: TargetName[] = [
+    "Alisa",
+    "Diana",
+    "Kayleigh",
+    "Maren",
+    "Matthias",
+    "Richard",
+    "Robin",
+    "Sven",
+    "Julian",
+    "Carlo",
+    "Jan_G",
+  ];
 
-    const contributors: TargetName[] = [
-        "Alisa",
-        "Diana",
-        "Kayleigh",
-        "Maren",
-        "Matthias",
-        "Richard",
-        "Robin",
-        "Sven",
-        "Julian",
-        "Carlo",
-        "Jan_G"
-    ]
-
-
-    const targets = contributors.map((c) => new Target(
+  const targets = contributors.map(
+    (c) =>
+      new Target(
         {
-            x: Math.floor(Math.random() * 50) + 180,
-            y: Math.floor(Math.random() * 400) - 1000
-        }, c))
+          x: Math.floor(Math.random() * 50) + 180,
+          y: Math.floor(Math.random() * 400) - 1000,
+        },
+        c,
+      ),
+  );
 
-    const level = new Level(
-        5,
-        LEVEL_BACKGROUND,
-        targets,
-        {x: 1500, y: 1500}
-    );
+  const level = new Level(5, LEVEL_BACKGROUND, targets, { x: 1500, y: 1500 });
 
-    settings.targets.minimalSpeedToHit = 100;
-    settings.objects.eventuallyBreakingSpeedStart = 100;
-    settings.objects.instantBreakingSpeed = 100;
+  settings.targets.minimalSpeedToHit = 100;
+  settings.objects.eventuallyBreakingSpeedStart = 100;
+  settings.objects.instantBreakingSpeed = 100;
 
-    // Define the number of steps
-    const stairCount = 35;
+  // Define the number of steps
+  const stairCount = 35;
 
-    // Loop to create each step
-    const stairstack = Composites.stack(0, 0, stairCount, 2, 0, 0, function (x, y, column) {
-        return Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
-            isStatic: true, friction: 0.01, frictionstatic: 0,
-            render: {
-                sprite: {
-                    texture: STAIRS_100_1000 // Provide the correct path to your texture image here
-                }
-            }
-        });
-    });
-
-    const lotumbanner = Bodies.rectangle(175, 700, 346, 102, {
+  // Loop to create each step
+  const stairstack = Composites.stack(
+    0,
+    0,
+    stairCount,
+    2,
+    0,
+    0,
+    function (x, y, column) {
+      return Bodies.rectangle(x - 66, y + column * stairCount, 100, 1000, {
         isStatic: true,
+        friction: 0.01,
+        frictionstatic: 0,
         render: {
-            sprite: {
-                texture: LOTUM_BANNER_346_102 // Stelle sicher, dass dies ein gültiger Pfad/URL ist
-            }
-        }
-    });
+          sprite: {
+            texture: STAIRS_100_1000, // Provide the correct path to your texture image here
+          },
+        },
+      });
+    },
+  );
 
-    const lotumbannercomposite = Composite.create({
-        bodies: [lotumbanner] // Füge den Körper der Composite hinzu
-    });
+  const lotumbanner = Bodies.rectangle(175, 700, 346, 102, {
+    isStatic: true,
+    render: {
+      sprite: {
+        texture: LOTUM_BANNER_346_102, // Stelle sicher, dass dies ein gültiger Pfad/URL ist
+      },
+    },
+  });
 
-    const Schriftzug_Concept = Bodies.rectangle(170, -700, 342, 129, {
-        friction: 0.1, frictionstatic: 0,
-        render: {
-            sprite: {
-                texture: SZ_CONCEPT_342_129 // Provide the correct path to your texture image here
-            }
-        }
-    });
+  const lotumbannercomposite = Composite.create({
+    bodies: [lotumbanner], // Füge den Körper der Composite hinzu
+  });
 
-    level.objectsStatic = [
-        objectFactory.createObjectFromTopLeft("ground", 0, 0, 5, -1000, 0),
-        objectFactory.createObjectFromTopLeft("ground", 1280, 820, 5, 5, 0),
-    ];
+  const Schriftzug_Concept = Bodies.rectangle(170, -700, 342, 129, {
+    friction: 0.1,
+    frictionstatic: 0,
+    render: {
+      sprite: {
+        texture: SZ_CONCEPT_342_129, // Provide the correct path to your texture image here
+      },
+    },
+  });
 
-    level.misc = [
-        Schriftzug_Concept
-    ];
+  level.objectsStatic = [
+    objectFactory.createObjectFromTopLeft("ground", 0, 0, 5, -1000, 0),
+    objectFactory.createObjectFromTopLeft("ground", 1280, 820, 5, 5, 0),
+  ];
 
-    level.composites = [
-        stairstack,
-        lotumbannercomposite,
-    ]
+  level.misc = [Schriftzug_Concept];
 
-    return level;
+  level.composites = [stairstack, lotumbannercomposite];
+
+  return level;
 }
 
-
-export {getLevel};
-
+export { getLevel };
