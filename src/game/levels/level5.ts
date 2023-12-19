@@ -9,8 +9,13 @@ import LEVEL_BACKGROUND from "./../../assets/levels/credit_background.jpg";
 import SZ_CONCEPT_342_129 from "./../../assets/objects/sz_concept_342_129.png";
 import {Target, TargetName} from "../../util/Target.ts";
 import {Bodies, Composite, Composites} from "matter-js";
+import {gameState} from "../gameState.ts";
 
 function getLevel(): Level {
+
+    setTimeout(() => {
+        gameState.postGameScreen = 'design'
+    }, 10000)
 
     const contributors: TargetName[] = [
         "Alisa",

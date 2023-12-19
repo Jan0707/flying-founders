@@ -7,11 +7,11 @@ import {
     Constraint,
     Detector,
     Engine,
+    Events,
     Mouse,
     MouseConstraint,
     Render,
     Runner,
-    Events,
 } from "matter-js";
 import teabagImage from "../../assets/objects/teabag_300_300.png"
 import {Founder} from "../Founders.ts";

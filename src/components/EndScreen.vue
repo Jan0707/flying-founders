@@ -4,13 +4,20 @@ import RiveAnimation from './rive-animation.vue'
 import animationAsset from '../assets/animations/winning_screen.riv?url'
 import type { Event } from '@rive-app/canvas'
 import { gameState } from '../game/gameState.ts'
+import {levelState} from "../game/levelState.ts";
 
 onMounted(function () {})
 
 const returnToLobby = function () {
     gameState.isGameOver = false
     gameState.hasStarted = false
-    gameState.hasWon = false
+    gameState.postGameScreen = 'endScreen'
+    gameState.key++
+    levelState.reset()
+}
+
+const showCredits = function () {
+    gameState.postGameScreen = 'concept'
 }
 
 const handleAnimationStateChange = function (event: Event) {
@@ -25,7 +32,7 @@ const handleAnimationStateChange = function (event: Event) {
     }
 
     if (eventString === 'Credit') {
-        console.log('show credits')
+        showCredits()
         return
     }
 }
