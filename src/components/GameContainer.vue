@@ -30,6 +30,7 @@ watch(
 
 function reset() {
   levelKeys.value += 1;
+  levelState.reset();
 }
 
 function getNextLevel() {
