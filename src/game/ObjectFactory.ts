@@ -75,7 +75,7 @@ class ObjectFactory {
         const obj = new GameObject(type, length, height)
 
         const centerCoordinates = this.getCenterFromTopLeftCorner(x, y, length, height, rotation);
-        const combinedOptions = Object.assign({}, obj.renderOptions, inputOptions);
+        const combinedOptions = Object.assign({}, obj.additionalOptions, inputOptions);
 
         const createdObject = Bodies.rectangle(centerCoordinates.x, centerCoordinates.y, length, height, combinedOptions);
 

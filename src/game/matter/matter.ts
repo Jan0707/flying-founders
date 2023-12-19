@@ -17,6 +17,7 @@ import teabagImage from "../../assets/objects/teabag_300_300.png"
 import {Founder} from "../Founders.ts";
 import {Target} from "../../util/Target.ts";
 import {playSound} from "../../SoundSystem.ts";
+import {when} from "../../util/when.ts";
 
 export abstract class LevelEvent {
     readonly name: 'fired' | 'hit' | 'stopped' | 'update_founder'
@@ -293,6 +294,11 @@ export function createLevel(
                 detector.bodies = detector.bodies.filter((body) => {
                     return body !== collision.bodyA;
                 });
+
+                when(collision.bodyA.plugin.lotum.type) ({
+                    glass: () => playSound('breakingGlass'),
+                    wood: () => playSound('bonkWood'),
+                })
             }
             if (
                 collision.bodyB.plugin.lotum &&
@@ -304,6 +310,11 @@ export function createLevel(
                 detector.bodies = detector.bodies.filter((body) => {
                     return body !== collision.bodyB;
                 });
+
+                when(collision.bodyB.plugin.lotum.type) ({
+                    glass: () => playSound('breakingGlass'),
+                    wood: () => playSound('bonkWood'),
+                })
             }
         });
     });

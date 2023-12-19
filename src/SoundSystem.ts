@@ -27,8 +27,19 @@ import employee3 from "./assets/sounds/employee-3.mp3"
 import employee4 from "./assets/sounds/employee-4.mp3"
 import employee5 from "./assets/sounds/employee-5.mp3"
 import levelSuccess from "./assets/sounds/level-success.mp3"
+import breakingGlass from "./assets/sounds/breaking-glass.mp3"
+import bonkWood from "./assets/sounds/hit-2.mp3"
+import jingleBellRock from "./assets/sounds/JingleBellRock.mp3"
 
 import {TargetName} from "./util/Target.ts";
+
+const music = {
+    jingleBellRock: new Howl({src: [jingleBellRock], loop: true, volume: 0.5})
+} as const
+
+export function playMusic(title: keyof typeof music) {
+    music[title].play()
+}
 
 const howls: Partial<Record<TargetName, Howl>> &
     Record<
@@ -40,6 +51,8 @@ const howls: Partial<Record<TargetName, Howl>> &
         'laughSebastian' |
         'allrightyright' |
         'fired' |
+        'breakingGlass' |
+        'bonkWood' |
         'employee1' |
         'employee2' |
         'employee3' |
@@ -66,6 +79,8 @@ const howls: Partial<Record<TargetName, Howl>> &
     fired: new Howl({src: [shoot]}),
     bells: new Howl({src: [bells]}),
     smallExplosion: new Howl({src: [smallExplosion]}),
+    breakingGlass: new Howl({src: [breakingGlass]}),
+    bonkWood: new Howl({src: [bonkWood]}),
     levelSuccess: new Howl({src: [levelSuccess]}),
     employee1: new Howl({src: [employee1]}),
     employee2: new Howl({src: [employee2]}),
@@ -74,7 +89,7 @@ const howls: Partial<Record<TargetName, Howl>> &
     employee5: new Howl({src: [employee5]}),
 }
 
-export function playSound(key: TargetName | "levelSuccess" | 'bells' | 'smallExplosion' | 'wooDominik' | 'startSebastian' | 'laughSebastian' | 'allrightyright' | 'fired') {
+export function playSound(key: TargetName | "levelSuccess" | 'bells' | 'smallExplosion' | 'wooDominik' | 'startSebastian' | 'laughSebastian' | 'allrightyright' | 'fired' | 'breakingGlass' | 'bonkWood') {
     if (key in howls) {
         return howls[key]!.play()
     }

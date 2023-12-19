@@ -44,7 +44,7 @@ export class GameObject {
         return `${this.type}_${this.length}_${this.width}`
     }
 
-    get renderOptions(): IChamferableBodyDefinition {
+    get additionalOptions(): IChamferableBodyDefinition {
         const options: IChamferableBodyDefinition = {
             sleepThreshold: settings.objects.sleepThreshold,
             ...when(this.type) <IChamferableBodyDefinition>({
@@ -64,7 +64,10 @@ export class GameObject {
                     restitution: 0.8,
                     isStatic: true,
                 },
-                wood: {
+                wood: (() => {
+                    console.log('creating wood')
+
+                    return {
                     render: {
                         fillStyle: "brown",
                     },
@@ -74,10 +77,10 @@ export class GameObject {
                     plugin: {
                         lotum: {
                             breakable: 'eventually',
-
+                            type: 'wood'
                         }
                     }
-                },
+                }})(),
                 glass: {
                     render: {
                         fillStyle: "lightblue",
@@ -88,7 +91,7 @@ export class GameObject {
                     plugin: {
                         lotum: {
                             breakable: 'instantly',
-
+                            type: 'glass'
                         }
                     }
                 },
