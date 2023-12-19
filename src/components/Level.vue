@@ -20,6 +20,8 @@ const props = defineProps<{ levelName: LevelName }>();
 const domElement = ref();
 const level = ref();
 
+const usedSkill = ref(false);
+
 const wrapperStyle = ref({
   background: "none",
 });
@@ -56,11 +58,20 @@ function onTriggerSkill() {
     return;
   }
 
+  if (usedSkill.value) {
+    console.log("Skill already used");
+    return;
+  }
+  usedSkill.value = true;
   when(levelState.currentFounder?.name)({
     dominik: () => level.value.skills.powerPatron(),
     jens: () => level.value.skills.strategySlinger(),
     sebastian: () => level.value.skills.explodingLaugh(),
   });
+
+  setTimeout(() => {
+    usedSkill.value = false;
+  }, 50);
 }
 
 onMounted(function () {
