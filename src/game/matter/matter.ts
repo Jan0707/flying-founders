@@ -322,11 +322,11 @@ export function createLevel(
     // Tracks movement of eventually breakable objects
     Events.on(engine, "afterUpdate", () => {
         level.objectsMovable.forEach(function (object) {
-            //if (object.plugin.lotum.explodable && object.speed >= 4) {
-            //    createExplosion(engine, object, 1);
-            //    level.removeBody(object)
-            //    Composite.remove(engine.world,object);
-            //}
+            if (object.plugin.lotum.explodable && object.speed >= 3) {
+                createExplosion(engine, object, 1);
+                level.removeBody(object)
+                Composite.remove(engine.world,object);
+            }
 
             if (object.plugin.lotum.breakable !== "eventually") return;
 
