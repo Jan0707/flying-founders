@@ -238,7 +238,7 @@ export function createLevel(
 
         function onOutOfBounds(body: Body, callback: () => void) {
             const {x, y} = body.position;
-            if (y < 0 || x < 0 || x > 1200 || y > 1000) {
+            if (y < -300 || x < 0 || x > 1200 || y > 1000) {
                 callback()
             }
         }
