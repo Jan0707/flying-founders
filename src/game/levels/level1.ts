@@ -13,7 +13,7 @@ function getLevel(): Level {
         new Target({x: 810, y: 720}),
         new Target({x: 900, y: 720}),
         new Target({x: 975, y: 550}),
-        new Target({x: 848, y: 90}),
+        new Target({x: 885, y: 120}),
     ]
 
     const level = new Level(1, LEVEL_BACKGROUND, targets)
@@ -33,8 +33,6 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("platform", 510, 550, 10, 200, 0),
         objectFactory.createObjectFromTopLeft("platform", 480, 540, 10, 40, 0.5 * Math.PI),
 
-        //ceiling light
-        //objectFactory.createObjectFromTopLeft("platform", 780, 110, 20, 150, 0.5 * Math.PI),
 
         //top right pillar
         objectFactory.createObjectFromTopLeft("platform", 1130, 0, 10, 300, 0),
@@ -50,7 +48,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("platform", 1130, 440, 10, 40, 0.5 * Math.PI),
     ]
 
-    const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 765, 112, 180, 10, 0);
+    const Beamerbar = objectFactory.createObjectFromTopLeft("wood", 765, 150, 180, 10, 0);
 
     let ropeC = Composites.stack(775, 50, 1, 3, 5, 5, function (x: number, y: number) {
         return Bodies.rectangle(x, y, 5, 25/*, { collisionFilter: { group: group } }*/);
@@ -118,7 +116,7 @@ function getLevel(): Level {
         objectFactory.createObjectFromTopLeft("wood", 730, 600, 20, 150, 0), //table leg left
         objectFactory.createObjectFromTopLeft("wood", 960, 600, 20, 150, 0), //table leg right
 
-        objectFactory.createPresent_45_60(740,520)
+        objectFactory.createPresent_45_60(800,140)
     ]
 
     return level;
