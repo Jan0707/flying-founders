@@ -93,6 +93,8 @@ onMounted(function () {
   }
 });
 
+emitter.off("triggerSkill");
+emitter.off("canvasClicked");
 emitter.on("triggerSkill", onTriggerSkill);
 emitter.on("canvasClicked", onTriggerSkill);
 </script>
