@@ -14,6 +14,7 @@ import VanessaSound from "./assets/sounds/vanessa.mp3"
 import WesselSound from "./assets/sounds/wessel.mp3"
 import YannSound from "./assets/sounds/yann.mp3"
 import JulianSound from "./assets/sounds/julian.mp3"
+import DaveSound from "./assets/sounds/dave.mp3";
 
 import bells from "./assets/sounds/bells.mp3"
 import smallExplosion from "./assets/sounds/small-explosion.mp3"
@@ -70,6 +71,7 @@ const howls: Partial<Record<TargetName, Howl>> &
     Wessel: new Howl({src: [WesselSound]}),
     Yann: new Howl({src: [YannSound]}),
     Julian: new Howl({src: [JulianSound]}),
+  Dave: new Howl({ src: [DaveSound] }),
 
     wooDominik: new Howl({src: [wooDominik]}),
     startSebastian: new Howl({src: [startSebastian]}),
