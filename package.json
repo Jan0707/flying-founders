@@ -10,7 +10,7 @@
     "lint": "eslint --fix --ext .js,.ts,.vue .",
     "prettier": "prettier --write .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run predeploy && gh-pages -d dist"
   },
   "dependencies": {
     "@rive-app/canvas": "^2.7.6",
