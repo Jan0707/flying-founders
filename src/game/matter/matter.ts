@@ -178,6 +178,7 @@ export function createLevel(
   }
 
   function setNewFounder() {
+    removeOldFounder();
     console.log("placing new founder");
     currentBall = level.ballFactory.getBall();
 
@@ -188,6 +189,14 @@ export function createLevel(
     Composite.add(engine.world, currentBall);
 
     eventHandler(new LevelEventUpdateFounder(currentBall.plugin.lotum.founder));
+  }
+
+  function removeOldFounder() {
+    console.log("deleting old founder");
+    Composite.remove(engine.world, currentBall);
+    detector.bodies = detector.bodies.filter((body) => {
+      return body !== currentBall;
+    });
   }
 
   function removeTarget(target: Body) {
