@@ -13,7 +13,8 @@ function getLevel(): Level {
     new Target({ x: 885, y: 120 }),
   ];
 
-  const level = new Level(1, LEVEL_BACKGROUND, targets);
+  const slingPosition = { x: 130, y: 650 }
+  const level = new Level(1, LEVEL_BACKGROUND, targets, slingPosition);
 
   level.objectsStatic = [
     //ground
