@@ -9,6 +9,7 @@ import DianaSound from "./assets/sounds/diana.mp3";
 import FabianSound from "./assets/sounds/fabian.mp3";
 import GarreltSound from "./assets/sounds/garrelt.mp3";
 import LarsSound from "./assets/sounds/lars.mp3";
+import JanGSound from "./assets/sounds/jan_g.mp3";
 import RichardSound from "./assets/sounds/richard.mp3";
 import VanessaSound from "./assets/sounds/vanessa.mp3";
 import WesselSound from "./assets/sounds/wessel.mp3";
@@ -68,6 +69,7 @@ const howls: Partial<Record<TargetName, Howl>> &
   Fabian: new Howl({ src: [FabianSound] }),
   Garrelt: new Howl({ src: [GarreltSound] }),
   Lars: new Howl({ src: [LarsSound] }),
+  Jan_G: new Howl({ src: [JanGSound] }),
   Richard: new Howl({ src: [RichardSound] }),
   Vanessa: new Howl({ src: [VanessaSound] }),
   Wessel: new Howl({ src: [WesselSound] }),
