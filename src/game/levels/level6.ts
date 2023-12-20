@@ -28,6 +28,7 @@ function getLevel(): Level {
     "Robin",
     "Anja",
     "Alexandra",
+    "Kayleigh",
   ];
 
   const targets = contributors.map(
