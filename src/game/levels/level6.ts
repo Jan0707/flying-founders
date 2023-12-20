@@ -19,7 +19,6 @@ function getLevel(): Level {
 
   const contributors: TargetName[] = [
     "Alisa",
-    "Andrzej",
     "Carlo",
     "Diana",
     "Jo",

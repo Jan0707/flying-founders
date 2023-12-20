@@ -21,7 +21,6 @@ function getLevel(): Level {
     "Diana",
     "Kayleigh",
     "Maren",
-    "Matthias",
     "Richard",
     "Robin",
     "Sven",
