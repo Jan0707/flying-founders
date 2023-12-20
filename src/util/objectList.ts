@@ -64,24 +64,20 @@ export class GameObject {
           restitution: 0.8,
           isStatic: true,
         },
-        wood: (() => {
-          console.log("creating wood");
-
-          return {
-            render: {
-              fillStyle: "brown",
+        wood: {
+          render: {
+            fillStyle: "brown",
+          },
+          restitution: 0.1,
+          friction: 0.95,
+          frictionStatic: 1000,
+          plugin: {
+            lotum: {
+              breakable: "eventually",
+              type: "wood",
             },
-            restitution: 0.1,
-            friction: 0.95,
-            frictionStatic: 1000,
-            plugin: {
-              lotum: {
-                breakable: "eventually",
-                type: "wood",
-              },
-            },
-          };
-        })(),
+          },
+        },
         glass: {
           render: {
             fillStyle: "lightblue",

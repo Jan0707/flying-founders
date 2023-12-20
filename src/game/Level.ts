@@ -7,6 +7,7 @@ import { FounderName, Founders } from "./Founders.ts";
 export class Level {
   readonly founders: Founders;
   readonly ballFactory = new BallFactory(this);
+  readonly sling: Body
 
   targets: Body[];
   objectsMovable: Body[] = [];
@@ -23,6 +24,7 @@ export class Level {
   ) {
     this.targets = objectFactory.createTargetBodies(targets);
     this.founders = new Founders(stockPile);
+    this.sling = objectFactory.createSlingBody(slingPosition.x - 10, 705);
   }
 
   removeBody(body: Body) {
@@ -34,6 +36,7 @@ export class Level {
 
   getAllBodies() {
     return this.targets
+      .concat(this.sling)
       .concat(this.objectsMovable)
       .concat(this.objectsStatic)
       .concat(this.misc);
