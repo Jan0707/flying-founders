@@ -117,7 +117,7 @@ onMounted(function () {
 
 <style scoped>
 .game-container {
-  background-color: hotpink;
+  background-color: black;
   display: flex;
   flex-direction: column;
   height: 100%;
