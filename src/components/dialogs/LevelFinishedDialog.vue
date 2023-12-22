@@ -7,6 +7,11 @@ defineProps<{ levelName: string }>();
 
 const emit = defineEmits(["continue"]);
 
+function handleClick() {
+  playSound("tap");
+  emit("continue");
+}
+
 onMounted(function () {
   playSound("levelSuccess");
 });
@@ -16,9 +21,8 @@ onMounted(function () {
   <div class="content">
     <h1>Level {{ levelName }} finished!</h1>
     <p>Shots fired: {{ levelState.shots }}</p>
-    <p>Points: {{ levelState.points }}</p>
     <p>Time needed: {{ levelState.getTimeNeededInSeconds() }} seconds</p>
-    <button class="continue-button" @click="emit('continue')">Continue</button>
+    <button class="continue-button" @click="handleClick">Continue</button>
   </div>
 </template>
 
@@ -44,6 +48,7 @@ onMounted(function () {
   }
 
   .continue-button {
+    font-family: "Skranji", cursive;
     margin-bottom: 20px;
     background: linear-gradient(#ced869, #536d1b);
     box-shadow:

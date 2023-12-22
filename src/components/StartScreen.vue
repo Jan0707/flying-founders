@@ -4,6 +4,7 @@ import { gameState } from "../game/gameState.ts";
 import RiveAnimation from "./rive-animation.vue";
 import animationAsset from "../assets/animations/flying_founders_lobby.riv?url";
 import type { Event } from "@rive-app/canvas";
+import {playSound} from "../SoundSystem.ts";
 
 onMounted(function () {});
 
@@ -24,6 +25,7 @@ const handleAnimationStateChange = function (event: Event) {
       class="rive-animation"
       :src="animationAsset"
       :state-machines="['state_machine']"
+      @click="playSound('tap')"
       @state-change="(event) => handleAnimationStateChange(event)"
     />
   </div>
@@ -37,7 +39,7 @@ const handleAnimationStateChange = function (event: Event) {
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: red;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: space-around;

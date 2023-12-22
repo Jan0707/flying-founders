@@ -4,7 +4,7 @@ const emit = defineEmits(["reset"]);
 
 <template>
   <img
-    src="../assets/replay-icon.png"
+    src="../assets/replay-icon-white.png"
     class="replay-button"
     alt="Replay button"
     @click="emit('reset')"
@@ -13,7 +13,8 @@ const emit = defineEmits(["reset"]);
 
 <style scoped>
 .replay-button {
-  width: 50px;
+  width: 40pt;
   cursor: pointer;
+  padding: 10pt;
 }
 </style>

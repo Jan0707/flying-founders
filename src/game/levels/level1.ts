@@ -4,6 +4,7 @@ import { Target } from "../../util/Target.ts";
 
 import LEVEL_BACKGROUND from "./../../assets/levels/level_1.jpg";
 import { Bodies, Composite, Composites, Constraint } from "matter-js";
+import platform_10_40 from "./../../assets/objects/platform_10_40.png";
 
 function getLevel(): Level {
   const targets = [
@@ -13,7 +14,8 @@ function getLevel(): Level {
     new Target({ x: 885, y: 120 }),
   ];
 
-  const level = new Level(1, LEVEL_BACKGROUND, targets);
+  const slingPosition = { x: 130, y: 650 }
+  const level = new Level(1, LEVEL_BACKGROUND, targets, slingPosition);
 
   level.objectsStatic = [
     //ground
@@ -73,11 +75,11 @@ function getLevel(): Level {
 
   const Beamerbar = objectFactory.createObjectFromTopLeft(
     "wood",
-    765,
-    150,
+    1020,
     180,
-    10,
-    0,
+    30,
+    300,
+    1.5 * Math.PI,
   );
 
   let ropeC = Composites.stack(
@@ -92,17 +94,27 @@ function getLevel(): Level {
         x,
         y,
         5,
-        25 /*, { collisionFilter: { group: group } }*/,
-      );
+        25,
+        {
+          render: {
+            sprite: {
+              texture: platform_10_40,
+              xScale: 10 / 5,
+              yScale: 40 / 25,
+            },
+          }, /*, { collisionFilter: { group: group } }*/
+        },
+        );
     },
   );
 
-  Composites.chain(ropeC, 0, 0.5, 0, -0.5, { stiffness: 1, damping: 0.1 });
+  Composites.chain(ropeC, 0, 0.5, 0, -0.5, { stiffness: 1, damping: 0.1, render: {visible: false } });
 
   Composite.add(
     ropeC,
     Constraint.create({
       bodyB: ropeC.bodies[0],
+      render: {visible: false },
       pointB: { x: 0, y: -5 },
       pointA: {
         x: ropeC.bodies[0].position.x,
@@ -119,14 +131,23 @@ function getLevel(): Level {
     5,
     5,
     function (x: number, y: number) {
-      return Bodies.rectangle(x, y, 5, 25);
+      return Bodies.rectangle(x, y, 5, 25, {
+        render: {
+          sprite: {
+            texture: platform_10_40,
+            xScale: 10 / 5,
+            yScale: 40 / 25,
+          },
+        }, /*, { collisionFilter: { group: group } }*/
+      },);
     },
   );
-  Composites.chain(ropeB, 0, 0.5, 0, -0.5, { stiffness: 1, damping: 0.1 });
+  Composites.chain(ropeB, 0, 0.5, 0, -0.5, { stiffness: 1, damping: 0.1, render: {visible: false } });
   ropeB = Composite.add(
     ropeB,
     Constraint.create({
       bodyB: ropeB.bodies[0],
+      render: {visible: false },
       pointB: { x: 0, y: -5 },
       pointA: {
         x: ropeB.bodies[0].position.x,
@@ -140,6 +161,7 @@ function getLevel(): Level {
     ropeB,
     Constraint.create({
       bodyB: ropeB.bodies[2],
+      render: {visible: false },
       pointB: { x: 0, y: 5 },
       bodyA: Beamerbar,
       pointA: { x: +80, y: 0 },
@@ -151,6 +173,7 @@ function getLevel(): Level {
     ropeC,
     Constraint.create({
       bodyB: ropeC.bodies[2],
+      render: {visible: false },
       pointB: { x: 0, y: 5 },
       bodyA: Beamerbar,
       pointA: { x: -80, y: 0 },

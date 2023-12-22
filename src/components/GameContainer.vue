@@ -117,7 +117,7 @@ onMounted(function () {
 
 <style scoped>
 .game-container {
-  background-color: hotpink;
+  background-color: black;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -132,12 +132,14 @@ onMounted(function () {
   justify-content: space-between;
   align-items: center;
   flex-basis: 50px;
+  padding: 20pt 20pt 0;
+  background: linear-gradient(to top, transparent 0%, black 75%,  black 100%);
 }
 
 .dialog {
   position: absolute;
-  top: 10%;
+  top: 50%;
   left: 50%;
-  translate: -50%;
+  translate: -50% -50%;
 }
 </style>
