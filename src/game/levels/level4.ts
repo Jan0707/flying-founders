@@ -6,8 +6,13 @@ import LEVEL_BACKGROUND from "./../../assets/levels/level_4.jpg";
 
 function getLevel(): Level {
   const targets = [
-    new Target({ x: 1095, y: 250 }),
-    new Target({ x: 200, y: 50 }),
+    new Target({ x: 300, y: 740 }),
+    new Target({ x: 450, y: 740 }),
+    new Target({ x: 700, y: 740 }),
+    new Target({ x: 750, y: 120 }),
+    new Target({ x: 1095, y: 540 }),
+    new Target({ x: 1095, y: 640 }),
+    new Target({ x: 1095, y: 740 }),
   ];
 
   const level = new Level(4, LEVEL_BACKGROUND, targets);
@@ -84,7 +89,9 @@ function getLevel(): Level {
       850,
       660,
       10,
-      80,
+      80
+      
+      ,
       0.5 * Math.PI,
     ),
     objectFactory.createObjectFromTopLeft(

@@ -1,4 +1,4 @@
-import {Howl} from "howler";
+import { Howl } from "howler";
 
 import shoot from "./assets/sounds/shoot.mp3";
 
@@ -9,6 +9,7 @@ import DianaSound from "./assets/sounds/diana.mp3";
 import FabianSound from "./assets/sounds/fabian.mp3";
 import GarreltSound from "./assets/sounds/garrelt.mp3";
 import LarsSound from "./assets/sounds/lars.mp3";
+import JanGSound from "./assets/sounds/jan_g.mp3";
 import RichardSound from "./assets/sounds/richard.mp3";
 import VanessaSound from "./assets/sounds/vanessa.mp3";
 import WesselSound from "./assets/sounds/wessel.mp3";
@@ -36,11 +37,11 @@ import jingleBellRock from "./assets/sounds/JingleBellRock.mp3";
 import {TargetName} from "./util/Target.ts";
 
 const music = {
-    jingleBellRock: new Howl({src: [jingleBellRock], loop: true, volume: 0.5}),
+  jingleBellRock: new Howl({ src: [jingleBellRock], loop: true, volume: 0.1 }),
 } as const;
 
 export function playMusic(title: keyof typeof music) {
-    music[title].play();
+  music[title].play();
 }
 
 const howls: Partial<Record<TargetName, Howl>> &
@@ -70,21 +71,21 @@ const howls: Partial<Record<TargetName, Howl>> &
     Fabian: new Howl({src: [FabianSound]}),
     Garrelt: new Howl({src: [GarreltSound]}),
     Lars: new Howl({src: [LarsSound]}),
-    Richard: new Howl({src: [RichardSound]}),
+    Jan_G: new Howl({ src: [JanGSound] }),Richard: new Howl({src: [RichardSound]}),
     Vanessa: new Howl({src: [VanessaSound]}),
     Wessel: new Howl({src: [WesselSound]}),
     Yann: new Howl({src: [YannSound]}),
     Julian: new Howl({src: [JulianSound]}),
     Dave: new Howl({src: [DaveSound]}),
 
-    wooDominik: new Howl({src: [wooDominik]}),
-    startSebastian: new Howl({src: [startSebastian]}),
-    laughSebastian: new Howl({src: [laughSebastian]}),
-    allrightyright: new Howl({src: [allrightyright]}),
+  wooDominik: new Howl({ src: [wooDominik] }),
+  startSebastian: new Howl({ src: [startSebastian] }),
+  laughSebastian: new Howl({ src: [laughSebastian] }),
+  allrightyright: new Howl({ src: [allrightyright] }),
 
     fired: new Howl({src: [shoot]}),
     bells: new Howl({src: [bells]}),
-    smallExplosion: new Howl({src: [smallExplosion]}),
+    smallExplosion: new Howl({src: [smallExplosion], volume: 0.3}),
     breakingGlass: new Howl({src: [breakingGlass]}),
     bonkWood: new Howl({src: [bonkWood]}),
     levelSuccess: new Howl({src: [levelSuccess]}),
@@ -111,21 +112,21 @@ export function playSound(
         | "bonkWood"
         | "tap",
 ) {
-    if (key in howls) {
-        return howls[key]!.play();
-    }
+  if (key in howls) {
+    return howls[key]!.play();
+  }
 
-    const genericEmployeeHowls = [
-        howls["employee1"],
-        howls["employee2"],
-        howls["employee3"],
-        howls["employee4"],
-        howls["employee5"],
+  const genericEmployeeHowls = [
+    howls["employee1"],
+    howls["employee2"],
+    howls["employee3"],
+    howls["employee4"],
+    howls["employee5"],
+  ];
+  //get random element from genericEmployeeHowls
+  const randomHowl =
+    genericEmployeeHowls[
+      Math.floor(Math.random() * genericEmployeeHowls.length)
     ];
-    //get random element from genericEmployeeHowls
-    const randomHowl =
-        genericEmployeeHowls[
-            Math.floor(Math.random() * genericEmployeeHowls.length)
-            ];
-    return randomHowl!.play();
+  return randomHowl!.play();
 }

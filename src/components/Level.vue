@@ -106,7 +106,7 @@ emitter.on("canvasClicked", onTriggerSkill);
 <style scoped>
 .canvas-wrapper {
   flex-grow: 1;
-  background-color: yellow;
+  background-color: black;
 }
 
 .canvas-wrapper canvas {

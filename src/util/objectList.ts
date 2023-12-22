@@ -28,6 +28,7 @@ import wood_20_80 from "./../assets/objects/wood_20_80.png";
 import wood_20_150 from "./../assets/objects/wood_20_150.png";
 import wood_20_200 from "./../assets/objects/wood_20_200.png";
 import wood_20_300 from "./../assets/objects/wood_20_300.png";
+import wood_30_300 from "./../assets/objects/wood_30_300.png";
 import wood_50_200 from "./../assets/objects/wood_50_200.png";
 import { IChamferableBodyDefinition } from "matter-js";
 import { when } from "./when.ts";
@@ -174,6 +175,7 @@ const objects = {
   wood_20_150,
   wood_20_200,
   wood_20_300,
+  wood_30_300,
   wood_50_200,
 } as const satisfies Partial<Record<ConstructedObjectName, string>>;
 

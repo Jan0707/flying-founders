@@ -14,7 +14,7 @@ const settings = {
     sleepThreshold: 60,
   },
   targets: {
-    minimalSpeedToHit: 1.5,
+    minimalSpeedToHit: 1,
   },
   engine: {
     defaults: {
