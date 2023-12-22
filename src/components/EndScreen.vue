@@ -5,10 +5,12 @@ import animationAsset from "../assets/animations/winning_screen.riv?url";
 import type { Event } from "@rive-app/canvas";
 import { gameState } from "../game/gameState.ts";
 import { levelState } from "../game/levelState.ts";
+import {playSound} from "../SoundSystem.ts";
 
 onMounted(function () {});
 
 const returnToLobby = function () {
+  playSound("tap")
   gameState.isGameOver = false;
   gameState.hasStarted = false;
   gameState.postGameScreen = "endScreen";
@@ -17,6 +19,7 @@ const returnToLobby = function () {
 };
 
 const showCredits = function () {
+  playSound("tap")
   gameState.postGameScreen = "concept";
 };
 

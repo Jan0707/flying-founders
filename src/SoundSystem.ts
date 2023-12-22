@@ -28,12 +28,13 @@ import employee2 from "./assets/sounds/employee-2.mp3";
 import employee3 from "./assets/sounds/employee-3.mp3";
 import employee4 from "./assets/sounds/employee-4.mp3";
 import employee5 from "./assets/sounds/employee-5.mp3";
+import tap from "./assets/sounds/tap.mp3";
 import levelSuccess from "./assets/sounds/level-success.mp3";
 import breakingGlass from "./assets/sounds/breaking-glass.mp3";
 import bonkWood from "./assets/sounds/hit-2.mp3";
 import jingleBellRock from "./assets/sounds/JingleBellRock.mp3";
 
-import { TargetName } from "./util/Target.ts";
+import {TargetName} from "./util/Target.ts";
 
 const music = {
   jingleBellRock: new Howl({ src: [jingleBellRock], loop: true, volume: 0.1 }),
@@ -44,70 +45,72 @@ export function playMusic(title: keyof typeof music) {
 }
 
 const howls: Partial<Record<TargetName, Howl>> &
-  Record<
-    | "levelSuccess"
-    | "bells"
-    | "smallExplosion"
-    | "wooDominik"
-    | "startSebastian"
-    | "laughSebastian"
-    | "allrightyright"
-    | "fired"
-    | "breakingGlass"
-    | "bonkWood"
-    | "employee1"
-    | "employee2"
-    | "employee3"
-    | "employee4"
-    | "employee5",
-    Howl
-  > = {
-  Alisa: new Howl({ src: [AlisaSound] }),
-  Carlo: new Howl({ src: [CarloSound] }),
-  Dennis: new Howl({ src: [DennisSound] }),
-  Diana: new Howl({ src: [DianaSound] }),
-  Fabian: new Howl({ src: [FabianSound] }),
-  Garrelt: new Howl({ src: [GarreltSound] }),
-  Lars: new Howl({ src: [LarsSound] }),
-  Jan_G: new Howl({ src: [JanGSound] }),
-  Richard: new Howl({ src: [RichardSound] }),
-  Vanessa: new Howl({ src: [VanessaSound] }),
-  Wessel: new Howl({ src: [WesselSound] }),
-  Yann: new Howl({ src: [YannSound] }),
-  Julian: new Howl({ src: [JulianSound] }),
-  Dave: new Howl({ src: [DaveSound] }),
+    Record<
+        | "levelSuccess"
+        | "bells"
+        | "smallExplosion"
+        | "wooDominik"
+        | "startSebastian"
+        | "laughSebastian"
+        | "allrightyright"
+        | "fired"
+        | "breakingGlass"
+        | "bonkWood"
+        | "employee1"
+        | "employee2"
+        | "employee3"
+        | "employee4"
+        | "employee5"
+        | "tap",
+        Howl
+    > = {
+    Alisa: new Howl({src: [AlisaSound]}),
+    Carlo: new Howl({src: [CarloSound]}),
+    Dennis: new Howl({src: [DennisSound]}),
+    Diana: new Howl({src: [DianaSound]}),
+    Fabian: new Howl({src: [FabianSound]}),
+    Garrelt: new Howl({src: [GarreltSound]}),
+    Lars: new Howl({src: [LarsSound]}),
+    Jan_G: new Howl({ src: [JanGSound] }),Richard: new Howl({src: [RichardSound]}),
+    Vanessa: new Howl({src: [VanessaSound]}),
+    Wessel: new Howl({src: [WesselSound]}),
+    Yann: new Howl({src: [YannSound]}),
+    Julian: new Howl({src: [JulianSound]}),
+    Dave: new Howl({src: [DaveSound]}),
 
   wooDominik: new Howl({ src: [wooDominik] }),
   startSebastian: new Howl({ src: [startSebastian] }),
   laughSebastian: new Howl({ src: [laughSebastian] }),
   allrightyright: new Howl({ src: [allrightyright] }),
 
-  fired: new Howl({ src: [shoot] }),
-  bells: new Howl({ src: [bells] }),
-  smallExplosion: new Howl({ src: [smallExplosion], volume: 0.3 }),
-  breakingGlass: new Howl({ src: [breakingGlass] }),
-  bonkWood: new Howl({ src: [bonkWood] }),
-  levelSuccess: new Howl({ src: [levelSuccess] }),
-  employee1: new Howl({ src: [employee1] }),
-  employee2: new Howl({ src: [employee2] }),
-  employee3: new Howl({ src: [employee3] }),
-  employee4: new Howl({ src: [employee4] }),
-  employee5: new Howl({ src: [employee5] }),
+    fired: new Howl({src: [shoot]}),
+    bells: new Howl({src: [bells]}),
+    smallExplosion: new Howl({src: [smallExplosion], volume: 0.3}),
+    breakingGlass: new Howl({src: [breakingGlass]}),
+    bonkWood: new Howl({src: [bonkWood]}),
+    levelSuccess: new Howl({src: [levelSuccess]}),
+    employee1: new Howl({src: [employee1]}),
+    employee2: new Howl({src: [employee2]}),
+    employee3: new Howl({src: [employee3]}),
+    employee4: new Howl({src: [employee4]}),
+    employee5: new Howl({src: [employee5]}),
+    tap: new Howl({src: [tap], volume: 0.5}),
 };
 
 export function playSound(
-  key:
-    | TargetName
-    | "levelSuccess"
-    | "bells"
-    | "smallExplosion"
-    | "wooDominik"
-    | "startSebastian"
-    | "laughSebastian"
-    | "allrightyright"
-    | "fired"
-    | "breakingGlass"
-    | "bonkWood",
+    key:
+        | TargetName
+        | "levelSuccess"
+        | "bells"
+        | "smallExplosion"
+        | "wooDominik"
+        | "startSebastian"
+        | "laughSebastian"
+        | "allrightyright"
+        | "fired"
+        | "breakingGlass"
+        | "bonkWood"
+        | "tap",
 ) {
   if (key in howls) {
     return howls[key]!.play();
