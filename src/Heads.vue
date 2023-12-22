@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {ref} from "vue";
+import {Howl} from "howler";
+
 import AK from "./assets/targets/AK.png";
 import Alex from "./assets/targets/Alex.png";
 import Alexandra from "./assets/targets/Alexandra.png";
@@ -47,7 +50,20 @@ import Vanessa from "./assets/targets/Vanessa.png";
 import Wessel from "./assets/targets/Wessel.png";
 import Yann from "./assets/targets/Yann.png";
 
-import {ref} from "vue";
+import AlisaSound from "./assets/sounds/alisa.mp3";
+import CarloSound from "./assets/sounds/carlo.mp3";
+import DennisSound from "./assets/sounds/dennis.mp3";
+import DianaSound from "./assets/sounds/diana.mp3";
+import FabianSound from "./assets/sounds/fabian.mp3";
+import GarreltSound from "./assets/sounds/garrelt.mp3";
+import LarsSound from "./assets/sounds/lars.mp3";
+import JanGSound from "./assets/sounds/jan_g.mp3";
+import RichardSound from "./assets/sounds/richard.mp3";
+import VanessaSound from "./assets/sounds/vanessa.mp3";
+import WesselSound from "./assets/sounds/wessel.mp3";
+import YannSound from "./assets/sounds/yann.mp3";
+import JulianSound from "./assets/sounds/julian.mp3";
+import DaveSound from "./assets/sounds/dave.mp3";
 
 const initialTargets = [
   {
@@ -69,6 +85,7 @@ const initialTargets = [
     name: 'Alisa',
     image: Alisa,
     readable: true,
+    sound: new Howl({src: [AlisaSound]}),
   },
   {
     name: 'Andrzej',
@@ -109,11 +126,13 @@ const initialTargets = [
     name: 'Carlo',
     image: Carlo,
     readable: true,
+    sound: new Howl({src: [CarloSound]}),
   },
   {
     name: 'Dave',
     image: Dave,
     readable: true,
+    sound: new Howl({src: [DaveSound]}),
   },
   {
     name: 'David',
@@ -124,11 +143,13 @@ const initialTargets = [
     name: 'Dennis',
     image: Dennis,
     readable: true,
+    sound: new Howl({src: [DennisSound]}),
   },
   {
     name: 'Diana',
     image: Diana,
     readable: true,
+    sound: new Howl({src: [DianaSound]}),
   },
   {
     name: 'Etienne',
@@ -139,6 +160,7 @@ const initialTargets = [
     name: 'Fabian',
     image: Fabian,
     readable: true,
+    sound: new Howl({src: [FabianSound]}),
   },
   {
     name: 'Fabi',
@@ -159,6 +181,7 @@ const initialTargets = [
     name: 'Garrelt',
     image: Garrelt,
     readable: true,
+    sound: new Howl({src: [GarreltSound]}),
   },
   {
     name: 'Grebiel',
@@ -174,6 +197,7 @@ const initialTargets = [
     name: 'Jan_G',
     image: Jan_G,
     readable: true,
+    sound: new Howl({ src: [JanGSound] }),
   },
   {
     name: 'Jo',
@@ -194,6 +218,7 @@ const initialTargets = [
     name: 'Julian',
     image: Julian,
     readable: true,
+    sound: new Howl({src: [JulianSound]}),
   },
   {
     name: 'Kayleigh',
@@ -204,6 +229,7 @@ const initialTargets = [
     name: 'Lars',
     image: Lars,
     readable: true,
+    sound: new Howl({src: [LarsSound]}),
   },
   {
     name: 'Maren',
@@ -229,6 +255,7 @@ const initialTargets = [
     name: 'Richard',
     image: Richard,
     readable: true,
+    sound: new Howl({src: [RichardSound]}),
   },
   {
     name: 'Robin',
@@ -274,16 +301,19 @@ const initialTargets = [
     name: 'Vanessa',
     image: Vanessa,
     readable: true,
+    sound: new Howl({src: [VanessaSound]}),
   },
   {
     name: 'Wessel',
     image: Wessel,
     readable: true,
+    sound: new Howl({src: [WesselSound]}),
   },
   {
     name: 'Yann',
     image: Yann,
     readable: true,
+    sound: new Howl({src: [YannSound]}),
   },
 ];
 
@@ -293,6 +323,11 @@ const flipTargetReadability = (target) => {
   target.readable = !target.readable;
 }
 
+const playSound = (target) => {
+  if (target.sound) {
+    target.sound.play();
+  }
+}
 
 const hideAll = () => {
   targets.value.forEach((target)=>{target.readable = false;})
@@ -301,7 +336,6 @@ const hideAll = () => {
 const showAll = () => {
   targets.value.forEach((target)=>{target.readable = true;})
 }
-
 
 </script>
 
@@ -322,7 +356,7 @@ const showAll = () => {
 
   <div class="heads-grid">
     <div class="heads-grid-card" v-for="target in targets" v-on:click="flipTargetReadability(target)">
-      <img v-bind:src="target.image" />
+      <img v-bind:src="target.image" v-on:click="playSound(target)"/>
       <span v-if="target.readable">{{ target.name }}</span>
     </div>
   </div>
