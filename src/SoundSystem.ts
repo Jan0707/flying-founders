@@ -36,7 +36,7 @@ import jingleBellRock from "./assets/sounds/JingleBellRock.mp3";
 import { TargetName } from "./util/Target.ts";
 
 const music = {
-  jingleBellRock: new Howl({ src: [jingleBellRock], loop: true, volume: 0.5 }),
+  jingleBellRock: new Howl({ src: [jingleBellRock], loop: true, volume: 0.1 }),
 } as const;
 
 export function playMusic(title: keyof typeof music) {
@@ -84,7 +84,7 @@ const howls: Partial<Record<TargetName, Howl>> &
 
   fired: new Howl({ src: [shoot] }),
   bells: new Howl({ src: [bells] }),
-  smallExplosion: new Howl({ src: [smallExplosion] }),
+  smallExplosion: new Howl({ src: [smallExplosion], volume: 0.3 }),
   breakingGlass: new Howl({ src: [breakingGlass] }),
   bonkWood: new Howl({ src: [bonkWood] }),
   levelSuccess: new Howl({ src: [levelSuccess] }),
